@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:HelloAvalonia.ViewModels"
+        x:Class="HelloAvalonia.SettingsDialog"
+        x:DataType="vm:SettingsDialogViewModel"
+        Title="Paramètres"
+        Width="600" Height="300"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <Grid Margin="20" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+        <!-- Title -->
+        <TextBlock Text="Configuration de la base de données"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+        
+        <!-- Database Path -->
+        <StackPanel Grid.Row="1" Spacing="8">
+            <TextBlock Text="Chemin de la base de données principale:"
+                       FontWeight="SemiBold"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding DatabasePath, Mode=TwoWay}"
+                         Watermark="C:\ProgramData\...\pos.db"
+                         Padding="10,8"/>
+                <Button Grid.Column="1"
+                        Content="Parcourir..."
+                        Command="{Binding BrowseCommand}"
+                        Margin="10,0,0,0"
+                        Padding="20,8"
+                        Background="#6366F1"
+                        Foreground="White"
+                        CornerRadius="6"
+                        BorderThickness="0"/>
+            </Grid>
+        </StackPanel>
+        
+        <!-- Status Message -->
+        <Border Grid.Row="2"
+                Margin="0,15,0,0"
+                Padding="12"
+                Background="#F3F4F6"
+                CornerRadius="6"
+                IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <TextBlock Text="{Binding StatusMessage}"
+                       TextWrapping="Wrap"
+                       FontSize="13"/>
+        </Border>
+        
+        <!-- Test Connection Button -->
+        <Button Grid.Row="3"
+                Content="Tester la connexion"
+                Command="{Binding TestConnectionCommand}"
+                Margin="0,15,0,0"
+                HorizontalAlignment="Left"
+                Padding="15,8"
+                Background="#10B981"
+                Foreground="White"
+                CornerRadius="6"
+                BorderThickness="0"
+                IsEnabled="{Binding IsValid}"/>
+        
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button Content="Annuler"
+                    Click="Cancel_Click"
+                    Padding="20,10"
+                    Background="#6B7280"
+                    Foreground="White"
+                    CornerRadius="6"
+                    BorderThickness="0"/>
+            <Button Content="Enregistrer"
+                    Command="{Binding SaveCommand}"
+                    Click="Save_Click"
+                    Padding="20,10"
+                    Background="#2563EB"
+                    Foreground="White"
+                    CornerRadius="6"
+                    BorderThickness="0"
+                    IsEnabled="{Binding IsValid}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+
+
+
+
+
+
+
+
+

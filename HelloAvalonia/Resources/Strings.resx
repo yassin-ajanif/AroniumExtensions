@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Facturation</value>
+  </data>
+  <data name="IntroText" xml:space="preserve">
+    <value>Bienvenue dans votre application de facturation.</value>
+  </data>
+  <data name="SliderLabel" xml:space="preserve">
+    <value>Ajustez le montant estimé</value>
+  </data>
+  <data name="CreateInvoiceButton" xml:space="preserve">
+    <value>Créer facture</value>
+  </data>
+  <data name="FormTitle" xml:space="preserve">
+    <value>Nouvelle facture</value>
+  </data>
+  <data name="CustomerLabel" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="SliderValuePrefix" xml:space="preserve">
+    <value>Montant estimé :</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>N° :</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value>Du :</value>
+  </data>
+  <data name="PaymentType" xml:space="preserve">
+    <value>Payé par :</value>
+  </data>
+  <data name="ClientLabel" xml:space="preserve">
+    <value>Client :</value>
+  </data>
+  <data name="ICELabel" xml:space="preserve">
+    <value>ICE :</value>
+  </data>
+  <data name="RefColumn" xml:space="preserve">
+    <value>Réf.</value>
+  </data>
+  <data name="DesignationColumn" xml:space="preserve">
+    <value>Désignation</value>
+  </data>
+  <data name="QtyColumn" xml:space="preserve">
+    <value>Qté</value>
+  </data>
+  <data name="PriceColumn" xml:space="preserve">
+    <value>PV.TTC NET</value>
+  </data>
+  <data name="TVAColumn" xml:space="preserve">
+    <value>TVA</value>
+  </data>
+  <data name="TotalColumn" xml:space="preserve">
+    <value>Mnt TTC</value>
+  </data>
+  <data name="TotalHT" xml:space="preserve">
+    <value>Total HT</value>
+  </data>
+  <data name="Taxe" xml:space="preserve">
+    <value>Taxe</value>
+  </data>
+  <data name="TotalTTC" xml:space="preserve">
+    <value>Total TTC</value>
+  </data>
+  <data name="AddItemButton" xml:space="preserve">
+    <value>Ajouter article</value>
+  </data>
+  <data name="RemoveItemButton" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Nom de l'entreprise</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Adresse de l'entreprise</value>
+  </data>
+  <data name="InvoiceTitle" xml:space="preserve">
+    <value>BL / Facture</value>
+  </data>
+  <data name="GenerateButton" xml:space="preserve">
+    <value>Générer Facture</value>
+  </data>
+  <data name="ChooseLogo" xml:space="preserve">
+    <value>Choisir logo</value>
+  </data>
+  <data name="AmountInWords" xml:space="preserve">
+    <value>Arrêté la présente facture à la somme de:</value>
+  </data>
+</root>
+
