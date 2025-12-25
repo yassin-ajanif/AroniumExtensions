@@ -17,12 +17,13 @@ public static class ServiceProvider
     private static ICustomerService? _customerService;
     private static IApplicationService? _applicationService;
     private static IProductService? _productService;
+    private static ILocalSettingsService? _localSettingsService;
 
     public static void Initialize(string databasePath)
     {
         // Create DbContext
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseSqlite($"Data Source={databasePath};Mode=ReadOnly;Cache=Shared;Default Timeout=3;");
+        optionsBuilder.UseSqlite($"Data Source={databasePath};Mode=ReadOnly;Default Timeout=3;");
         _dbContext = new AppDbContext(optionsBuilder.Options);
 
         // Create repositories
@@ -36,6 +37,7 @@ public static class ServiceProvider
         _customerService = new CustomerService(_customerRepository);
         _applicationService = new ApplicationService(_applicationPropertyRepository);
         _productService = new ProductService(_productRepository);
+        _localSettingsService = new LocalSettingsService();
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -43,4 +45,5 @@ public static class ServiceProvider
     public static ICustomerService CustomerService => _customerService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IApplicationService ApplicationService => _applicationService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IProductService ProductService => _productService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static ILocalSettingsService LocalSettingsService => _localSettingsService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

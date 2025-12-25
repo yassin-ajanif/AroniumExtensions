@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelloAvalonia.Data;
 using HelloAvalonia.Data.Entities;
+using HelloAvalonia.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelloAvalonia.Repositories;
@@ -17,93 +18,67 @@ public class DocumentRepository : IDocumentRepository
         _context = context;
     }
 
-    public async Task<List<Document>> GetAllAsync()
+    /// <summary>
+    /// Gets document with items and discount info by document number
+    /// </summary>
+    public async Task<DocumentWithItemsDto?> GetDocumentWithItemsByNumberAsync(string documentNumber)
     {
-        return await _context.Documents
-            .Include(d => d.DocumentItems)
-                .ThenInclude(di => di.Product)
+        var document = await _context.Documents
+            .AsNoTracking()
             .Include(d => d.Customer)
             .Include(d => d.DocumentType)
-            .OrderByDescending(d => d.DateCreated)
-            .ToListAsync();
-    }
-
-    public async Task<Document?> GetByIdAsync(int id)
-    {
-        return await _context.Documents
+            .Include(d => d.Payments)
+                .ThenInclude(p => p.PaymentType)
             .Include(d => d.DocumentItems)
                 .ThenInclude(di => di.Product)
-            .Include(d => d.Customer)
-            .Include(d => d.DocumentType)
-            .FirstOrDefaultAsync(d => d.Id == id);
-    }
-
-    public async Task<Document?> GetByNumberAsync(string number)
-    {
-        return await _context.Documents
             .Include(d => d.DocumentItems)
-                .ThenInclude(di => di.Product)
-            .Include(d => d.Customer)
-            .Include(d => d.DocumentType)
-            .FirstOrDefaultAsync(d => d.Number == number);
-    }
-
-    public async Task<List<Document>> GetByCustomerIdAsync(int customerId)
-    {
-        return await _context.Documents
-            .Include(d => d.DocumentItems)
-                .ThenInclude(di => di.Product)
-            .Include(d => d.DocumentType)
-            .Where(d => d.CustomerId == customerId)
-            .OrderByDescending(d => d.DateCreated)
-            .ToListAsync();
-    }
-
-    public async Task<Document> CreateAsync(Document document)
-    {
-        document.DateCreated = DateTime.Now;
-        document.DateUpdated = DateTime.Now;
-        
-        _context.Documents.Add(document);
-        await _context.SaveChangesAsync();
-        
-        return document;
-    }
-
-    public async Task UpdateAsync(Document document)
-    {
-        document.DateUpdated = DateTime.Now;
-        
-        _context.Documents.Update(document);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        var document = await _context.Documents.FindAsync(id);
-        if (document != null)
-        {
-            _context.Documents.Remove(document);
-            await _context.SaveChangesAsync();
-        }
-    }
-
-    public async Task<int> GetNextDocumentNumberAsync()
-    {
-        var lastDocument = await _context.Documents
-            .OrderByDescending(d => d.Id)
+                .ThenInclude(di => di.DocumentItemTaxes)
+                    .ThenInclude(dit => dit.Tax)
+            .Where(d => d.Number == documentNumber)
             .FirstOrDefaultAsync();
         
-        return (lastDocument?.Id ?? 0) + 1;
+        if (document == null)
+            return null;
+        
+        // Get all payment types and concatenate with commas
+        var paymentTypeNames = document.Payments
+            .Where(p => p.PaymentType != null)
+            .Select(p => p.PaymentType.Code ?? p.PaymentType.Name)
+            .Where(name => !string.IsNullOrEmpty(name))
+            .Distinct()  // Remove duplicates if same payment type appears multiple times
+            .ToList();
+
+        var paymentTypeName = paymentTypeNames.Any() 
+            ? string.Join(", ", paymentTypeNames)
+            : null;
+        
+        return new DocumentWithItemsDto
+        {
+            DocumentNumber = document.Number,
+            CustomerName = document.Customer?.Name,
+            Date = document.Date,
+            DueDate = document.DueDate,
+            PaymentTypeName = paymentTypeName,
+            DocumentTypeCode = document.DocumentType.Code,
+            DocumentTypeName = document.DocumentType.Name,
+            DocumentDiscount = document.Discount,
+            DocumentDiscountType = document.DiscountType,
+            Items = document.DocumentItems.Select(di => new DocumentItemDto
+            {
+                Id = di.Id,
+                ProductCode = di.Product.Code ?? "",
+                ProductName = di.Product.Name,
+                UnitOfMeasure = di.Product.MeasurementUnit ?? "ute",
+                Quantity = di.Quantity,
+                PriceBeforeTax = di.PriceBeforeTax,
+                Tax = (di.Price - di.PriceBeforeTax) ,
+                TaxRate = di.DocumentItemTaxes.FirstOrDefault()?.Tax?.Rate ?? 0m,
+                Price = di.Price ,
+                TotalBeforeDiscount = di.Total ,
+                Discount = di.Discount ,
+                DiscountType = di.DiscountType,
+                Total = di.TotalAfterDocumentDiscount 
+            }).ToList()
+        };
     }
 }
-
-
-
-
-
-
-
-
-
-

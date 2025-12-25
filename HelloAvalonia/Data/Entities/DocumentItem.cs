@@ -11,27 +11,27 @@ public partial class DocumentItem
 
     public int ProductId { get; set; }
 
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
 
-    public int ExpectedQuantity { get; set; }
+    public decimal ExpectedQuantity { get; set; }
 
-    public int PriceBeforeTax { get; set; }
+    public decimal PriceBeforeTax { get; set; }
 
-    public int Price { get; set; }
+    public decimal Price { get; set; }
 
-    public int Discount { get; set; }
+    public decimal Discount { get; set; }
 
     public int DiscountType { get; set; }
 
-    public int ProductCost { get; set; }
+    public decimal ProductCost { get; set; }
 
-    public int PriceBeforeTaxAfterDiscount { get; set; }
+    public decimal PriceBeforeTaxAfterDiscount { get; set; }
 
-    public int PriceAfterDiscount { get; set; }
+    public decimal PriceAfterDiscount { get; set; }
 
-    public int Total { get; set; }
+    public decimal Total { get; set; }
 
-    public int TotalAfterDocumentDiscount { get; set; }
+    public decimal TotalAfterDocumentDiscount { get; set; }
 
     public int DiscountApplyRule { get; set; }
 

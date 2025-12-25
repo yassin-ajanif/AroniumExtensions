@@ -11,76 +11,123 @@
         Width="1000" Height="800"
         Background="#F0F2F5">
     
-    <Grid>
+    <Grid PointerPressed="MainGrid_PointerPressed">
         <ScrollViewer IsEnabled="{Binding IsInteractive}">
-            <Grid Margin="30" RowDefinitions="Auto,*">
-            <!-- Top Bar with Create Button and Settings -->
-            <Grid ColumnDefinitions="*,Auto">
-                <Button Content="{x:Static local:Strings.CreateInvoiceButton}"
+            <Grid Margin="30" RowDefinitions="Auto,Auto,*">
+            <!-- Document Search Section -->
+            <Border Grid.Row="0" 
+                    Background="White"
+                    Padding="15"
+                    CornerRadius="8"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    Margin="0,0,0,15"
+                    BoxShadow="0 1 3 0 #10000000">
+                <Grid ColumnDefinitions="Auto,250,Auto,*,Auto">
+                        <TextBlock Text="N° Document:" 
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,15,0"/>
+                        
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding SearchDocumentNumber, Mode=TwoWay}"
+                                 Watermark="25-200-000002"
+                                 VerticalContentAlignment="Center"
+                                 Padding="10,8"/>
+                        
+                        <Button Grid.Column="2"
+                                Content="📄 Charger"
+                                Command="{Binding LoadDocumentCommand}"
+                                IsEnabled="{Binding !IsLoadingDocument}"
+                                Margin="10,0,0,0"
+                                Background="#10B981"
+                                Foreground="White"
+                                Padding="20,8"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#059669"/>
+                                </Style>
+                                <Style Selector="Button:disabled">
+                                    <Setter Property="Background" Value="#D1D5DB"/>
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        
+                        <TextBlock Grid.Column="3"
+                                   Text="{Binding LoadDocumentStatus}"
+                                   VerticalAlignment="Center"
+                                   Margin="15,0,0,0"
+                                   FontSize="13"/>
+                        
+                        <!-- Settings Button -->
+                        <Button Grid.Column="4"
+                                Content="⚙️ Paramètres"
+                                Command="{Binding OpenSettingsCommand}"
+                                Margin="10,0,0,0"
+                                Background="#6B7280"
+                                Foreground="White"
+                                Padding="15,8"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#4B5563"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                </Grid>
+            </Border>
+
+            <!-- Document Type Chip -->
+            <Grid Grid.Row="1">
+                <Border IsVisible="{Binding HasDocumentType}"
+                        Background="#DC2626"
+                        BorderThickness="0"
+                        CornerRadius="8"
+                        Padding="16,10"
+                        Margin="0,0,0,20"
                         HorizontalAlignment="Left"
-                        Padding="20,12"
-                        Margin="0,0,0,20"
-                        Command="{Binding ShowFormCommand}"
-                        Background="#2563EB"
-                        Foreground="White"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        CornerRadius="8"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover">
-                            <Setter Property="Background" Value="#1D4ED8"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
-                
-                <!-- Settings Button (Top Right) -->
-                <Button Grid.Column="1"
-                        Content="⚙️ Paramètres"
-                        Command="{Binding OpenSettingsCommand}"
-                        HorizontalAlignment="Right"
-                        Padding="15,10"
-                        Margin="0,0,0,20"
-                        Background="#6B7280"
-                        Foreground="White"
-                        FontSize="13"
-                        CornerRadius="8"
-                        BorderThickness="0"
-                        Cursor="Hand">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover">
-                            <Setter Property="Background" Value="#4B5563"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
+                        VerticalAlignment="Center">
+                    <TextBlock Text="{Binding DocumentTypeDisplay}"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Foreground="White"/>
+                </Border>
             </Grid>
 
             <!-- Invoice Form -->
-            <Border Grid.Row="1"
+            <Border Grid.Row="2"
                     Padding="40"
                     CornerRadius="12"
                     BorderBrush="#E5E7EB"
                     BorderThickness="1"
                     Background="White"
-                    IsVisible="{Binding ShowForm}"
                     BoxShadow="0 4 6 -1 #10000000, 0 2 4 -1 #06000000">
                 <StackPanel Spacing="0">
                     <!-- Header Section -->
                     <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,20">
                         <!-- Logo Section (Left) -->
                         <StackPanel Spacing="10" Margin="0,0,20,0">
-                            <Border Width="100" 
-                                    Height="80"
+                            <Border Width="150" 
+                                    Height="120"
                                     CornerRadius="8">
                                 <Image Source="{Binding LogoImage}" 
                                        Stretch="Uniform"
                                        IsVisible="{Binding HasLogo}"/>
                             </Border>
-                            <StackPanel Spacing="6">
-                                <Button Content="{x:Static local:Strings.ChooseLogo}"
+                            <StackPanel Orientation="Horizontal" 
+                                        Spacing="8" 
+                                        HorizontalAlignment="Center">
+                                <Button Content="Ajouter"
                                         Command="{Binding ChooseLogoCommand}"
-                                        HorizontalAlignment="Center"
                                         Padding="10,6"
                                         FontSize="11"
                                         Background="#6366F1"
@@ -96,7 +143,6 @@
                                 </Button>
                                 <Button Content="Supprimer"
                                         Command="{Binding RemoveLogoCommand}"
-                                        HorizontalAlignment="Center"
                                         Padding="10,6"
                                         FontSize="11"
                                         Background="#EF4444"
@@ -122,29 +168,10 @@
                                      BorderThickness="0"
                                      Background="Transparent"
                                      Watermark="{x:Static local:Strings.CompanyName}"/>
-                            <TextBlock Text="{x:Static local:Strings.InvoiceTitle}"
+                            <TextBlock Text="{Binding DocumentTypeName}"
                                        FontSize="16"
+                                       FontWeight="SemiBold"
                                        Margin="0,5,0,0"/>
-                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,3,0,0">
-                                <TextBlock Text="{Binding ProductCountDisplay}"
-                                           FontSize="13"
-                                           Foreground="#6B7280"/>
-                                <Button Content="Rafraichir"
-                                        Command="{Binding LoadProductCountCommand}"
-                                        Padding="8,4"
-                                        FontSize="11"
-                                        Background="#2563EB"
-                                        Foreground="White"
-                                        BorderThickness="0"
-                                        CornerRadius="6"
-                                        Cursor="Hand">
-                                    <Button.Styles>
-                                        <Style Selector="Button:pointerover">
-                                            <Setter Property="Background" Value="#1D4ED8"/>
-                                        </Style>
-                                    </Button.Styles>
-                                </Button>
-                            </StackPanel>
                         </StackPanel>
                     </Grid>
 
@@ -156,31 +183,41 @@
                                 Padding="15"
                                 CornerRadius="8"
                                 Background="#F9FAFB">
-                            <StackPanel Spacing="12">
+                            <StackPanel Spacing="4">
                                 <Grid ColumnDefinitions="Auto,*">
                                     <TextBlock Text="{x:Static local:Strings.InvoiceNumber}" 
                                                FontWeight="SemiBold" 
                                                Margin="0,0,8,0"
                                                Foreground="#374151"/>
-                                    <TextBox Grid.Column="1" Text="{Binding InvoiceNumber, Mode=TwoWay}" 
-                                             BorderThickness="0" Background="Transparent" Padding="0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding InvoiceNumber}" 
+                                               Foreground="#374151"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto,*">
                                     <TextBlock Text="{x:Static local:Strings.InvoiceDate}" 
                                                FontWeight="SemiBold" 
                                                Margin="0,0,8,0"
                                                Foreground="#374151"/>
-                                    <TextBox Grid.Column="1" Text="{Binding InvoiceDateString, Mode=TwoWay}" 
-                                             BorderThickness="0" Background="Transparent" Padding="0"
-                                             Watermark="JJ/MM/AAAA"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding InvoiceDateString}" 
+                                               Foreground="#374151"/>
                                 </Grid>
+                                
+                                <!-- Due Date -->
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="Date d'échéance" 
+                                               FontWeight="SemiBold" 
+                                               Margin="0,0,8,0"
+                                               Foreground="#DC2626"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DueDateString}" 
+                                               Foreground="#DC2626"/>
+                                </Grid>
+                                
                                 <Grid ColumnDefinitions="Auto,*">
                                     <TextBlock Text="{x:Static local:Strings.PaymentType}" 
                                                FontWeight="SemiBold" 
                                                Margin="0,0,8,0"
                                                Foreground="#374151"/>
-                                    <TextBox Grid.Column="1" Text="{Binding PaymentType, Mode=TwoWay}" 
-                                             BorderThickness="0" Background="Transparent" Padding="0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding PaymentType}" 
+                                               Foreground="#374151"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
@@ -193,23 +230,24 @@
                                 Margin="15,0,0,0"
                                 CornerRadius="8"
                                 Background="#F9FAFB">
-                            <StackPanel Spacing="12">
+                            <StackPanel Spacing="4">
                                 <Grid ColumnDefinitions="Auto,*">
                                     <TextBlock Text="{x:Static local:Strings.ClientLabel}" 
                                                FontWeight="SemiBold" 
                                                Margin="0,0,10,0"
                                                Foreground="#374151"/>
-                                    <TextBox Grid.Column="1" Text="{Binding CustomerName, Mode=TwoWay}" 
-                                             BorderThickness="0" Background="Transparent" Padding="0"
-                                             Watermark="Nom du client"
-                                             FontSize="13"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding CustomerName}" 
+                                               FontSize="13"
+                                               Foreground="#374151"/>
                                 </Grid>
-                                <Grid ColumnDefinitions="Auto,*" Margin="0,15,0,0">
+                                <Grid ColumnDefinitions="Auto,*">
                                     <TextBlock Text="{x:Static local:Strings.ICELabel}" 
                                                FontWeight="SemiBold" 
                                                Margin="0,0,10,0"
                                                Foreground="#374151"/>
-                                    <TextBox Grid.Column="1" Text="{Binding IceNumber, Mode=TwoWay}" 
+                                    <TextBox Grid.Column="1" 
+                                             Name="IceNumberTextBox"
+                                             Text="{Binding IceNumber, Mode=TwoWay}" 
                                              BorderThickness="0" Background="Transparent" Padding="0"
                                              Watermark="000000000000000"
                                              FontSize="13"/>
@@ -226,7 +264,7 @@
                             BoxShadow="0 1 3 0 #0A000000">
                         <StackPanel>
                             <!-- Table Header -->
-                            <Grid ColumnDefinitions="80,*,80,100,80,100,60" 
+                            <Grid ColumnDefinitions="80,*,80,100,80,100,100" 
                                   Background="#F3F4F6" 
                                   Height="40">
                                 <TextBlock Grid.Column="0" Text="{x:Static local:Strings.RefColumn}" 
@@ -239,9 +277,9 @@
                                            FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
                                 <TextBlock Grid.Column="4" Text="{x:Static local:Strings.TVAColumn}" 
                                            FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
-                                <TextBlock Grid.Column="5" Text="{x:Static local:Strings.TotalColumn}" 
+                                <TextBlock Grid.Column="5" Text="Remise" 
                                            FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
-                                <TextBlock Grid.Column="6" Text="" 
+                                <TextBlock Grid.Column="6" Text="{x:Static local:Strings.TotalColumn}" 
                                            FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
                             </Grid>
 
@@ -250,62 +288,73 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
-                                            <Grid ColumnDefinitions="80,*,80,100,80,100,60" MinHeight="40">
-                                                <TextBox Grid.Column="0" Text="{Binding Reference, Mode=TwoWay}" 
-                                                         BorderThickness="0" VerticalAlignment="Center" Margin="5,0"/>
-                                                <TextBox Grid.Column="1" Text="{Binding Designation, Mode=TwoWay}" 
-                                                         BorderThickness="0" VerticalAlignment="Center" Margin="5,0"
-                                                         TextWrapping="Wrap" AcceptsReturn="True"/>
-                                                <TextBox Grid.Column="2" Text="{Binding Quantity, Mode=TwoWay}" 
-                                                         BorderThickness="0" VerticalAlignment="Center" Margin="5,0"/>
-                                                <TextBox Grid.Column="3" Text="{Binding UnitPrice, Mode=TwoWay}" 
-                                                         BorderThickness="0" VerticalAlignment="Center" Margin="5,0"/>
-                                                <TextBox Grid.Column="4" Text="{Binding TvaRate, Mode=TwoWay}" 
-                                                         BorderThickness="0" VerticalAlignment="Center" Margin="5,0"/>
-                                                <TextBlock Grid.Column="5" Text="{Binding TotalTTC, StringFormat={}{0:F2}}" 
+                                            <Grid ColumnDefinitions="80,*,80,100,80,100,100" MinHeight="40">
+                                                <TextBlock Grid.Column="0" Text="{Binding Reference}" 
                                                            VerticalAlignment="Center" Margin="5,0"/>
-                                                <Button Grid.Column="6" 
-                                                        Content="✕"
-                                                        FontSize="16"
-                                                        Foreground="Red"
-                                                        Background="Transparent"
-                                                        BorderThickness="0"
-                                                        Padding="5"
-                                                        VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"
-                                                        Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).RemoveItemCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        Cursor="Hand"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Designation}" 
+                                                           VerticalAlignment="Center" Margin="5,0"
+                                                           TextWrapping="Wrap"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding Quantity, StringFormat={}{0:F2}}" 
+                                                           VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding UnitPrice, StringFormat={}{0:F2}}" 
+                                                           VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="4" Text="{Binding TvaRate, StringFormat={}{0:F2}}" 
+                                                           VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="5" Text="{Binding ItemDiscountDisplay}" 
+                                                           VerticalAlignment="Center" Margin="5,0"
+                                                           Foreground="#EF4444"/>
+                                                <TextBlock Grid.Column="6" Text="{Binding TotalAfterDiscount, StringFormat={}{0:F2}}" 
+                                                           VerticalAlignment="Center" Margin="5,0"
+                                                           FontWeight="SemiBold"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
-                            <!-- Add/Remove Buttons -->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,15">
-                                <Button Content="{x:Static local:Strings.AddItemButton}"
-                                        Command="{Binding AddItemCommand}"
-                                        Padding="14,8"
-                                        Background="#10B981"
-                                        Foreground="White"
-                                        FontSize="12"
-                                        FontWeight="SemiBold"
-                                        CornerRadius="6"
-                                        BorderThickness="0"
-                                        Cursor="Hand">
-                                    <Button.Styles>
-                                        <Style Selector="Button:pointerover">
-                                            <Setter Property="Background" Value="#059669"/>
-                                        </Style>
-                                    </Button.Styles>
-                                </Button>
-                            </StackPanel>
                         </StackPanel>
                     </Border>
 
+                    <!-- Discount Calculation Mode Buttons -->
+                    <StackPanel Orientation="Horizontal" 
+                                Spacing="10" 
+                                Margin="0,20,0,10"
+                                HorizontalAlignment="Right">
+                        <Button Content="Remise AVANT TVA"
+                                Command="{Binding ApplyDiscountBeforeTaxCommand}"
+                                Background="{Binding BeforeTaxButtonBackground}"
+                                Foreground="White"
+                                Padding="15,8"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#059669"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        <Button Content="Remise APRÈS TVA"
+                                Command="{Binding ApplyDiscountAfterTaxCommand}"
+                                Background="{Binding AfterTaxButtonBackground}"
+                                Foreground="White"
+                                Padding="15,8"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#059669"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </StackPanel>
+
                     <!-- Totals Section -->
-                    <Grid ColumnDefinitions="*,250" Margin="0,20,0,0">
+                    <Grid ColumnDefinitions="*,250" Margin="0,0,0,0">
                         <StackPanel Grid.Column="1">
                             <Border BorderBrush="#E5E7EB" 
                                     BorderThickness="2" 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
@@ -10,7 +11,6 @@ namespace HelloAvalonia.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private bool _showForm;
     private string _invoiceNumber = string.Empty;
     private DateTimeOffset _invoiceDate = DateTimeOffset.Now;
     private string _paymentType = "C";
@@ -25,16 +25,26 @@ public class MainWindowViewModel : ViewModelBase
     private string _initializationMessage = "Initialisation de la base de donnees...";
     private string _productCountDisplay = string.Empty;
     private string _productCountStatus = "Cliquer pour charger le nombre de produits";
+    private string _searchDocumentNumber = string.Empty;
+    private bool _isLoadingDocument;
+    private string _loadDocumentStatus = string.Empty;
+    private decimal _documentDiscount;
+    private string _documentDiscountDisplay = "0.00";
+    private DateTimeOffset? _dueDate;
+    private string _documentTypeDisplay = string.Empty;
+    private bool _hasDocumentType = false;
 
     public MainWindowViewModel()
     {
-        ShowFormCommand = new RelayCommand(() => ShowForm = true);
         AddItemCommand = new RelayCommand(AddItem);
         RemoveItemCommand = new RelayCommand<InvoiceItem>(RemoveItem);
         ChooseLogoCommand = new RelayCommand(ChooseLogo);
         RemoveLogoCommand = new RelayCommand(RemoveLogo);
         OpenSettingsCommand = new RelayCommand(OpenSettings);
         LoadProductCountCommand = new RelayCommand(async () => await LoadProductCountAsync(), () => IsInteractive);
+        LoadDocumentCommand = new RelayCommand(async () => await LoadDocumentItemsAsync(), () => !string.IsNullOrWhiteSpace(SearchDocumentNumber) && !IsLoadingDocument);
+        ApplyDiscountBeforeTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = true);
+        ApplyDiscountAfterTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = false);
 
         ProductCountDisplay = _productCountStatus;
         
@@ -92,13 +102,15 @@ public class MainWindowViewModel : ViewModelBase
         };
     }
 
-    public RelayCommand ShowFormCommand { get; }
     public RelayCommand AddItemCommand { get; }
     public RelayCommand<InvoiceItem> RemoveItemCommand { get; }
     public RelayCommand ChooseLogoCommand { get; }
     public RelayCommand RemoveLogoCommand { get; }
     public RelayCommand OpenSettingsCommand { get; }
     public RelayCommand LoadProductCountCommand { get; }
+    public RelayCommand LoadDocumentCommand { get; }
+    public RelayCommand ApplyDiscountBeforeTaxCommand { get; }
+    public RelayCommand ApplyDiscountAfterTaxCommand { get; }
 
     public bool IsInitializing
     {
@@ -146,19 +158,6 @@ public class MainWindowViewModel : ViewModelBase
     public bool IsInteractive => !_isInitializing && !_initializationFailed;
     
     public ObservableCollection<InvoiceItem> Items { get; } = new();
-
-    public bool ShowForm
-    {
-        get => _showForm;
-        set
-        {
-            if (_showForm != value)
-            {
-                _showForm = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
 
     public string InvoiceNumber
     {
@@ -234,6 +233,7 @@ public class MainWindowViewModel : ViewModelBase
             {
                 _iceNumber = value;
                 RaisePropertyChanged();
+                _ = SaveSettingsAsync();
             }
         }
     }
@@ -247,6 +247,7 @@ public class MainWindowViewModel : ViewModelBase
             {
                 _companyName = value;
                 RaisePropertyChanged();
+                _ = SaveSettingsAsync();
             }
         }
     }
@@ -260,6 +261,7 @@ public class MainWindowViewModel : ViewModelBase
             {
                 _companyAddress = value;
                 RaisePropertyChanged();
+                _ = SaveSettingsAsync();
             }
         }
     }
@@ -285,6 +287,146 @@ public class MainWindowViewModel : ViewModelBase
             if (_productCountDisplay != value)
             {
                 _productCountDisplay = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public string SearchDocumentNumber
+    {
+        get => _searchDocumentNumber;
+        set
+        {
+            if (_searchDocumentNumber != value)
+            {
+                _searchDocumentNumber = value;
+                RaisePropertyChanged();
+                LoadDocumentCommand?.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
+    public bool IsLoadingDocument
+    {
+        get => _isLoadingDocument;
+        set
+        {
+            if (_isLoadingDocument != value)
+            {
+                _isLoadingDocument = value;
+                RaisePropertyChanged();
+                LoadDocumentCommand?.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
+    public string LoadDocumentStatus
+    {
+        get => _loadDocumentStatus;
+        set
+        {
+            if (_loadDocumentStatus != value)
+            {
+                _loadDocumentStatus = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public decimal DocumentDiscount
+    {
+        get => _documentDiscount;
+        set
+        {
+            if (_documentDiscount != value)
+            {
+                _documentDiscount = value;
+                RaisePropertyChanged();
+                UpdateDocumentDiscountDisplay();
+            }
+        }
+    }
+
+    public string DocumentDiscountDisplay
+    {
+        get => _documentDiscountDisplay;
+        private set
+        {
+            if (_documentDiscountDisplay != value)
+            {
+                _documentDiscountDisplay = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    private void UpdateDocumentDiscountDisplay()
+    {
+        DocumentDiscountDisplay = $"{DocumentDiscount:F2}";
+    }
+
+    public DateTimeOffset? DueDate
+    {
+        get => _dueDate;
+        set
+        {
+            if (_dueDate != value)
+            {
+                _dueDate = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(DueDateString));
+            }
+        }
+    }
+
+    public string DueDateString
+    {
+        get => _dueDate?.ToString("dd/MM/yyyy") ?? string.Empty;
+        set
+        {
+            if (DateTimeOffset.TryParseExact(value, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var date))
+            {
+                DueDate = date;
+            }
+        }
+    }
+
+    public string DocumentTypeDisplay
+    {
+        get => _documentTypeDisplay;
+        set
+        {
+            if (_documentTypeDisplay != value)
+            {
+                _documentTypeDisplay = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(DocumentTypeName));
+            }
+        }
+    }
+
+    public string DocumentTypeName
+    {
+        get
+        {
+            // Extract just the name part (after " - ")
+            if (!string.IsNullOrEmpty(_documentTypeDisplay) && _documentTypeDisplay.Contains(" - "))
+            {
+                var parts = _documentTypeDisplay.Split(" - ", 2);
+                return parts.Length > 1 ? parts[1] : "BL / Facture";
+            }
+            return "BL / Facture"; // Default when no document loaded
+        }
+    }
+
+    public bool HasDocumentType
+    {
+        get => _hasDocumentType;
+        set
+        {
+            if (_hasDocumentType != value)
+            {
+                _hasDocumentType = value;
                 RaisePropertyChanged();
             }
         }
@@ -349,8 +491,31 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    // 1) Add this property in your ViewModel (default = BeforeTax)
+private bool _applyDiscountBeforeTax = true;
+public bool ApplyDiscountBeforeTax
+{
+    get => _applyDiscountBeforeTax;
+    set
+    {
+        if (_applyDiscountBeforeTax != value)
+        {
+            _applyDiscountBeforeTax = value;
+            RaisePropertyChanged();
+            RaisePropertyChanged(nameof(BeforeTaxButtonBackground));
+            RaisePropertyChanged(nameof(AfterTaxButtonBackground));
+            RecalculateTotals();
+        }
+    }
+}
+
+// Button background colors based on active mode
+public string BeforeTaxButtonBackground => ApplyDiscountBeforeTax ? "#10B981" : "#D1D5DB";
+public string AfterTaxButtonBackground => !ApplyDiscountBeforeTax ? "#10B981" : "#D1D5DB";
+
     public string TotalInWords => NumberToFrenchWords.ConvertToWords(TotalTTC);
 
+    
     private void AddItem()
     {
         Items.Add(new InvoiceItem 
@@ -369,12 +534,128 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    private void RecalculateTotals()
+    private static decimal GetItemFinalTtc(InvoiceItem i)
     {
-        TotalHT = Items.Sum(i => i.TotalHT);
-        TotalTTC = Items.Sum(i => i.TotalTTC);
-        TotalTaxe = TotalTTC - TotalHT;
+        // Prefer persisted totals when loading from the database; otherwise derive from current inputs
+        if (i.TotalAfterDiscount > 0)
+            return i.TotalAfterDiscount;
+
+        var baseTtc = i.UnitPrice * i.Quantity;
+        var discount = i.ItemDiscountType == 0
+            ? baseTtc * (i.ItemDiscount / 100m)
+            : i.ItemDiscount;
+
+        return Math.Max(baseTtc - discount, 0);
     }
+
+ // 2) Parent function decides which calculation to use
+private void RecalculateTotals()
+{
+    if (ApplyDiscountBeforeTax)
+        RecalculateBeforeTax();
+    else
+        RecalculateAfterTax();
+}
+
+// 3) Remise AVANT TVA (discount reduces taxable base)
+private void RecalculateBeforeTax()
+{
+    decimal totalHT = 0m;
+    decimal totalTax = 0m;
+    decimal totalTTC = 0m;
+
+    foreach (var i in Items)
+    {
+        decimal qty = (decimal)i.Quantity;
+        decimal rate = i.TvaRate / 100m;
+
+        // UnitPrice is HT
+        decimal lineHTBeforeDiscount = i.UnitPrice * qty;
+
+        // Discount in HT (percent or amount)
+        decimal discountHT = i.ItemDiscountType == 0
+            ? lineHTBeforeDiscount * (i.ItemDiscount / 100m)
+            : i.ItemDiscount;
+
+        // Guards
+        if (discountHT < 0m) discountHT = 0m;
+        if (discountHT > lineHTBeforeDiscount) discountHT = lineHTBeforeDiscount;
+
+        decimal lineHT = lineHTBeforeDiscount - discountHT;
+        if (lineHT < 0m) lineHT = 0m;
+
+        decimal lineTax = Math.Round(lineHT * rate, 2, MidpointRounding.AwayFromZero);
+        decimal lineTTC = Math.Round(lineHT + lineTax, 2, MidpointRounding.AwayFromZero);
+
+        totalHT += Math.Round(lineHT, 2, MidpointRounding.AwayFromZero);
+        totalTax += lineTax;
+        totalTTC += lineTTC;
+    }
+
+    TotalHT = totalHT;
+    TotalTaxe = totalTax;
+    TotalTTC = totalTTC;
+}
+
+// 4) Remise APRÈS TVA (discount does NOT reduce tax)
+private void RecalculateAfterTax()
+{
+    decimal totalHT = 0m;
+    decimal totalTax = 0m;
+    decimal totalTTC = 0m;
+
+    foreach (var i in Items)
+    {
+        decimal qty = (decimal)i.Quantity;
+        decimal rate = i.TvaRate / 100m;
+
+        // HT line total
+        decimal lineHTBeforeDiscount = i.UnitPrice * qty;
+        if (lineHTBeforeDiscount < 0m) lineHTBeforeDiscount = 0m;
+
+        // TTC BEFORE discount (compute from HT)
+        // Use line-level rounding to match typical POS behavior.
+        decimal lineTTCBeforeDiscount = Math.Round(lineHTBeforeDiscount * (1m + rate), 2, MidpointRounding.AwayFromZero);
+
+        // Discount applied on TTC (percent or amount)
+        decimal discountTTC = 0m;
+
+        if (i.ItemDiscountType == 0) // percent
+        {
+            discountTTC = lineTTCBeforeDiscount * (i.ItemDiscount / 100m);
+        }
+        else // amount (in TTC)
+        {
+            discountTTC = i.ItemDiscount;
+        }
+
+        // Guards
+        if (discountTTC < 0m) discountTTC = 0m;
+        if (discountTTC > lineTTCBeforeDiscount) discountTTC = lineTTCBeforeDiscount;
+
+        // TTC AFTER discount
+        decimal lineTTCAfterDiscount = Math.Round(lineTTCBeforeDiscount - discountTTC, 2, MidpointRounding.AwayFromZero);
+
+        // Recompute HT + TAX from discounted TTC (this is the missing part)
+        decimal lineHTAfterDiscount = (rate == 0m)
+            ? lineTTCAfterDiscount
+            : Math.Round(lineTTCAfterDiscount / (1m + rate), 2, MidpointRounding.AwayFromZero);
+
+        decimal lineTaxAfterDiscount = Math.Round(lineTTCAfterDiscount - lineHTAfterDiscount, 2, MidpointRounding.AwayFromZero);
+
+        // Accumulate
+        totalHT += lineHTAfterDiscount;
+        totalTax += lineTaxAfterDiscount;
+        totalTTC += lineTTCAfterDiscount;
+    }
+
+    TotalHT = totalHT;
+    TotalTaxe = totalTax;
+    TotalTTC = totalTTC;
+}
+
+
+
 
     public async Task InitializeAsync(string mainDbPath)
     {
@@ -395,6 +676,9 @@ public class MainWindowViewModel : ViewModelBase
             ServiceProvider.Initialize(mainDbPath);
             ProductCountDisplay = _productCountStatus;
             InitializationMessage = "Base de donnees prete.";
+            
+            // Load saved settings after ServiceProvider is initialized
+            await LoadSavedSettingsAsync();
         }
         catch (Exception ex)
         {
@@ -426,24 +710,119 @@ public class MainWindowViewModel : ViewModelBase
         };
 
         var result = await window.StorageProvider.OpenFilePickerAsync(dialog);
-        if (result.Count > 0)
+        if (result.Count == 0) return;
+
+        var filePath = result[0].Path.LocalPath;
+        
+        try
         {
-            var filePath = result[0].Path.LocalPath;
-            try
-            {
-                LogoImage = new Bitmap(filePath);
-            }
-            catch
-            {
-                // Failed to load image
-                LogoImage = null;
-            }
+            // Create logos folder in app data
+            var logoFolder = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "HelloAvalonia",
+                "Logos"
+            );
+            Directory.CreateDirectory(logoFolder);
+            
+            // Copy image to local folder with extension
+            var extension = System.IO.Path.GetExtension(filePath);
+            var savedLogoPath = System.IO.Path.Combine(logoFolder, $"company_logo{extension}");
+            
+            // Copy file
+            System.IO.File.Copy(filePath, savedLogoPath, overwrite: true);
+            
+            // Load the logo
+            LogoImage = new Bitmap(savedLogoPath);
+            
+            // Save path to settings
+            var settingsService = ServiceProvider.LocalSettingsService;
+            var settings = await settingsService.LoadSettingsAsync();
+            settings.LogoPath = savedLogoPath;
+            await settingsService.SaveSettingsAsync(settings);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving logo: {ex.Message}");
+            LogoImage = null;
         }
     }
 
-    private void RemoveLogo()
+    private async void RemoveLogo()
     {
         LogoImage = null;
+        
+        // Clear logo from settings
+        try
+        {
+            var settingsService = ServiceProvider.LocalSettingsService;
+            var settings = await settingsService.LoadSettingsAsync();
+            settings.LogoPath = null;
+            await settingsService.SaveSettingsAsync(settings);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing logo: {ex.Message}");
+        }
+    }
+
+    private async Task LoadSavedSettingsAsync()
+    {
+        try
+        {
+            var settingsService = ServiceProvider.LocalSettingsService;
+            var settings = await settingsService.LoadSettingsAsync();
+            
+            // Load logo
+            if (!string.IsNullOrEmpty(settings.LogoPath) && System.IO.File.Exists(settings.LogoPath))
+            {
+                LogoImage = new Bitmap(settings.LogoPath);
+            }
+            
+            // Load company name
+            if (!string.IsNullOrEmpty(settings.CompanyName))
+            {
+                _companyName = settings.CompanyName;
+                RaisePropertyChanged(nameof(CompanyName));
+            }
+            
+            // Load ICE number
+            if (!string.IsNullOrEmpty(settings.IceNumber))
+            {
+                _iceNumber = settings.IceNumber;
+                RaisePropertyChanged(nameof(IceNumber));
+            }
+            
+            // Load company info (footer text)
+            if (!string.IsNullOrEmpty(settings.CompanyInfo))
+            {
+                _companyAddress = settings.CompanyInfo;
+                RaisePropertyChanged(nameof(CompanyAddress));
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading saved settings: {ex.Message}");
+        }
+    }
+
+    private async Task SaveSettingsAsync()
+    {
+        try
+        {
+            var settingsService = ServiceProvider.LocalSettingsService;
+            var settings = await settingsService.LoadSettingsAsync();
+            
+            // Update only the changed fields, keep LogoPath if it exists
+            settings.CompanyName = _companyName;
+            settings.IceNumber = _iceNumber;
+            settings.CompanyInfo = _companyAddress;
+            
+            await settingsService.SaveSettingsAsync(settings);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving settings: {ex.Message}");
+        }
     }
 
     private async Task LoadProductCountAsync()
@@ -477,6 +856,105 @@ public class MainWindowViewModel : ViewModelBase
             // Settings saved, offer to reload database
             // TODO: Add reload functionality
             Console.WriteLine("Settings saved! Restart app to use new database.");
+        }
+    }
+
+    private async Task LoadDocumentItemsAsync()
+    {
+        try
+        {
+            IsLoadingDocument = true;
+            LoadDocumentStatus = "Chargement...";
+            
+            // Get invoice service
+            var invoiceService = HelloAvalonia.ServiceProvider.InvoiceService;
+            
+            // Load document with items and discount in ONE call
+            var documentData = await invoiceService.GetInvoiceWithItemsByNumberAsync(SearchDocumentNumber);
+            
+            if (documentData == null || documentData.Items.Count == 0)
+            {
+                LoadDocumentStatus = $"❌ Document '{SearchDocumentNumber}' introuvable ou vide";
+                return;
+            }
+            
+            // Set invoice number
+            InvoiceNumber = documentData.DocumentNumber;
+            
+            // Set invoice date
+            InvoiceDate = new DateTimeOffset(documentData.Date);
+            
+            // Set payment type
+            PaymentType = documentData.PaymentTypeName ?? string.Empty;
+            
+            // Set document type with French translation
+            if (!string.IsNullOrEmpty(documentData.DocumentTypeCode) && 
+                !string.IsNullOrEmpty(documentData.DocumentTypeName))
+            {
+                var translatedName = Helpers.DocumentTypeTranslator.Translate(documentData.DocumentTypeName);
+                DocumentTypeDisplay = $"{documentData.DocumentTypeCode} - {translatedName}";
+                HasDocumentType = true;
+            }
+            else
+            {
+                DocumentTypeDisplay = string.Empty;
+                HasDocumentType = false;
+            }
+            
+            // Set due date
+            if (documentData.DueDate.HasValue)
+            {
+                DueDate = new DateTimeOffset(documentData.DueDate.Value);
+            }
+            else
+            {
+                DueDate = null;
+            }
+            
+            // Set customer name
+            CustomerName = documentData.CustomerName ?? "N/A";
+            
+            // Set discount (convert from storage format)
+            DocumentDiscount = documentData.DocumentDiscount ;
+            
+            // Clear existing items
+            Items.Clear();
+            
+            // Convert DocumentItemDto to InvoiceItem - use database values directly (no calculations)
+            foreach (var docItem in documentData.Items)
+            {
+                Items.Add(new InvoiceItem
+                {
+                    Reference = docItem.ProductCode,
+                    Designation = docItem.ProductName,
+                    Quantity = docItem.Quantity,
+                    UnitPrice = docItem.PriceBeforeTax,
+                    TaxAmount = docItem.Tax,
+                    TvaRate = docItem.TaxRate,
+                    ItemDiscount = docItem.Discount,
+                    ItemDiscountType = docItem.DiscountType,
+                    TotalTTC = docItem.TotalBeforeDiscount,
+                    TotalAfterDiscount = docItem.Total
+                });
+            }
+            
+            LoadDocumentStatus = $"✅ {documentData.Items.Count} produit(s) chargé(s)";
+        }
+        catch (Exception ex)
+        {
+            LoadDocumentStatus = $"❌ Erreur: {ex.Message}";
+            InvoiceNumber = string.Empty;
+            InvoiceDate = DateTimeOffset.Now;
+            PaymentType = string.Empty;
+            DocumentTypeDisplay = string.Empty;
+            HasDocumentType = false;
+            DueDate = null;
+            CustomerName = string.Empty;
+            DocumentDiscount = 0;
+        }
+        finally
+        {
+            IsLoadingDocument = false;
         }
     }
 }

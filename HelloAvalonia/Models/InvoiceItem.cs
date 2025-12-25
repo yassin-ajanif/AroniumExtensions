@@ -8,9 +8,14 @@ public class InvoiceItem : INotifyPropertyChanged
 {
     private string _reference = string.Empty;
     private string _designation = string.Empty;
-    private double _quantity = 1.0;
+    private decimal _quantity = 1.0m;
     private decimal _unitPrice = 0m;
     private decimal _tvaRate = 20m;
+    private decimal _itemDiscount = 0m;
+    private int _itemDiscountType = 0;
+    private decimal _taxAmount = 0m;
+    private decimal _totalBeforeDiscount = 0m;
+    private decimal _totalAfterDiscount = 0m;
 
     public string Reference
     {
@@ -38,12 +43,12 @@ public class InvoiceItem : INotifyPropertyChanged
         }
     }
 
-    public double Quantity
+    public decimal Quantity
     {
         get => _quantity;
         set
         {
-            if (Math.Abs(_quantity - value) > double.Epsilon)
+            if (_quantity != value)
             {
                 _quantity = value;
                 OnPropertyChanged();
@@ -82,9 +87,85 @@ public class InvoiceItem : INotifyPropertyChanged
         }
     }
 
-    public decimal TotalHT => (decimal)_quantity * _unitPrice;
+    public decimal ItemDiscount
+    {
+        get => _itemDiscount;
+        set
+        {
+            if (_itemDiscount != value)
+            {
+                _itemDiscount = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ItemDiscountDisplay));
+            }
+        }
+    }
 
-    public decimal TotalTTC => TotalHT * (1 + _tvaRate / 100);
+    public int ItemDiscountType
+    {
+        get => _itemDiscountType;
+        set
+        {
+            if (_itemDiscountType != value)
+            {
+                _itemDiscountType = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ItemDiscountDisplay));
+            }
+        }
+    }
+
+    public string ItemDiscountDisplay
+    {
+        get
+        {
+            if (_itemDiscountType == 0) // Percentage (0 = percentage, 1 = fixed)
+                return $"{_itemDiscount:F2}%";
+            else // Fixed value
+                return $"{_itemDiscount:F2}";
+        }
+    }
+
+    public decimal TaxAmount
+    {
+        get => _taxAmount;
+        set
+        {
+            if (_taxAmount != value)
+            {
+                _taxAmount = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public decimal TotalHT => _quantity * _unitPrice;
+
+    public decimal TotalTTC
+    {
+        get => _totalBeforeDiscount;
+        set
+        {
+            if (_totalBeforeDiscount != value)
+            {
+                _totalBeforeDiscount = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public decimal TotalAfterDiscount
+    {
+        get => _totalAfterDiscount;
+        set
+        {
+            if (_totalAfterDiscount != value)
+            {
+                _totalAfterDiscount = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
