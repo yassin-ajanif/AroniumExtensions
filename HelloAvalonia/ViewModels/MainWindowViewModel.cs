@@ -45,6 +45,8 @@ public class MainWindowViewModel : ViewModelBase
         LoadDocumentCommand = new RelayCommand(async () => await LoadDocumentItemsAsync(), () => !string.IsNullOrWhiteSpace(SearchDocumentNumber) && !IsLoadingDocument);
         ApplyDiscountBeforeTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = true);
         ApplyDiscountAfterTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = false);
+        ExportToPdfCommand = new RelayCommand(async () => await ExportToPdfAsync());
+        PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
 
         ProductCountDisplay = _productCountStatus;
         
@@ -111,6 +113,8 @@ public class MainWindowViewModel : ViewModelBase
     public RelayCommand LoadDocumentCommand { get; }
     public RelayCommand ApplyDiscountBeforeTaxCommand { get; }
     public RelayCommand ApplyDiscountAfterTaxCommand { get; }
+    public RelayCommand ExportToPdfCommand { get; }
+    public RelayCommand PreviewInvoiceCommand { get; }
 
     public bool IsInitializing
     {
@@ -856,6 +860,101 @@ private void RecalculateAfterTax()
             // Settings saved, offer to reload database
             // TODO: Add reload functionality
             Console.WriteLine("Settings saved! Restart app to use new database.");
+        }
+    }
+
+    private async Task ExportToPdfAsync()
+    {
+        try
+        {
+            var window = (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            if (window == null)
+            {
+                LoadDocumentStatus = "Erreur: Fenêtre principale introuvable";
+                return;
+            }
+
+            var defaultFileName = $"Facture_{InvoiceNumber}_{DateTime.Now:yyyyMMdd}.pdf";
+            
+            var file = await window.StorageProvider.SaveFilePickerAsync(new Avalonia.Platform.Storage.FilePickerSaveOptions
+            {
+                Title = "Enregistrer la facture en PDF",
+                DefaultExtension = "pdf",
+                SuggestedFileName = defaultFileName,
+                FileTypeChoices = new[]
+                {
+                    new Avalonia.Platform.Storage.FilePickerFileType("Fichier PDF")
+                    {
+                        Patterns = new[] { "*.pdf" }
+                    }
+                }
+            });
+
+            if (file != null)
+            {
+                LoadDocumentStatus = "Génération du PDF...";
+                
+                var filePath = file.Path.LocalPath;
+                
+                // Run PDF generation on background thread to avoid blocking UI
+                await Task.Run(async () =>
+                {
+                    try
+                    {
+                        await ServiceProvider.PdfService.GenerateInvoicePdfAsync(this, filePath);
+                        
+                        // Update UI on main thread
+                        await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                        {
+                            LoadDocumentStatus = $"✅ PDF généré avec succès: {Path.GetFileName(filePath)}";
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Update UI on main thread with error
+                        await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                        {
+                            LoadDocumentStatus = $"❌ Erreur lors de la génération du PDF: {ex.Message}";
+                        });
+                    }
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            LoadDocumentStatus = $"❌ Erreur lors de la génération du PDF: {ex.Message}";
+        }
+    }
+
+    private async Task PreviewInvoiceAsync()
+    {
+        try
+        {
+            LoadDocumentStatus = "Ouverture de l'aperçu...";
+            
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    await ServiceProvider.PdfService.ShowInvoicePreviewAsync(this);
+                    
+                    await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        LoadDocumentStatus = "✅ Aperçu ouvert dans QuestPDF Companion";
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        LoadDocumentStatus = $"❌ Erreur: {ex.Message}. Assurez-vous que QuestPDF Companion est installé et ouvert.";
+                    });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            LoadDocumentStatus = $"❌ Erreur: {ex.Message}";
         }
     }
 

@@ -24,3 +24,16 @@ public interface IApplicationPropertyRepository
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
