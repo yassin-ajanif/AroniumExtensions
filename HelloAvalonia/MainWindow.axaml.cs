@@ -1,5 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using HelloAvalonia.ViewModels;
 
 namespace HelloAvalonia;
@@ -14,6 +16,27 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = viewModel;
+        
+        // Load icon programmatically - this ensures proper loading
+        try
+        {
+            using var stream = AssetLoader.Open(new System.Uri("avares://HelloAvalonia/Assets/aronium Facture.png"));
+            var bitmap = new Bitmap(stream);
+            this.Icon = new WindowIcon(bitmap);
+            
+        }
+        catch
+        {
+            // If programmatic loading fails, try XAML path
+            try
+            {
+                this.Icon = new WindowIcon("avares://HelloAvalonia/Assets/aronium Facture.png");
+            }
+            catch
+            {
+                // Icon loading failed, continue without icon
+            }
+        }
     }
 
     private void MainGrid_PointerPressed(object? sender, PointerPressedEventArgs e)
