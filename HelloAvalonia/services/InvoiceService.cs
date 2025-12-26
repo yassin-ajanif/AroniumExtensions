@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HelloAvalonia.Models;
-using HelloAvalonia.Repositories;
+using AroniumFactures.Models;
+using AroniumFactures.Repositories;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public class InvoiceService : IInvoiceService
 {

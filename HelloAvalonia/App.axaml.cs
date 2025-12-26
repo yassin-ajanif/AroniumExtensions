@@ -7,11 +7,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
-using HelloAvalonia.ViewModels;
+using AroniumFactures.ViewModels;
 
 
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public partial class App : Application
 {

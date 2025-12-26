@@ -1,0 +1,5 @@
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\win-x64\publish\HelloAvalonia.pdb
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\win-x64\publish\database\location.json
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\win-x64\publish\database\pos.db
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\win-x64\publish\LatoFont\OFL.txt
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\win-x64\publish\HelloAvalonia.exe

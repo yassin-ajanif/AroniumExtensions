@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using HelloAvalonia.Models;
-using HelloAvalonia.Helpers;
+using AroniumFactures.Models;
+using AroniumFactures.Helpers;
 
-namespace HelloAvalonia.ViewModels;
+namespace AroniumFactures.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
@@ -32,6 +32,7 @@ public class MainWindowViewModel : ViewModelBase
     private string _documentDiscountDisplay = "0.00";
     private DateTimeOffset? _dueDate;
     private string _documentTypeDisplay = string.Empty;
+    private string _documentTypeName = "BL / Facture";
     private bool _hasDocumentType = false;
 
     public MainWindowViewModel()
@@ -411,15 +412,14 @@ public class MainWindowViewModel : ViewModelBase
 
     public string DocumentTypeName
     {
-        get
+        get => _documentTypeName;
+        set
         {
-            // Extract just the name part (after " - ")
-            if (!string.IsNullOrEmpty(_documentTypeDisplay) && _documentTypeDisplay.Contains(" - "))
+            if (_documentTypeName != value)
             {
-                var parts = _documentTypeDisplay.Split(" - ", 2);
-                return parts.Length > 1 ? parts[1] : "BL / Facture";
+                _documentTypeName = value;
+                RaisePropertyChanged();
             }
-            return "BL / Facture"; // Default when no document loaded
         }
     }
 
@@ -723,7 +723,7 @@ private void RecalculateAfterTax()
             // Create logos folder in app data
             var logoFolder = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "HelloAvalonia",
+                "AroniumFactures",
                 "Logos"
             );
             Directory.CreateDirectory(logoFolder);
@@ -966,7 +966,7 @@ private void RecalculateAfterTax()
             LoadDocumentStatus = "Chargement...";
             
             // Get invoice service
-            var invoiceService = HelloAvalonia.ServiceProvider.InvoiceService;
+            var invoiceService = AroniumFactures.ServiceProvider.InvoiceService;
             
             // Load document with items and discount in ONE call
             var documentData = await invoiceService.GetInvoiceWithItemsByNumberAsync(SearchDocumentNumber);
@@ -992,11 +992,13 @@ private void RecalculateAfterTax()
             {
                 var translatedName = Helpers.DocumentTypeTranslator.Translate(documentData.DocumentTypeName);
                 DocumentTypeDisplay = $"{documentData.DocumentTypeCode} - {translatedName}";
+                DocumentTypeName = translatedName;
                 HasDocumentType = true;
             }
             else
             {
                 DocumentTypeDisplay = string.Empty;
+                DocumentTypeName = "BL / Facture";
                 HasDocumentType = false;
             }
             
@@ -1046,6 +1048,7 @@ private void RecalculateAfterTax()
             InvoiceDate = DateTimeOffset.Now;
             PaymentType = string.Empty;
             DocumentTypeDisplay = string.Empty;
+            DocumentTypeName = "BL / Facture";
             HasDocumentType = false;
             DueDate = null;
             CustomerName = string.Empty;

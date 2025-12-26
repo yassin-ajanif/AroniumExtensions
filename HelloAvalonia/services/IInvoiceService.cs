@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HelloAvalonia.Models;
+using AroniumFactures.Models;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public interface IInvoiceService
 {

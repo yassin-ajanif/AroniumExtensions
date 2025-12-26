@@ -1,10 +1,10 @@
 using System.IO;
-using HelloAvalonia.Data;
-using HelloAvalonia.Repositories;
-using HelloAvalonia.Services;
+using AroniumFactures.Data;
+using AroniumFactures.Repositories;
+using AroniumFactures.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public static class ServiceProvider
 {

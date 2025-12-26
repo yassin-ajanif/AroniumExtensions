@@ -1,4 +1,4 @@
-namespace HelloAvalonia.Models;
+namespace AroniumFactures.Models;
 
 public class DocumentItemDto
 {

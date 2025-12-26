@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace HelloAvalonia.Repositories;
+namespace AroniumFactures.Repositories;
 
 public interface IProductRepository
 {

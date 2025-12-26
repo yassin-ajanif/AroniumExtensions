@@ -2,9 +2,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using HelloAvalonia.ViewModels;
+using AroniumFactures.ViewModels;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public partial class MainWindow : Window
 {
@@ -20,7 +20,7 @@ public partial class MainWindow : Window
         // Load icon programmatically - this ensures proper loading
         try
         {
-            using var stream = AssetLoader.Open(new System.Uri("avares://HelloAvalonia/Assets/aronium Facture.png"));
+            using var stream = AssetLoader.Open(new System.Uri("avares://AroniumFactures/Assets/aronium Facture.png"));
             var bitmap = new Bitmap(stream);
             this.Icon = new WindowIcon(bitmap);
             
@@ -30,7 +30,7 @@ public partial class MainWindow : Window
             // If programmatic loading fails, try XAML path
             try
             {
-                this.Icon = new WindowIcon("avares://HelloAvalonia/Assets/aronium Facture.png");
+                this.Icon = new WindowIcon("avares://AroniumFactures/Assets/aronium Facture.png");
             }
             catch
             {

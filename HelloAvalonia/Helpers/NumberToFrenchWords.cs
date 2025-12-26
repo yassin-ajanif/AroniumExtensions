@@ -1,6 +1,6 @@
 using System;
 
-namespace HelloAvalonia.Helpers;
+namespace AroniumFactures.Helpers;
 
 public static class NumberToFrenchWords
 {

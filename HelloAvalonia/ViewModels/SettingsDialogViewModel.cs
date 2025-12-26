@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using HelloAvalonia.Models;
+using AroniumFactures.Models;
 
-namespace HelloAvalonia.ViewModels;
+namespace AroniumFactures.ViewModels;
 
 public class SettingsDialogViewModel : ViewModelBase
 {

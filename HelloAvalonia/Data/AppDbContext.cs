@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using HelloAvalonia.Data.Entities;
+using AroniumFactures.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloAvalonia.Data;
+namespace AroniumFactures.Data;
 
 public partial class AppDbContext : DbContext
 {

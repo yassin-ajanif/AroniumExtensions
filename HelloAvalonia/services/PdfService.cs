@@ -7,13 +7,13 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Companion;
-using HelloAvalonia.ViewModels;
-using HelloAvalonia;
+using AroniumFactures.ViewModels;
+using AroniumFactures;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public class PdfService : IPdfService
 {
@@ -27,6 +27,7 @@ public class PdfService : IPdfService
             {
                 page.Size(PageSizes.A4);
                 page.Margin(2, Unit.Centimetre);
+                page.MarginBottom(0, Unit.Centimetre);
                 page.PageColor(Colors.White);
                 page.DefaultTextStyle(x => x.FontSize(10));
 
@@ -223,7 +224,7 @@ public class PdfService : IPdfService
                         column.Item().PaddingVertical(20);
 
                         // ==================== TOTALS ====================
-                        column.Item().ShowEntire().Row(row =>
+                        column.Item().ShowEntire().PaddingBottom(0).Row(row =>
                         {
                             // Amount in words
                             row.RelativeItem().Column(col =>
@@ -280,8 +281,6 @@ public class PdfService : IPdfService
                                         });
                                 });
                         });
-
-                        column.Item().PaddingVertical(30);
                     });
 
                 page.Footer()

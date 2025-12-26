@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace HelloAvalonia.Data.Entities;
+namespace AroniumFactures.Data.Entities;
 
 public partial class ApplicationProperty
 {

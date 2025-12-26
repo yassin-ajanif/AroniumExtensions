@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using HelloAvalonia.Data;
+using AroniumFactures.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public static class DbInspector
 {

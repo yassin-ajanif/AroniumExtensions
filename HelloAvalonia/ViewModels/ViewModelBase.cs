@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace HelloAvalonia.ViewModels;
+namespace AroniumFactures.ViewModels;
 
 public abstract class ViewModelBase : INotifyPropertyChanged
 {

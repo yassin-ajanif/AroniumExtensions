@@ -2,10 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:HelloAvalonia.ViewModels"
-        xmlns:local="clr-namespace:HelloAvalonia"
+        xmlns:vm="clr-namespace:AroniumFactures.ViewModels"
+        xmlns:local="clr-namespace:AroniumFactures"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="800"
-        x:Class="HelloAvalonia.MainWindow"
+        x:Class="AroniumFactures.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="{x:Static local:Strings.AppTitle}"
         Width="1000" Height="800"
@@ -23,7 +23,7 @@
                     BorderThickness="1"
                     Margin="0,0,0,15"
                     BoxShadow="0 1 3 0 #10000000">
-                <Grid ColumnDefinitions="Auto,250,Auto,*,Auto,Auto">
+                <Grid ColumnDefinitions="Auto,250,Auto,Auto,*,Auto,Auto">
                         <TextBlock Text="N° Document:" 
                                    VerticalAlignment="Center"
                                    FontWeight="SemiBold"
@@ -58,14 +58,34 @@
                             </Button.Styles>
                         </Button>
                         
-                        <TextBlock Grid.Column="3"
+                        <!-- Preview Button -->
+                        <Button Grid.Column="3"
+                                Content="👁️ Aperçu"
+                                Command="{Binding PreviewInvoiceCommand}"
+                                Margin="10,0,0,0"
+                                Background="#6366F1"
+                                Foreground="White"
+                                Padding="15,8"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#4F46E5"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        
+                        <TextBlock Grid.Column="4"
                                    Text="{Binding LoadDocumentStatus}"
                                    VerticalAlignment="Center"
                                    Margin="15,0,0,0"
                                    FontSize="13"/>
                         
                         <!-- PDF Export Button -->
-                        <Button Grid.Column="4"
+                        <Button Grid.Column="5"
                                 Content="📄 Exporter PDF"
                                 Command="{Binding ExportToPdfCommand}"
                                 Margin="10,0,0,0"
@@ -85,7 +105,7 @@
                         </Button>
                         
                         <!-- Settings Button -->
-                        <Button Grid.Column="5"
+                        <Button Grid.Column="6"
                                 Content="⚙️ Paramètres"
                                 Command="{Binding OpenSettingsCommand}"
                                 Margin="10,0,0,0"
@@ -188,10 +208,13 @@
                                      BorderThickness="0"
                                      Background="Transparent"
                                      Watermark="{x:Static local:Strings.CompanyName}"/>
-                            <TextBlock Text="{Binding DocumentTypeName}"
-                                       FontSize="16"
-                                       FontWeight="SemiBold"
-                                       Margin="0,5,0,0"/>
+                            <TextBox Text="{Binding DocumentTypeName, Mode=TwoWay}"
+                                     FontSize="16"
+                                     FontWeight="SemiBold"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     Margin="0,5,0,0"
+                                     Watermark="BL / Facture"/>
                         </StackPanel>
                     </Grid>
 

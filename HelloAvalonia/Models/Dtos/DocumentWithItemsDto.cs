@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HelloAvalonia.Models;
+namespace AroniumFactures.Models;
 
 public class DocumentWithItemsDto
 {

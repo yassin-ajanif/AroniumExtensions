@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using HelloAvalonia.ViewModels;
+using AroniumFactures.ViewModels;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public interface IPdfService
 {

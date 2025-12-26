@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public static class DatabaseInitializer
 {
@@ -39,6 +39,7 @@ public static class DatabaseInitializer
         }
     }
 }
+
 
 
 

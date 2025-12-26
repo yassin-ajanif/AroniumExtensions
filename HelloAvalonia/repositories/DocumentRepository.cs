@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HelloAvalonia.Data;
-using HelloAvalonia.Data.Entities;
-using HelloAvalonia.Models;
+using AroniumFactures.Data;
+using AroniumFactures.Data.Entities;
+using AroniumFactures.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloAvalonia.Repositories;
+namespace AroniumFactures.Repositories;
 
 public class DocumentRepository : IDocumentRepository
 {

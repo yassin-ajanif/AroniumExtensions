@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HelloAvalonia.Helpers;
+namespace AroniumFactures.Helpers;
 
 public static class DocumentTypeTranslator
 {
@@ -25,8 +25,8 @@ public static class DocumentTypeTranslator
         { "REFUND", "Remboursement" },
         
         // 230 - Proforma / Devis
-        { "Proforma", "Devis" },
-        { "PROFORMA", "Devis" },
+        { "Proforma", "Devis/B.Commande" },
+        { "PROFORMA", "Devis/B.Commande" },
         
         // 300 - Inventory Count / Inventaire
         { "Inventory Count", "Inventaire" },

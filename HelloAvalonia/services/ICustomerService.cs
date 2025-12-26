@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HelloAvalonia.Data.Entities;
+using AroniumFactures.Data.Entities;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public interface ICustomerService
 {
@@ -13,6 +13,7 @@ public interface ICustomerService
     Task UpdateCustomerAsync(Customer customer);
     Task DeleteCustomerAsync(int id);
 }
+
 
 
 

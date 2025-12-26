@@ -2,15 +2,15 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using HelloAvalonia.Models;
+using AroniumFactures.Models;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {
     private static readonly string SettingsFolder = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "HelloAvalonia"
+        "AroniumFactures"
     );
     
     private static readonly string SettingsFile = Path.Combine(SettingsFolder, "appsettings.json");

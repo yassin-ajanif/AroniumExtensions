@@ -4640,7 +4640,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\yassin\\Desktop\\FacturesProject\\HelloAvalonia\\HelloAvalonia.csproj",
-      "projectName": "HelloAvalonia",
+      "projectName": "AroniumFactures",
       "projectPath": "C:\\Users\\yassin\\Desktop\\FacturesProject\\HelloAvalonia\\HelloAvalonia.csproj",
       "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\yassin\\Desktop\\FacturesProject\\HelloAvalonia\\obj\\",

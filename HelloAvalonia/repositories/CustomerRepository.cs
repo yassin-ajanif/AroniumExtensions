@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HelloAvalonia.Data;
-using HelloAvalonia.Data.Entities;
+using AroniumFactures.Data;
+using AroniumFactures.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelloAvalonia.Repositories;
+namespace AroniumFactures.Repositories;
 
 public class CustomerRepository : ICustomerRepository
 {
@@ -67,6 +67,7 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 }
+
 
 
 

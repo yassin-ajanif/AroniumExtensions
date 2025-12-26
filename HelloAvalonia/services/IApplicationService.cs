@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public interface IApplicationService
 {
@@ -9,6 +9,7 @@ public interface IApplicationService
     Task<string> GetCompanyNameAsync();
     Task<string> GetCompanyPhoneAsync();
 }
+
 
 
 

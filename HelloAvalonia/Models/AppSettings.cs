@@ -1,6 +1,6 @@
 using System;
 
-namespace HelloAvalonia.Models;
+namespace AroniumFactures.Models;
 
 public class AppSettings
 {

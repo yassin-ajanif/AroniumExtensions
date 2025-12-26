@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using HelloAvalonia.Repositories;
+using AroniumFactures.Repositories;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public class ApplicationService : IApplicationService
 {

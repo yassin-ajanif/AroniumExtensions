@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public interface IProductService
 {

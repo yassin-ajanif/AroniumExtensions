@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public class RelayCommand : ICommand
 {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HelloAvalonia.Data.Entities;
+using AroniumFactures.Data.Entities;
 
-namespace HelloAvalonia.Repositories;
+namespace AroniumFactures.Repositories;
 
 public interface ICustomerRepository
 {

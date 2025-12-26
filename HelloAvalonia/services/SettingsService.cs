@@ -1,10 +1,10 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using HelloAvalonia.Data.Entities;
-using HelloAvalonia.Repositories;
+using AroniumFactures.Data.Entities;
+using AroniumFactures.Repositories;
 
-namespace HelloAvalonia.Services;
+namespace AroniumFactures.Services;
 
 public class SettingsService : ISettingsService
 {
@@ -58,6 +58,7 @@ public class SettingsService : ISettingsService
         return !string.IsNullOrEmpty(path) && File.Exists(path);
     }
 }
+
 
 
 

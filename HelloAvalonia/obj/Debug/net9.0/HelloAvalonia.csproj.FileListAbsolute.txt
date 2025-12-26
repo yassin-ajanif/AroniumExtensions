@@ -1,8 +1,3 @@
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\HelloAvalonia.exe
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\HelloAvalonia.deps.json
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\HelloAvalonia.runtimeconfig.json
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\HelloAvalonia.dll
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\HelloAvalonia.pdb
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\Avalonia.Base.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\Avalonia.Controls.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\Avalonia.DesignerSupport.dll
@@ -66,12 +61,7 @@ C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAval
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.AssemblyInfo.cs
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.csproj.CoreCompileInputs.cache
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAva.1FC47614.Up2Date
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.dll
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\refint\HelloAvalonia.dll
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.pdb
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.genruntimeconfig.cache
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\ref\HelloAvalonia.dll
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.Resources.Strings.resources
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\HelloAvalonia.csproj.GenerateResource.cache
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\Humanizer.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -238,3 +228,13 @@ C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\win-x86\native\libwinpthread-1.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\win-x86\native\qpdf.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\win-x86\native\zlib1.dll
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\AroniumFactures.Resources.Strings.resources
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\AroniumFactures.exe
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\AroniumFactures.deps.json
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\AroniumFactures.runtimeconfig.json
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\AroniumFactures.dll
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\AroniumFactures.pdb
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\AroniumFactures.dll
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\refint\AroniumFactures.dll
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\AroniumFactures.pdb
+C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\obj\Debug\net9.0\ref\AroniumFactures.dll

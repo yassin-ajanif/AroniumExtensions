@@ -1,9 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using HelloAvalonia.ViewModels;
+using AroniumFactures.ViewModels;
 
-namespace HelloAvalonia;
+namespace AroniumFactures;
 
 public partial class SettingsDialog : Window
 {
@@ -32,6 +32,7 @@ public partial class SettingsDialog : Window
         Close(true);
     }
 }
+
 
 
 

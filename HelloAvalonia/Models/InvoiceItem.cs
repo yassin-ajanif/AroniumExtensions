@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace HelloAvalonia.Models;
+namespace AroniumFactures.Models;
 
 public class InvoiceItem : INotifyPropertyChanged
 {
