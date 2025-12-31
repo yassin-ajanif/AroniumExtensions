@@ -185,7 +185,6 @@ C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\database\location.json
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\database\pos.db
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\LatoFont\Lato-Black.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\LatoFont\Lato-BlackItalic.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Debug\net9.0\LatoFont\Lato-Bold.ttf

@@ -1,0 +1,5 @@
+C:\Users\yassin\Desktop\FacturesProject\publish\win-x64\AroniumFactures.pdb
+C:\Users\yassin\Desktop\FacturesProject\publish\win-x64\database\location.json
+C:\Users\yassin\Desktop\FacturesProject\publish\win-x64\database\pos.db
+C:\Users\yassin\Desktop\FacturesProject\publish\win-x64\LatoFont\OFL.txt
+C:\Users\yassin\Desktop\FacturesProject\publish\win-x64\AroniumFactures.exe

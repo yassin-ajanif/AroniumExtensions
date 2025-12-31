@@ -1,5 +1,4 @@
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\database\location.json
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\database\pos.db
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\LatoFont\Lato-Black.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\LatoFont\Lato-BlackItalic.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\LatoFont\Lato-Bold.ttf

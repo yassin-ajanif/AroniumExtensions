@@ -59,7 +59,7 @@ public partial class App : Application
             using FileStream fileStream = File.OpenRead(locationFile);
             using JsonDocument doc = JsonDocument.Parse(fileStream);
 
-            if (doc.RootElement.TryGetProperty("mainDatabasePath", out JsonElement pathElement))
+            if (doc.RootElement.TryGetProperty("MainDatabasePath", out JsonElement pathElement))
             {
                 string? configuredPath = pathElement.GetString();
 

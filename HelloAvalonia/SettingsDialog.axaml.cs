@@ -61,3 +61,11 @@ public partial class SettingsDialog : Window
 
 
 
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ public class MainWindowViewModel : ViewModelBase
         ApplyDiscountBeforeTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = true);
         ApplyDiscountAfterTaxCommand = new RelayCommand(() => ApplyDiscountBeforeTax = false);
         ExportToPdfCommand = new RelayCommand(async () => await ExportToPdfAsync());
+        PrintCommand = new RelayCommand(async () => await PrintAsync());
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
 
         ProductCountDisplay = _productCountStatus;
@@ -115,6 +117,7 @@ public class MainWindowViewModel : ViewModelBase
     public RelayCommand ApplyDiscountBeforeTaxCommand { get; }
     public RelayCommand ApplyDiscountAfterTaxCommand { get; }
     public RelayCommand ExportToPdfCommand { get; }
+    public RelayCommand PrintCommand { get; }
     public RelayCommand PreviewInvoiceCommand { get; }
 
     public bool IsInitializing
@@ -160,7 +163,7 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public bool IsInteractive => !_isInitializing && !_initializationFailed;
+    public bool IsInteractive => !_isInitializing;
     
     public ObservableCollection<InvoiceItem> Items { get; } = new();
 
@@ -923,6 +926,90 @@ private void RecalculateAfterTax()
         catch (Exception ex)
         {
             LoadDocumentStatus = $"❌ Erreur lors de la génération du PDF: {ex.Message}";
+        }
+    }
+
+    private async Task PrintAsync()
+    {
+        try
+        {
+            var window = (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            if (window == null)
+            {
+                LoadDocumentStatus = "Erreur: Fenêtre principale introuvable";
+                return;
+            }
+
+            LoadDocumentStatus = "Préparation de l'impression...";
+            
+            // Generate PDF to a temporary file
+            var tempPdfPath = Path.Combine(Path.GetTempPath(), $"Facture_{InvoiceNumber}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+            
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    // Generate PDF
+                    await ServiceProvider.PdfService.GenerateInvoicePdfAsync(this, tempPdfPath);
+                    
+                    // Print using Windows default printer
+                    await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        try
+                        {
+                            var processStartInfo = new ProcessStartInfo
+                            {
+                                FileName = tempPdfPath,
+                                Verb = "print",
+                                UseShellExecute = true,
+                                CreateNoWindow = true
+                            };
+                            
+                            Process.Start(processStartInfo);
+                            
+                            LoadDocumentStatus = "✅ Document envoyé à l'imprimante";
+                            
+                            // Clean up temp file after a delay (give time for print spooler)
+                            Task.Delay(5000).ContinueWith(_ =>
+                            {
+                                try
+                                {
+                                    if (File.Exists(tempPdfPath))
+                                        File.Delete(tempPdfPath);
+                                }
+                                catch { }
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            LoadDocumentStatus = $"Erreur d'impression: {ex.Message}";
+                            
+                            // Try to open PDF for manual printing
+                            try
+                            {
+                                Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = tempPdfPath,
+                                    UseShellExecute = true
+                                });
+                                LoadDocumentStatus = "PDF ouvert - vous pouvez imprimer manuellement";
+                            }
+                            catch { }
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        LoadDocumentStatus = $"Erreur lors de la génération du PDF: {ex.Message}";
+                    });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            LoadDocumentStatus = $"Erreur: {ex.Message}";
         }
     }
 

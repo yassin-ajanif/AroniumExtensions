@@ -143,11 +143,11 @@ public class SettingsDialogViewModel : ViewModelBase
             // Ensure directory exists
             Directory.CreateDirectory("database");
             
-            // Save to JSON settings file
+            // Save to location.json file
             var settings = new SettingsData { MainDatabasePath = DatabasePath };
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(settings, options);
-            await File.WriteAllTextAsync("database/settings.json", json);
+            await File.WriteAllTextAsync("database/location.json", json);
             
             StatusMessage = "Parametres enregistres! Redemarrez l'application.";
         }
@@ -161,11 +161,11 @@ public class SettingsDialogViewModel : ViewModelBase
     {
         try
         {
-            const string settingsPath = "database/settings.json";
+            const string locationPath = "database/location.json";
             
-            if (File.Exists(settingsPath))
+            if (File.Exists(locationPath))
             {
-                var json = await File.ReadAllTextAsync(settingsPath);
+                var json = await File.ReadAllTextAsync(locationPath);
                 var settings = JsonSerializer.Deserialize<SettingsData>(json);
                 if (settings != null && !string.IsNullOrEmpty(settings.MainDatabasePath))
                 {
