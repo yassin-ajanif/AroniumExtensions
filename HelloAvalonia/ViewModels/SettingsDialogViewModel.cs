@@ -1,10 +1,9 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using AroniumFactures.Models;
+using AroniumFactures.Services;
 
 namespace AroniumFactures.ViewModels;
 
@@ -18,7 +17,7 @@ public class SettingsDialogViewModel : ViewModelBase
     {
         BrowseCommand = new RelayCommand(async () => await BrowseForDatabaseAsync());
         SaveCommand = new RelayCommand(async () => await SaveSettingsAsync(), () => IsValid);
-        TestConnectionCommand = new RelayCommand(async () =>  TestConnection());
+        TestConnectionCommand = new RelayCommand(() => TestConnection());
     }
 
     public RelayCommand BrowseCommand { get; }
@@ -140,15 +139,7 @@ public class SettingsDialogViewModel : ViewModelBase
     {
         try
         {
-            // Ensure directory exists
-            Directory.CreateDirectory("database");
-            
-            // Save to location.json file
-            var settings = new SettingsData { MainDatabasePath = DatabasePath };
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(settings, options);
-            await File.WriteAllTextAsync("database/location.json", json);
-            
+            await DatabaseLocationConfigurationService.SaveMainDatabasePathAsync(DatabasePath);
             StatusMessage = "Parametres enregistres! Redemarrez l'application.";
         }
         catch (Exception ex)
@@ -161,30 +152,11 @@ public class SettingsDialogViewModel : ViewModelBase
     {
         try
         {
-            const string locationPath = "database/location.json";
-            
-            if (File.Exists(locationPath))
-            {
-                var json = await File.ReadAllTextAsync(locationPath);
-                var settings = JsonSerializer.Deserialize<SettingsData>(json);
-                if (settings != null && !string.IsNullOrEmpty(settings.MainDatabasePath))
-                {
-                    DatabasePath = settings.MainDatabasePath;
-                    return;
-                }
-            }
-            
-            // Default path if file doesn't exist or is invalid
-            DatabasePath = @"C:\ProgramData\Aronium\SimplePos\pos.db";
+            DatabasePath = await DatabaseLocationConfigurationService.LoadMainDatabasePathAsync();
         }
         catch
         {
             DatabasePath = @"C:\ProgramData\Aronium\SimplePos\pos.db";
         }
-    }
-
-    private class SettingsData
-    {
-        public string? MainDatabasePath { get; set; }
     }
 }

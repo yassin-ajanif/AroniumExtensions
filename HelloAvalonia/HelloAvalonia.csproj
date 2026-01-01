@@ -48,12 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="database\**\*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 

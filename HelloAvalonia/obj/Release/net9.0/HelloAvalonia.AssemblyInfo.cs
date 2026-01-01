@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AroniumFactures")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aef5c52648651256b9644440b5c036a7ee4706ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f0872b70fc535b413b7a5197b53ea46196f5961")]
 [assembly: System.Reflection.AssemblyProductAttribute("AroniumFactures")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AroniumFactures")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

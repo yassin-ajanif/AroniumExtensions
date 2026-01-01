@@ -1,6 +1,5 @@
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\AroniumFactures.exe
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\database\location.json
-C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\database\pos.db
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\LatoFont\Lato-Black.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\LatoFont\Lato-BlackItalic.ttf
 C:\Users\yassin\Desktop\FacturesProject\HelloAvalonia\bin\Release\net9.0\publish\LatoFont\Lato-Bold.ttf
