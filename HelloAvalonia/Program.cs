@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AroniumFactures.Services;
 using System.Runtime.InteropServices;
+using Velopack;
 
 namespace AroniumFactures;
 
@@ -15,6 +16,9 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        // Initialize Velopack (must be first)
+        VelopackApp.Build().Run();
+
         // Ensure native SkiaSharp binaries are discoverable when installed via MSI
         TryAddNativeSkiaPathToProcessPath();
 
