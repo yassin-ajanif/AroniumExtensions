@@ -9,6 +9,9 @@
     <RootNamespace>AroniumFactures</RootNamespace>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ApplicationIcon>aronium_Facture.ico</ApplicationIcon>
+
+    <Version>1.0.1</Version>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>9999</WarningLevel>

@@ -19,6 +19,7 @@ public static class ServiceProvider
     private static IProductService? _productService;
     private static ILocalSettingsService? _localSettingsService;
     private static IPdfService? _pdfService;
+    private static IUpdateService? _updateService;
 
     public static void Initialize(string databasePath)
     {
@@ -40,6 +41,7 @@ public static class ServiceProvider
         _productService = new ProductService(_productRepository);
         _localSettingsService = new LocalSettingsService();
         _pdfService = new PdfService();
+        _updateService = new UpdateService();
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -49,4 +51,5 @@ public static class ServiceProvider
     public static IProductService ProductService => _productService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static ILocalSettingsService LocalSettingsService => _localSettingsService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IPdfService PdfService => _pdfService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static IUpdateService UpdateService => _updateService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

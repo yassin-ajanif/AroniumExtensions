@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using AroniumFactures.Models;
 using AroniumFactures.Helpers;
+using AroniumFactures.Services;
+using Velopack;
 
 namespace AroniumFactures.ViewModels;
 
@@ -35,6 +37,9 @@ public class MainWindowViewModel : ViewModelBase
     private string _documentTypeDisplay = string.Empty;
     private string _documentTypeName = "BL / Facture";
     private bool _hasDocumentType = false;
+    private bool _isUpdateAvailable;
+    private UpdateInfo? _updateInfo;
+    private bool _isDownloadingUpdate;
 
     public MainWindowViewModel()
     {
@@ -50,6 +55,7 @@ public class MainWindowViewModel : ViewModelBase
         ExportToPdfCommand = new RelayCommand(async () => await ExportToPdfAsync());
         PrintCommand = new RelayCommand(async () => await PrintAsync());
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
+        DownloadUpdateCommand = new RelayCommand(async () => await DownloadAndApplyUpdateAsync(), () => !_isDownloadingUpdate);
 
         ProductCountDisplay = _productCountStatus;
         
@@ -119,6 +125,7 @@ public class MainWindowViewModel : ViewModelBase
     public RelayCommand ExportToPdfCommand { get; }
     public RelayCommand PrintCommand { get; }
     public RelayCommand PreviewInvoiceCommand { get; }
+    public RelayCommand DownloadUpdateCommand { get; }
 
     public bool IsInitializing
     {
@@ -455,6 +462,33 @@ public class MainWindowViewModel : ViewModelBase
 
     public bool HasLogo => _logoImage != null;
 
+    public bool IsUpdateAvailable
+    {
+        get => _isUpdateAvailable;
+        private set
+        {
+            if (_isUpdateAvailable != value)
+            {
+                _isUpdateAvailable = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public bool IsDownloadingUpdate
+    {
+        get => _isDownloadingUpdate;
+        private set
+        {
+            if (_isDownloadingUpdate != value)
+            {
+                _isDownloadingUpdate = value;
+                RaisePropertyChanged();
+                DownloadUpdateCommand.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
     private decimal _totalHT;
     public decimal TotalHT
     {
@@ -686,6 +720,9 @@ private void RecalculateAfterTax()
             
             // Load saved settings after ServiceProvider is initialized
             await LoadSavedSettingsAsync();
+            
+            // Check for updates in background
+            _ = CheckForUpdatesAsync();
         }
         catch (Exception ex)
         {
@@ -695,6 +732,49 @@ private void RecalculateAfterTax()
         finally
         {
             IsInitializing = false;
+        }
+    }
+
+    private async Task CheckForUpdatesAsync()
+    {
+     
+        try
+        {
+            var updateService = ServiceProvider.UpdateService;
+            var updateInfo = await updateService.CheckForUpdatesAsync();
+            
+            if (updateInfo != null)
+            {
+                _updateInfo = updateInfo;
+                IsUpdateAvailable = true;
+            }
+            else
+            {
+                IsUpdateAvailable = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error checking for updates: {ex.Message}");
+            IsUpdateAvailable = false;
+        }
+    }
+
+    private async Task DownloadAndApplyUpdateAsync()
+    {
+        if (_updateInfo == null) return;
+        
+        try
+        {
+            IsDownloadingUpdate = true;
+            var updateService = ServiceProvider.UpdateService;
+            await updateService.DownloadUpdatesAsync(_updateInfo);
+            updateService.ApplyUpdatesAndRestart(_updateInfo);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error downloading update: {ex.Message}");
+            IsDownloadingUpdate = false;
         }
     }
 

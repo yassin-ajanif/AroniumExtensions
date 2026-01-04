@@ -11,9 +11,43 @@
         Width="1000" Height="800"
         Background="#F0F2F5">
     
-    <Grid PointerPressed="MainGrid_PointerPressed" RowDefinitions="Auto,*">
-        <!-- Top Bar with Settings Button (Always Enabled) -->
+    <Grid PointerPressed="MainGrid_PointerPressed" RowDefinitions="Auto,Auto,*">
+        <!-- Update Banner -->
         <Border Grid.Row="0"
+                Background="#10B981"
+                Padding="15,12"
+                IsVisible="{Binding IsUpdateAvailable}"
+                Cursor="Hand">
+            <Border.Styles>
+                <Style Selector="Border:pointerover">
+                    <Setter Property="Background" Value="#059669"/>
+                </Style>
+            </Border.Styles>
+            <Button Command="{Binding DownloadUpdateCommand}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="0"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0"
+                               Text="🔄 Une nouvelle mise à jour est disponible. Cliquez pour télécharger et installer."
+                               Foreground="White"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                               Text="⬇️"
+                               Foreground="White"
+                               FontSize="16"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+                </Grid>
+            </Button>
+        </Border>
+        
+        <!-- Top Bar with Settings Button (Always Enabled) -->
+        <Border Grid.Row="1"
                 Background="White"
                 Padding="15,10"
                 BorderBrush="#E5E7EB"
@@ -44,7 +78,7 @@
             </Grid>
         </Border>
         
-        <ScrollViewer Grid.Row="1" IsEnabled="{Binding IsInteractive}">
+        <ScrollViewer Grid.Row="2" IsEnabled="{Binding IsInteractive}">
             <Grid Margin="30" RowDefinitions="Auto,Auto,*">
             <!-- Document Search Section -->
             <Border Grid.Row="0" 

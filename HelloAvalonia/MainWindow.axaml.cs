@@ -17,6 +17,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = viewModel;
         
+        // Set title with version dynamically
+        Title = $"Aronium Factures {VersionService.GetInstalledVersion()}";
+        
         // Load icon programmatically - this ensures proper loading
         try
         {
