@@ -1,0 +1,15 @@
+# Visual Studio
+.vs/
+
+# Cursor
+.cursor/
+
+# VS Code
+.vscode/
+
+# Deployment
+deployment/
+
+# Build folders
+bin/
+obj/
