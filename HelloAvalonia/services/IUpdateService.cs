@@ -11,3 +11,8 @@ public interface IUpdateService
     bool IsUpdateAvailable { get; }
 }
 
+
+
+
+
+

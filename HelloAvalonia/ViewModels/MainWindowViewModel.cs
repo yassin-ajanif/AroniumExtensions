@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using AroniumFactures.Models;
 using AroniumFactures.Helpers;
 using AroniumFactures.Services;
+using AroniumFactures.UserControls;
 using Velopack;
 
 namespace AroniumFactures.ViewModels;
@@ -40,6 +42,7 @@ public class MainWindowViewModel : ViewModelBase
     private bool _isUpdateAvailable;
     private UpdateInfo? _updateInfo;
     private bool _isDownloadingUpdate;
+    private UserControl? _currentView;
 
     public MainWindowViewModel()
     {
@@ -56,6 +59,10 @@ public class MainWindowViewModel : ViewModelBase
         PrintCommand = new RelayCommand(async () => await PrintAsync());
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
         DownloadUpdateCommand = new RelayCommand(async () => await DownloadAndApplyUpdateAsync(), () => !_isDownloadingUpdate);
+        SelectDevisCommand = new RelayCommand(() => ShowQuotationView());
+        SelectBonLivraisonCommand = new RelayCommand(() => SelectDocumentType("BL", "Bon de livraison"));
+        SelectBonCommandeCommand = new RelayCommand(() => SelectDocumentType("BC", "Bon de commande"));
+        SelectFactureCommand = new RelayCommand(() => SelectDocumentType("FAC", "Facture"));
 
         ProductCountDisplay = _productCountStatus;
         
@@ -126,6 +133,10 @@ public class MainWindowViewModel : ViewModelBase
     public RelayCommand PrintCommand { get; }
     public RelayCommand PreviewInvoiceCommand { get; }
     public RelayCommand DownloadUpdateCommand { get; }
+    public RelayCommand SelectDevisCommand { get; }
+    public RelayCommand SelectBonLivraisonCommand { get; }
+    public RelayCommand SelectBonCommandeCommand { get; }
+    public RelayCommand SelectFactureCommand { get; }
 
     public bool IsInitializing
     {
@@ -444,6 +455,33 @@ public class MainWindowViewModel : ViewModelBase
                 RaisePropertyChanged();
             }
         }
+    }
+
+    private void SelectDocumentType(string code, string name)
+    {
+        DocumentTypeDisplay = $"{code} - {name}";
+        DocumentTypeName = name;
+        HasDocumentType = true;
+    }
+
+    public UserControl? CurrentView
+    {
+        get => _currentView;
+        set
+        {
+            if (_currentView != value)
+            {
+                _currentView = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    private void ShowQuotationView()
+    {
+        SelectDocumentType("DEV", "Devis");
+        var quotationViewModel = new QuotationViewModel();
+        CurrentView = new QuotationUserControl(quotationViewModel);
     }
 
     public Bitmap? LogoImage

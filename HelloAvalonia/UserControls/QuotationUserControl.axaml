@@ -1,0 +1,344 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:AroniumFactures.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1200"
+        x:Class="AroniumFactures.UserControls.QuotationUserControl"
+        x:DataType="vm:QuotationViewModel"
+        Background="White">
+    
+    <ScrollViewer>
+        <Grid Margin="40" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+            
+            <!-- Header Title -->
+            <TextBlock Grid.Row="0"
+                      Text="DEVIS / QUOTATION"
+                      FontSize="24"
+                      FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,30"
+                      Foreground="#1F2937"/>
+            
+            <!-- Client Information Section -->
+            <Border Grid.Row="1"
+                   Background="#F9FAFB"
+                   Padding="20"
+                   CornerRadius="8"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="1"
+                   Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="CLIENT INFORMATION"
+                              FontSize="14"
+                              FontWeight="Bold"
+                              Margin="0,0,0,15"
+                              Foreground="#374151"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                  Text="Client:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                Text="{Binding ClientName, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                  Text="Address:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,8,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Top"/>
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                Text="{Binding ClientAddress, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"
+                                MinHeight="60"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                  Text="Site:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1"
+                                Text="{Binding ClientSite, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Items Table Section -->
+            <Border Grid.Row="2"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="1"
+                   Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Table Header -->
+                    <Border Grid.Row="0"
+                           Background="#374151"
+                           Padding="12,10">
+                        <Grid ColumnDefinitions="40,*,100,80,100,120">
+                            <TextBlock Grid.Column="0" Text="N°" Foreground="White" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Grid.Column="1" Text="DESIGNATION" Foreground="White" FontWeight="SemiBold" FontSize="13" Margin="10,0,0,0"/>
+                            <TextBlock Grid.Column="2" Text="UNITE" Foreground="White" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="QTE" Foreground="White" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="PU HT" Foreground="White" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="5" Text="PT HT" Foreground="White" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Right" Margin="10,0,0,0"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Table Items -->
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Background="White" Padding="12,10">
+                                    <Border.Styles>
+                                        <Style Selector="Border:nth-child(even)">
+                                            <Setter Property="Background" Value="#F9FAFB"/>
+                                        </Style>
+                                    </Border.Styles>
+                                    <Grid ColumnDefinitions="40,*,100,80,100,120">
+                                        <TextBlock Grid.Column="0" Text="{Binding Reference}" Foreground="#1F2937" FontSize="13"/>
+                                        <TextBlock Grid.Column="1" 
+                                                  Text="{Binding Designation}" 
+                                                  Foreground="#1F2937" 
+                                                  FontSize="13"
+                                                  TextWrapping="Wrap"
+                                                  Margin="10,0,0,0"/>
+                                        <TextBlock Grid.Column="2" 
+                                                  Text="U" 
+                                                  Foreground="#1F2937" 
+                                                  FontSize="13"
+                                                  HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" 
+                                                  Text="{Binding Quantity, StringFormat={}{0:N0}}" 
+                                                  Foreground="#1F2937" 
+                                                  FontSize="13"
+                                                  HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" 
+                                                  Text="{Binding UnitPrice, StringFormat={}{0:N2}}" 
+                                                  Foreground="#1F2937" 
+                                                  FontSize="13"
+                                                  HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="5" 
+                                                  Text="{Binding TotalHT, StringFormat={}{0:N2}}" 
+                                                  Foreground="#1F2937" 
+                                                  FontSize="13"
+                                                  FontWeight="SemiBold"
+                                                  HorizontalAlignment="Right"
+                                                  Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+            
+            <!-- Totals Section -->
+            <Border Grid.Row="3"
+                   Background="#F9FAFB"
+                   Padding="20"
+                   CornerRadius="8"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="1"
+                   Margin="0,0,0,20">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="TOTAL GENERAL H.T ="
+                                  FontSize="15"
+                                  FontWeight="Bold"
+                                  Foreground="#1F2937"/>
+                        <TextBlock Grid.Column="1"
+                                  Text="{Binding TotalHTDisplay}"
+                                  FontSize="15"
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Right"
+                                  Foreground="#1F2937"/>
+                    </Grid>
+                    
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="{Binding VatRate, StringFormat='T.V.A {0}% ='}"
+                                  FontSize="15"
+                                  FontWeight="Bold"
+                                  Foreground="#1F2937"/>
+                        <TextBlock Grid.Column="1"
+                                  Text="{Binding VatAmountDisplay}"
+                                  FontSize="15"
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Right"
+                                  Foreground="#1F2937"/>
+                    </Grid>
+                    
+                    <Rectangle Height="2" Fill="#D1D5DB" Margin="0,5"/>
+                    
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="TOTAL LOT GENERAL TTC ="
+                                  FontSize="17"
+                                  FontWeight="Bold"
+                                  Foreground="#1F2937"/>
+                        <TextBlock Grid.Column="1"
+                                  Text="{Binding TotalTTCDisplay}"
+                                  FontSize="17"
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Right"
+                                  Foreground="#2563EB"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Conditions Section -->
+            <Border Grid.Row="4"
+                   Background="#F9FAFB"
+                   Padding="20"
+                   CornerRadius="8"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="1"
+                   Margin="0,0,0,20">
+                <StackPanel Spacing="15">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="CONDITIONS"
+                                  FontSize="14"
+                                  FontWeight="Bold"
+                                  Foreground="#374151"/>
+                        <Button Grid.Column="1"
+                               Command="{Binding AddConditionCommand}"
+                               Content="+ Ajouter Condition"
+                               Padding="12,6"
+                               Background="#2563EB"
+                               Foreground="White"
+                               BorderThickness="0"
+                               CornerRadius="4"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#1D4ED8"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </Grid>
+                    
+                    <ItemsControl ItemsSource="{Binding Conditions}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="White"
+                                       BorderBrush="#E5E7EB"
+                                       BorderThickness="1"
+                                       CornerRadius="4"
+                                       Padding="15"
+                                       Margin="0,0,0,10">
+                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                        <TextBox Grid.Row="0"
+                                                Grid.Column="0"
+                                                Text="{Binding Title, Mode=TwoWay}"
+                                                FontSize="13"
+                                                FontWeight="Bold"
+                                                Foreground="#374151"
+                                                Background="White"
+                                                BorderBrush="#D1D5DB"
+                                                BorderThickness="1"
+                                                Padding="8,6"
+                                                Margin="0,0,0,8"
+                                                Watermark="Titre de la condition"/>
+                                        <TextBox Grid.Row="1"
+                                                Grid.Column="0"
+                                                Text="{Binding Content, Mode=TwoWay}"
+                                                FontSize="13"
+                                                Foreground="#1F2937"
+                                                Background="White"
+                                                BorderBrush="#D1D5DB"
+                                                BorderThickness="1"
+                                                Padding="8,6"
+                                                AcceptsReturn="True"
+                                                TextWrapping="Wrap"
+                                                Watermark="Contenu de la condition"/>
+                                        <Button Grid.Row="0"
+                                               Grid.Column="1"
+                                               Grid.RowSpan="2"
+                                               Command="{Binding $parent[UserControl].DataContext.RemoveConditionCommand}"
+                                               CommandParameter="{Binding}"
+                                               Content="×"
+                                               Background="#DC2626"
+                                               Foreground="White"
+                                               BorderThickness="0"
+                                               CornerRadius="4"
+                                               FontSize="16"
+                                               FontWeight="Bold"
+                                               Width="30"
+                                               Height="30"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Top"
+                                               HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center"
+                                               Margin="10,0,0,0"
+                                               Cursor="Hand">
+                                            <Button.Styles>
+                                                <Style Selector="Button:pointerover">
+                                                    <Setter Property="Background" Value="#B91C1C"/>
+                                                </Style>
+                                            </Button.Styles>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+            
+            <!-- Company Footer Section -->
+            <Border Grid.Row="5"
+                   Padding="20,15"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="0,1,0,0">
+                <TextBox Text="{Binding CompanyInfo, Mode=TwoWay}"
+                        FontSize="12"
+                        Foreground="#1F2937"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        HorizontalContentAlignment="Center"
+                        HorizontalAlignment="Center"
+                        MinWidth="400"
+                        Padding="8,4"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        Watermark="Informations de l'entreprise">
+                    <TextBox.Styles>
+                        <Style Selector="TextBox:focus">
+                            <Setter Property="BorderBrush" Value="#D1D5DB"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Background" Value="White"/>
+                        </Style>
+                    </TextBox.Styles>
+                </TextBox>
+            </Border>
+            
+        </Grid>
+    </ScrollViewer>
+</UserControl>
+
