@@ -8,6 +8,7 @@ public class InvoiceItem : INotifyPropertyChanged
 {
     private string _reference = string.Empty;
     private string _designation = string.Empty;
+    private string _unit = "U";
     private decimal _quantity = 1.0m;
     private decimal _unitPrice = 0m;
     private decimal _tvaRate = 20m;
@@ -38,6 +39,19 @@ public class InvoiceItem : INotifyPropertyChanged
             if (_designation != value)
             {
                 _designation = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string Unit
+    {
+        get => _unit;
+        set
+        {
+            if (_unit != value)
+            {
+                _unit = value;
                 OnPropertyChanged();
             }
         }

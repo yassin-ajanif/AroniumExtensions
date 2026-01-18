@@ -7,14 +7,22 @@ using AroniumFactures.Services;
 
 namespace AroniumFactures.ViewModels;
 
-public class QuotationViewModel : ViewModelBase
+public class BonDeLivraisonViewModel : ViewModelBase
 {
     private MainWindowViewModel? _mainViewModel;
 
     // Client Information
-    private string _clientName = "MAZARS BUSINESS SERVICES";
-    private string _clientAddress = "101, Boulevard Abdelmoumen 20100 Casablanca, Maroc";
+    private string _clientName = string.Empty;
+    private string _clientAddress = string.Empty;
     private string _clientSite = string.Empty;
+    private string _clientIce = string.Empty;
+
+    // Delivery Note Information
+    private string _deliveryNoteNumber = string.Empty;
+    private DateTimeOffset _deliveryNoteDate = DateTimeOffset.Now;
+    private DateTimeOffset? _orderDateInput;
+    private string _code = string.Empty;
+    private string _quotationNumber = string.Empty;
 
     // Company Information
     private string _companyInfo = @"ENERGIE TECH SOLUTION SARL
@@ -30,16 +38,6 @@ Gmail: energietechsolution@gmail.com";
     private decimal _totalTTC = 0m;
     private decimal _vatRate = 20m;
 
-    // Delivery Date
-    private DateTimeOffset? _deliveryDate;
-
-    // Document Title
-    private string _documentTitle = "DEVIS / B.COMMANDE";
-
-    // Quotation Information
-    private string _quotationNumber = string.Empty;
-    private DateTimeOffset _quotationDate = DateTimeOffset.Now;
-
     // Document Search
     private string _searchDocumentNumber = string.Empty;
     private bool _isLoadingDocument;
@@ -49,123 +47,16 @@ Gmail: energietechsolution@gmail.com";
     private bool _isPrinting;
 
     public ObservableCollection<InvoiceItem> Items { get; } = new();
-    public ObservableCollection<QuotationCondition> Conditions { get; } = new();
 
-    public RelayCommand AddConditionCommand { get; }
-    public RelayCommand<QuotationCondition> RemoveConditionCommand { get; }
     public RelayCommand LoadDocumentCommand { get; }
-    public RelayCommand PrintQuotationCommand { get; }
+    public RelayCommand PrintBonDeLivraisonCommand { get; }
 
-    public QuotationViewModel(MainWindowViewModel? mainViewModel = null)
+    public BonDeLivraisonViewModel(MainWindowViewModel? mainViewModel = null)
     {
         _mainViewModel = mainViewModel;
-        AddConditionCommand = new RelayCommand(AddCondition);
-        RemoveConditionCommand = new RelayCommand<QuotationCondition>(RemoveCondition);
         LoadDocumentCommand = new RelayCommand(async () => await LoadDocumentFromDatabaseAsync(), () => !string.IsNullOrWhiteSpace(SearchDocumentNumber) && !IsLoadingDocument);
-        PrintQuotationCommand = new RelayCommand(async () => await PrintQuotationAsync(), () => !IsPrinting);
+        PrintBonDeLivraisonCommand = new RelayCommand(async () => await PrintBonDeLivraisonAsync(), () => !IsPrinting);
         
-        // Initialize with demo data from the image
-        LoadDemoData();
-        LoadDefaultConditions();
-        RecalculateTotals();
-    }
-
-    private void LoadDefaultConditions()
-    {
-        Conditions.Clear();
-        
-        Conditions.Add(new QuotationCondition
-        {
-            Title = "NON COMPRIS",
-            Content = "Tous ce qui n'apparaît pas dans le présent devis"
-        });
-        
-        Conditions.Add(new QuotationCondition
-        {
-            Title = "DUREE DES TRAVAUX",
-            Content = "10 jours"
-        });
-        
-        Conditions.Add(new QuotationCondition
-        {
-            Title = "VALIDITE DE DEVIS",
-            Content = "1 mois"
-        });
-        
-        Conditions.Add(new QuotationCondition
-        {
-            Title = "PAIEMENT",
-            Content = "50% à la commande par chèque.\n50% au cour des travaux"
-        });
-    }
-
-    private void AddCondition()
-    {
-        int nextNumber = Conditions.Count + 1;
-        Conditions.Add(new QuotationCondition
-        {
-            Title = $"CONDITION {nextNumber}",
-            Content = string.Empty
-        });
-    }
-
-    private void RemoveCondition(QuotationCondition? condition)
-    {
-        if (condition != null)
-        {
-            Conditions.Remove(condition);
-        }
-    }
-
-    private void LoadDemoData()
-    {
-        Items.Clear();
-        
-        Items.Add(new InvoiceItem
-        {
-            Reference = "01",
-            Designation = "Split système gainable 48 000 BTU",
-            Quantity = 3,
-            UnitPrice = 31071.60m,
-            TvaRate = 20m
-        });
-
-        Items.Add(new InvoiceItem
-        {
-            Reference = "02",
-            Designation = "Gaine de souflage calorifugee Ø 200",
-            Quantity = 212,
-            UnitPrice = 98.64m,
-            TvaRate = 20m
-        });
-
-        Items.Add(new InvoiceItem
-        {
-            Reference = "03",
-            Designation = "Diffuseur de soufflage 600x600",
-            Quantity = 21,
-            UnitPrice = 752.13m,
-            TvaRate = 20m
-        });
-
-        Items.Add(new InvoiceItem
-        {
-            Reference = "04",
-            Designation = "Plenium de soufflage en fiber",
-            Quantity = 3,
-            UnitPrice = 656.23m,
-            TvaRate = 20m
-        });
-
-        Items.Add(new InvoiceItem
-        {
-            Reference = "05",
-            Designation = "Condensat en pvc",
-            Quantity = 1,
-            UnitPrice = 2471.48m,
-            TvaRate = 20m
-        });
-
         // Subscribe to item changes
         Items.CollectionChanged += (s, e) =>
         {
@@ -178,12 +69,6 @@ Gmail: energietechsolution@gmail.com";
             }
             RecalculateTotals();
         };
-
-        // Subscribe to existing items
-        foreach (var item in Items)
-        {
-            item.PropertyChanged += (sender, args) => RecalculateTotals();
-        }
     }
 
     private void RecalculateTotals()
@@ -235,6 +120,85 @@ Gmail: energietechsolution@gmail.com";
             if (_clientSite != value)
             {
                 _clientSite = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public string ClientIce
+    {
+        get => _clientIce;
+        set
+        {
+            if (_clientIce != value)
+            {
+                _clientIce = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    // Delivery Note Properties
+    public string DeliveryNoteNumber
+    {
+        get => _deliveryNoteNumber;
+        set
+        {
+            if (_deliveryNoteNumber != value)
+            {
+                _deliveryNoteNumber = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public DateTimeOffset DeliveryNoteDate
+    {
+        get => _deliveryNoteDate;
+        set
+        {
+            if (_deliveryNoteDate != value)
+            {
+                _deliveryNoteDate = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public DateTimeOffset? OrderDateInput
+    {
+        get => _orderDateInput;
+        set
+        {
+            if (_orderDateInput != value)
+            {
+                _orderDateInput = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public string Code
+    {
+        get => _code;
+        set
+        {
+            if (_code != value)
+            {
+                _code = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public string QuotationNumber
+    {
+        get => _quotationNumber;
+        set
+        {
+            if (_quotationNumber != value)
+            {
+                _quotationNumber = value;
                 RaisePropertyChanged();
             }
         }
@@ -317,77 +281,6 @@ Gmail: energietechsolution@gmail.com";
 
     public string TotalTTCDisplay => $"{TotalTTC:N2}";
 
-    // Delivery Date Property
-    public DateTimeOffset? DeliveryDate
-    {
-        get => _deliveryDate;
-        set
-        {
-            if (_deliveryDate != value)
-            {
-                _deliveryDate = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
-
-    // Document Title Property
-    public string DocumentTitle
-    {
-        get => _documentTitle;
-        set
-        {
-            if (_documentTitle != value)
-            {
-                _documentTitle = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
-
-    // Quotation Number Property
-    public string QuotationNumber
-    {
-        get => _quotationNumber;
-        set
-        {
-            if (_quotationNumber != value)
-            {
-                _quotationNumber = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
-
-    // Quotation Date Property
-    public DateTimeOffset QuotationDate
-    {
-        get => _quotationDate;
-        set
-        {
-            if (_quotationDate != value)
-            {
-                _quotationDate = value;
-                RaisePropertyChanged();
-            }
-        }
-    }
-
-    // Printing Property
-    public bool IsPrinting
-    {
-        get => _isPrinting;
-        set
-        {
-            if (_isPrinting != value)
-            {
-                _isPrinting = value;
-                RaisePropertyChanged();
-                PrintQuotationCommand?.RaiseCanExecuteChanged();
-            }
-        }
-    }
-
     // Document Search Properties
     public string SearchDocumentNumber
     {
@@ -430,6 +323,21 @@ Gmail: energietechsolution@gmail.com";
         }
     }
 
+    // Printing Property
+    public bool IsPrinting
+    {
+        get => _isPrinting;
+        set
+        {
+            if (_isPrinting != value)
+            {
+                _isPrinting = value;
+                RaisePropertyChanged();
+                PrintBonDeLivraisonCommand?.RaiseCanExecuteChanged();
+            }
+        }
+    }
+
     // Load Document Method
     private async Task LoadDocumentFromDatabaseAsync()
     {
@@ -438,10 +346,7 @@ Gmail: energietechsolution@gmail.com";
             IsLoadingDocument = true;
             LoadDocumentStatus = "Chargement...";
             
-            // Get invoice service
             var invoiceService = AroniumFactures.ServiceProvider.InvoiceService;
-            
-            // Load document with items
             var documentData = await invoiceService.GetInvoiceWithItemsByNumberAsync(SearchDocumentNumber);
             
             if (documentData == null || documentData.Items.Count == 0)
@@ -450,18 +355,13 @@ Gmail: energietechsolution@gmail.com";
                 return;
             }
             
-            // Set client information
-            ClientName = documentData.CustomerName ?? "N/A";
+            // Set delivery note information
+            DeliveryNoteNumber = documentData.DocumentNumber;
+            DeliveryNoteDate = new DateTimeOffset(documentData.Date);
+            OrderDateInput = documentData.Date;
             
-            // Set delivery date if available
-            if (documentData.DueDate.HasValue)
-            {
-                DeliveryDate = new DateTimeOffset(documentData.DueDate.Value);
-            }
-            else
-            {
-                DeliveryDate = null;
-            }
+            // Set client information
+            ClientName = documentData.CustomerName ?? string.Empty;
             
             // Clear existing items
             Items.Clear();
@@ -484,15 +384,11 @@ Gmail: energietechsolution@gmail.com";
                     TotalAfterDiscount = docItem.Total
                 };
                 
-                // Subscribe to property changes for recalculation
                 invoiceItem.PropertyChanged += (sender, args) => RecalculateTotals();
-                
                 Items.Add(invoiceItem);
             }
             
-            // Recalculate totals after loading
             RecalculateTotals();
-            
             LoadDocumentStatus = $"✅ {documentData.Items.Count} produit(s) chargé(s)";
         }
         catch (Exception ex)
@@ -505,8 +401,8 @@ Gmail: energietechsolution@gmail.com";
         }
     }
 
-    // Print Quotation Method
-    private async Task PrintQuotationAsync()
+    // Print BonDeLivraison Method
+    private async Task PrintBonDeLivraisonAsync()
     {
         if (_mainViewModel == null)
         {
@@ -519,7 +415,7 @@ Gmail: energietechsolution@gmail.com";
             IsPrinting = true;
             LoadDocumentStatus = "Génération du PDF...";
             
-            await ServiceProvider.QuotationPdfService.ShowQuotationPreviewAsync(this, _mainViewModel);
+            await ServiceProvider.BonDeLivraisonPdfService.ShowBonDeLivraisonPreviewAsync(this, _mainViewModel);
             
             LoadDocumentStatus = "✅ PDF généré avec succès";
         }

@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:AroniumFactures.ViewModels"
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1200"
-        x:Class="AroniumFactures.UserControls.QuotationUserControl"
-        x:DataType="vm:QuotationViewModel"
+        x:Class="AroniumFactures.UserControls.BonDeLivraisonUserControl"
+        x:DataType="vm:BonDeLivraisonViewModel"
         Background="White">
     
     <ScrollViewer>
@@ -13,7 +13,7 @@
             
             <!-- Header Title -->
             <TextBlock Grid.Row="0"
-                      Text="DEVIS"
+                      Text="BON DE LIVRAISON"
                       FontSize="24"
                       FontWeight="Bold"
                       HorizontalAlignment="Center"
@@ -65,7 +65,7 @@
                     
                     <Button Grid.Column="3"
                            Content="🖨️ Imprimer"
-                           Command="{Binding PrintQuotationCommand}"
+                           Command="{Binding PrintBonDeLivraisonCommand}"
                            IsEnabled="{Binding !IsPrinting}"
                            Margin="10,0,0,0"
                            Background="#2563EB"
@@ -94,8 +94,69 @@
                 </Grid>
             </Border>
             
-            <!-- Client Information Section -->
+            <!-- Delivery Note Information Section -->
             <Border Grid.Row="2"
+                   Background="#F9FAFB"
+                   Padding="20"
+                   CornerRadius="8"
+                   BorderBrush="#E5E7EB"
+                   BorderThickness="1"
+                   Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="INFORMATIONS BON DE LIVRAISON"
+                              FontSize="14"
+                              FontWeight="Bold"
+                              Margin="0,0,0,15"
+                              Foreground="#374151"/>
+                    <Grid ColumnDefinitions="Auto,*,Auto,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="15">
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                  Text="Numéro:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                Text="{Binding DeliveryNoteNumber, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"/>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="2"
+                                  Text="Date:"
+                                  FontWeight="SemiBold"
+                                  Margin="15,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <DatePicker Grid.Row="0" Grid.Column="3"
+                                   SelectedDate="{Binding DeliveryNoteDate, Mode=TwoWay}"
+                                   Background="White"
+                                   BorderBrush="#D1D5DB"
+                                   BorderThickness="1"
+                                   Padding="8,6"
+                                   FontSize="13"
+                                   Foreground="#1F2937"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                  Text="N° de Devis:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                Text="{Binding QuotationNumber, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Client Information Section -->
+            <Border Grid.Row="3"
                    Background="#F9FAFB"
                    Padding="20"
                    CornerRadius="8"
@@ -108,7 +169,7 @@
                               FontWeight="Bold"
                               Margin="0,0,0,15"
                               Foreground="#374151"/>
-                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
                         <TextBlock Grid.Row="0" Grid.Column="0"
                                   Text="Client:"
                                   FontWeight="SemiBold"
@@ -157,12 +218,26 @@
                                 BorderThickness="1"
                                 Padding="8,6"/>
                         -->
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                  Text="ICE:"
+                                  FontWeight="SemiBold"
+                                  Margin="0,0,15,0"
+                                  Foreground="#4B5563"
+                                  VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1"
+                                Text="{Binding ClientIce, Mode=TwoWay}"
+                                Foreground="#1F2937"
+                                Background="White"
+                                BorderBrush="#D1D5DB"
+                                BorderThickness="1"
+                                Padding="8,6"/>
                     </Grid>
                 </StackPanel>
             </Border>
             
             <!-- Items Table Section -->
-            <Border Grid.Row="3"
+            <Border Grid.Row="4"
                    BorderBrush="#E5E7EB"
                    BorderThickness="1"
                    Margin="0,0,0,20">
@@ -278,7 +353,7 @@
             </Border>
             
             <!-- Totals Section -->
-            <Border Grid.Row="4"
+            <Border Grid.Row="5"
                    Background="#F9FAFB"
                    Padding="20"
                    CornerRadius="8"
@@ -326,133 +401,6 @@
                                   HorizontalAlignment="Right"
                                   Foreground="#2563EB"/>
                     </Grid>
-                </StackPanel>
-            </Border>
-            
-            <!-- Conditions Section -->
-            <Border Grid.Row="5"
-                   Background="#F9FAFB"
-                   Padding="20"
-                   CornerRadius="8"
-                   BorderBrush="#E5E7EB"
-                   BorderThickness="1"
-                   Margin="0,0,0,20">
-                <StackPanel Spacing="15">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Text="CONDITIONS"
-                                  FontSize="14"
-                                  FontWeight="Bold"
-                                  Foreground="#374151"/>
-                        <Button Grid.Column="1"
-                               Command="{Binding AddConditionCommand}"
-                               Content="+ Ajouter Condition"
-                               Padding="12,6"
-                               Background="#2563EB"
-                               Foreground="White"
-                               BorderThickness="0"
-                               CornerRadius="4"
-                               FontSize="12"
-                               FontWeight="SemiBold"
-                               Cursor="Hand">
-                            <Button.Styles>
-                                <Style Selector="Button:pointerover">
-                                    <Setter Property="Background" Value="#1D4ED8"/>
-                                </Style>
-                            </Button.Styles>
-                        </Button>
-                    </Grid>
-                    
-                    <ItemsControl ItemsSource="{Binding Conditions}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="White"
-                                       BorderBrush="#E5E7EB"
-                                       BorderThickness="1"
-                                       CornerRadius="4"
-                                       Padding="15"
-                                       Margin="0,0,0,10">
-                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
-                                        <TextBox Grid.Row="0"
-                                                Grid.Column="0"
-                                                Text="{Binding Title, Mode=TwoWay}"
-                                                FontSize="13"
-                                                FontWeight="Bold"
-                                                Foreground="#374151"
-                                                Background="White"
-                                                BorderBrush="#D1D5DB"
-                                                BorderThickness="1"
-                                                Padding="8,6"
-                                                Margin="0,0,0,8"
-                                                Watermark="Titre de la condition"/>
-                                        <TextBox Grid.Row="1"
-                                                Grid.Column="0"
-                                                Text="{Binding Content, Mode=TwoWay}"
-                                                FontSize="13"
-                                                Foreground="#1F2937"
-                                                Background="White"
-                                                BorderBrush="#D1D5DB"
-                                                BorderThickness="1"
-                                                Padding="8,6"
-                                                AcceptsReturn="True"
-                                                TextWrapping="Wrap"
-                                                Watermark="Contenu de la condition"/>
-                                        <Button Grid.Row="0"
-                                               Grid.Column="1"
-                                               Grid.RowSpan="2"
-                                               Command="{Binding $parent[UserControl].DataContext.RemoveConditionCommand}"
-                                               CommandParameter="{Binding}"
-                                               Content="×"
-                                               Background="#DC2626"
-                                               Foreground="White"
-                                               BorderThickness="0"
-                                               CornerRadius="4"
-                                               FontSize="16"
-                                               FontWeight="Bold"
-                                               Width="30"
-                                               Height="30"
-                                               HorizontalAlignment="Right"
-                                               VerticalAlignment="Top"
-                                               HorizontalContentAlignment="Center"
-                                               VerticalContentAlignment="Center"
-                                               Margin="10,0,0,0"
-                                               Cursor="Hand">
-                                            <Button.Styles>
-                                                <Style Selector="Button:pointerover">
-                                                    <Setter Property="Background" Value="#B91C1C"/>
-                                                </Style>
-                                            </Button.Styles>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    
-                    <!-- Delivery Date -->
-                    <Border Background="White"
-                           BorderBrush="#E5E7EB"
-                           BorderThickness="1"
-                           CornerRadius="4"
-                           Padding="15"
-                           Margin="0,10,0,0">
-                        <Grid ColumnDefinitions="Auto,*" RowSpacing="10">
-                            <TextBlock Grid.Column="0"
-                                      Text="Date de livraison:"
-                                      FontWeight="SemiBold"
-                                      FontSize="13"
-                                      Foreground="#374151"
-                                      VerticalAlignment="Center"
-                                      Margin="0,0,15,0"/>
-                            <DatePicker Grid.Column="1"
-                                       SelectedDate="{Binding DeliveryDate, Mode=TwoWay}"
-                                       Background="White"
-                                       BorderBrush="#D1D5DB"
-                                       BorderThickness="1"
-                                       Padding="8,6"
-                                       FontSize="13"
-                                       Foreground="#1F2937"/>
-                        </Grid>
-                    </Border>
                 </StackPanel>
             </Border>
             

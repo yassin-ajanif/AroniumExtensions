@@ -24,6 +24,12 @@ public class MainWindowViewModel : ViewModelBase
     private string _companyName = "VOTRE ENTREPRISE SARL";
     private string _companyEmail = "contact@votreentreprise.ma";
     private string _companyAddress = "Angle Route Casa-Rabat et Av Mohamed Jamal Eddoorra -Ain Sebaa- Casablanca Maroc -Capital : 2 500 000 dhs\nTél. :0522 34 33 36 (LG) - Fax: 0522 34 33 03 - Email : contact@votreentreprise.ma\nR.C. : 168351 /CASA - Patente : 37965629 - I.F. : 40151021 - CNSS : 7892591 - ICE : 003721796000016";
+    private string _companyInfo = @"VOTRE ENTREPRISE SARL
+SIEGE SOCIAL:
+Angle Route Casa-Rabat et Av Mohamed Jamal Eddoorra -Ain Sebaa- Casablanca Maroc -Capital : 2 500 000 dhs
+Tél. :0522 34 33 36 (LG) - Fax: 0522 34 33 03 - Email : contact@votreentreprise.ma
+R.C. : 168351 /CASA - Patente : 37965629 - I.F. : 40151021 - CNSS : 7892591 - ICE : 003721796000016
+Email: contact@votreentreprise.ma";
     private Bitmap? _logoImage;
     private bool _isInitializing = true;
     private bool _initializationFailed;
@@ -60,9 +66,9 @@ public class MainWindowViewModel : ViewModelBase
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
         DownloadUpdateCommand = new RelayCommand(async () => await DownloadAndApplyUpdateAsync(), () => !_isDownloadingUpdate);
         SelectDevisCommand = new RelayCommand(() => ShowQuotationView());
-        SelectBonLivraisonCommand = new RelayCommand(() => SelectDocumentType("BL", "Bon de livraison"));
-        SelectBonCommandeCommand = new RelayCommand(() => SelectDocumentType("BC", "Bon de commande"));
-        SelectFactureCommand = new RelayCommand(() => SelectDocumentType("FAC", "Facture"));
+        SelectBonLivraisonCommand = new RelayCommand(() => ShowBonDeLivraisonView());
+        SelectBonCommandeCommand = new RelayCommand(() => ShowBonDeCommandeView());
+        SelectFactureCommand = new RelayCommand(() => ShowFactureView());
 
         ProductCountDisplay = _productCountStatus;
         
@@ -305,6 +311,20 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    public string CompanyInfo
+    {
+        get => _companyInfo;
+        set
+        {
+            if (_companyInfo != value)
+            {
+                _companyInfo = value;
+                RaisePropertyChanged();
+                _ = SaveSettingsAsync();
+            }
+        }
+    }
+
     public string ProductCountDisplay
     {
         get => _productCountDisplay;
@@ -480,8 +500,29 @@ public class MainWindowViewModel : ViewModelBase
     private void ShowQuotationView()
     {
         SelectDocumentType("DEV", "Devis");
-        var quotationViewModel = new QuotationViewModel();
+        var quotationViewModel = new QuotationViewModel(this);
         CurrentView = new QuotationUserControl(quotationViewModel);
+    }
+
+    private void ShowFactureView()
+    {
+        SelectDocumentType("FAC", "Facture");
+        var factureViewModel = new FactureViewModel(this);
+        CurrentView = new FactureUserControl(factureViewModel);
+    }
+
+    private void ShowBonDeCommandeView()
+    {
+        SelectDocumentType("BC", "Bon de commande");
+        var bonDeCommandeViewModel = new BonDeCommandeViewModel(this);
+        CurrentView = new BonDeCommandeUserControl(bonDeCommandeViewModel);
+    }
+
+    private void ShowBonDeLivraisonView()
+    {
+        SelectDocumentType("BL", "Bon de livraison");
+        var bonDeLivraisonViewModel = new BonDeLivraisonViewModel(this);
+        CurrentView = new BonDeLivraisonUserControl(bonDeLivraisonViewModel);
     }
 
     public Bitmap? LogoImage
