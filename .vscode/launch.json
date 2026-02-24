@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/HelloAvalonia/bin/Debug/net9.0/HelloAvalonia.dll",
+            "program": "${workspaceFolder}/HelloAvalonia/bin/Debug/net9.0/AroniumFactures.dll",
             "args": [],
             "cwd": "${workspaceFolder}/HelloAvalonia",
             "console": "internalConsole",
