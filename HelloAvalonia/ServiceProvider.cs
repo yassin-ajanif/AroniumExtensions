@@ -20,6 +20,9 @@ public static class ServiceProvider
     private static ILocalSettingsService? _localSettingsService;
     private static IPdfService? _pdfService;
     private static IUpdateService? _updateService;
+    private static IGoogleDriveConnectionService? _googleDriveConnectionService;
+    private static IAuditLogExportService? _auditLogExportService;
+    private static AuditLogExportScheduler? _auditLogExportScheduler;
 
     public static void Initialize(string databasePath)
     {
@@ -42,6 +45,9 @@ public static class ServiceProvider
         _localSettingsService = new LocalSettingsService();
         _pdfService = new PdfService();
         _updateService = new UpdateService();
+        _googleDriveConnectionService = new GoogleDriveConnectionService();
+        _auditLogExportService = new AuditLogExportService(_dbContext);
+        _auditLogExportScheduler = new AuditLogExportScheduler(_auditLogExportService, _googleDriveConnectionService);
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -52,4 +58,7 @@ public static class ServiceProvider
     public static ILocalSettingsService LocalSettingsService => _localSettingsService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IPdfService PdfService => _pdfService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IUpdateService UpdateService => _updateService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static IGoogleDriveConnectionService GoogleDriveConnectionService => _googleDriveConnectionService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static IAuditLogExportService AuditLogExportService => _auditLogExportService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static AuditLogExportScheduler AuditLogExportScheduler => _auditLogExportScheduler ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

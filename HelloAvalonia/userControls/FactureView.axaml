@@ -1,0 +1,300 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AroniumFactures.ViewModels"
+             xmlns:local="clr-namespace:AroniumFactures"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+             x:Class="AroniumFactures.UserControls.FactureView"
+             x:DataType="vm:MainWindowViewModel">
+    <ScrollViewer IsEnabled="{Binding IsInteractive}">
+        <Grid Margin="30" RowDefinitions="Auto,Auto,*">
+            <!-- Document Search Section -->
+            <Border Grid.Row="0" 
+                    Background="White"
+                    Padding="15"
+                    CornerRadius="8"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    Margin="0,0,0,15"
+                    BoxShadow="0 1 3 0 #10000000">
+                <Grid ColumnDefinitions="Auto,250,Auto,*,Auto,Auto">
+                    <TextBlock Text="N° Document:" 
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Margin="0,0,15,0"/>
+                    <TextBox Grid.Column="1"
+                             Text="{Binding SearchDocumentNumber, Mode=TwoWay}"
+                             Watermark="25-200-000002"
+                             VerticalContentAlignment="Center"
+                             Padding="10,8"/>
+                    <Button Grid.Column="2"
+                            Content="📄 Charger"
+                            Command="{Binding LoadDocumentCommand}"
+                            IsEnabled="{Binding !IsLoadingDocument}"
+                            Margin="10,0,0,0"
+                            Background="#10B981"
+                            Foreground="White"
+                            Padding="20,8"
+                            FontWeight="SemiBold"
+                            CornerRadius="6"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover">
+                                <Setter Property="Background" Value="#059669"/>
+                            </Style>
+                            <Style Selector="Button:disabled">
+                                <Setter Property="Background" Value="#D1D5DB"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                    <TextBlock Grid.Column="3"
+                               Text="{Binding LoadDocumentStatus}"
+                               VerticalAlignment="Center"
+                               Margin="15,0,0,0"
+                               FontSize="13"/>
+                    <Button Grid.Column="4"
+                            Content="📄 Exporter PDF"
+                            Command="{Binding ExportToPdfCommand}"
+                            Margin="10,0,0,0"
+                            Background="#DC2626"
+                            Foreground="White"
+                            Padding="15,8"
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            CornerRadius="6"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover">
+                                <Setter Property="Background" Value="#B91C1C"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                    <Button Grid.Column="5"
+                            Content="🖨️ Imprimer"
+                            Command="{Binding PrintCommand}"
+                            Margin="10,0,0,0"
+                            Background="#2563EB"
+                            Foreground="White"
+                            Padding="15,8"
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            CornerRadius="6"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover">
+                                <Setter Property="Background" Value="#1D4ED8"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- Document Type Chip -->
+            <Grid Grid.Row="1">
+                <Border IsVisible="{Binding HasDocumentType}"
+                        Background="#DC2626"
+                        BorderThickness="0"
+                        CornerRadius="8"
+                        Padding="16,10"
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                    <TextBlock Text="{Binding DocumentTypeDisplay}"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Foreground="White"/>
+                </Border>
+            </Grid>
+
+            <!-- Invoice Form -->
+            <Border Grid.Row="2"
+                    Padding="40"
+                    CornerRadius="12"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    Background="White"
+                    BoxShadow="0 4 6 -1 #10000000, 0 2 4 -1 #06000000">
+                <StackPanel Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,20">
+                        <StackPanel Spacing="10" Margin="0,0,20,0">
+                            <Border Width="150" Height="120" CornerRadius="8">
+                                <Image Source="{Binding LogoImage}" Stretch="Uniform" IsVisible="{Binding HasLogo}"/>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                                <Button Content="Ajouter"
+                                        Command="{Binding ChooseLogoCommand}"
+                                        Padding="10,6" FontSize="11"
+                                        Background="#6366F1" Foreground="White"
+                                        CornerRadius="6" BorderThickness="0" Cursor="Hand">
+                                    <Button.Styles>
+                                        <Style Selector="Button:pointerover">
+                                            <Setter Property="Background" Value="#4F46E5"/>
+                                        </Style>
+                                    </Button.Styles>
+                                </Button>
+                                <Button Content="Supprimer"
+                                        Command="{Binding RemoveLogoCommand}"
+                                        Padding="10,6" FontSize="11"
+                                        Background="#EF4444" Foreground="White"
+                                        CornerRadius="6" BorderThickness="0" Cursor="Hand"
+                                        IsVisible="{Binding HasLogo}">
+                                    <Button.Styles>
+                                        <Style Selector="Button:pointerover">
+                                            <Setter Property="Background" Value="#DC2626"/>
+                                        </Style>
+                                    </Button.Styles>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBox Text="{Binding CompanyName, Mode=TwoWay}"
+                                     FontSize="24" FontWeight="Bold"
+                                     BorderThickness="0" Background="Transparent"
+                                     Watermark="{x:Static local:Strings.CompanyName}"/>
+                            <TextBox Text="{Binding DocumentTypeName, Mode=TwoWay}"
+                                     FontSize="16" FontWeight="SemiBold"
+                                     BorderThickness="0" Background="Transparent"
+                                     Margin="0,5,0,0"
+                                     Watermark="BL / Facture"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="300,*" Margin="0,0,0,25">
+                        <Border BorderBrush="#D1D5DB" BorderThickness="2" Padding="15" CornerRadius="8" Background="#F9FAFB">
+                            <StackPanel Spacing="4">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="{x:Static local:Strings.InvoiceNumber}" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="#374151"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding InvoiceNumber}" Foreground="#374151"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="{x:Static local:Strings.InvoiceDate}" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="#374151"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding InvoiceDateString}" Foreground="#374151"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="Date d'échéance" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="#DC2626"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DueDateString}" Foreground="#DC2626"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="{x:Static local:Strings.PaymentType}" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="#374151"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding PaymentType}" Foreground="#374151"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" BorderBrush="#D1D5DB" BorderThickness="2" Padding="18" Margin="15,0,0,0" CornerRadius="8" Background="#F9FAFB">
+                            <StackPanel Spacing="4">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="{x:Static local:Strings.ClientLabel}" FontWeight="SemiBold" Margin="0,0,10,0" Foreground="#374151"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding CustomerName}" FontSize="13" Foreground="#374151"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <TextBlock Text="{x:Static local:Strings.ICELabel}" FontWeight="SemiBold" Margin="0,0,10,0" Foreground="#374151"/>
+                                    <TextBox Grid.Column="1" 
+                                             x:Name="IceNumberTextBox"
+                                             Text="{Binding IceNumber, Mode=TwoWay}" 
+                                             BorderThickness="0" Background="Transparent" Padding="0"
+                                             Watermark="000000000000000" FontSize="13"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border BorderBrush="#E5E7EB" BorderThickness="2" Margin="0,0,0,25" CornerRadius="8" BoxShadow="0 1 3 0 #0A000000">
+                        <StackPanel>
+                            <Grid ColumnDefinitions="80,*,80,100,80,100,100" Background="#F3F4F6" Height="40">
+                                <TextBlock Grid.Column="0" Text="{x:Static local:Strings.RefColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="1" Text="{x:Static local:Strings.DesignationColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="2" Text="{x:Static local:Strings.QtyColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="3" Text="{x:Static local:Strings.PriceColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="4" Text="{x:Static local:Strings.TVAColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="5" Text="Remise" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                                <TextBlock Grid.Column="6" Text="{x:Static local:Strings.TotalColumn}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0"/>
+                            </Grid>
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+                                            <Grid ColumnDefinitions="80,*,80,100,80,100,100" MinHeight="40">
+                                                <TextBlock Grid.Column="0" Text="{Binding Reference}" VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Designation}" VerticalAlignment="Center" Margin="5,0" TextWrapping="Wrap"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding Quantity, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding UnitPrice, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="4" Text="{Binding TvaRate, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0"/>
+                                                <TextBlock Grid.Column="5" Text="{Binding ItemDiscountDisplay}" VerticalAlignment="Center" Margin="5,0" Foreground="#EF4444"/>
+                                                <TextBlock Grid.Column="6" Text="{Binding TotalAfterDiscount, StringFormat={}{0:F2}}" VerticalAlignment="Center" Margin="5,0" FontWeight="SemiBold"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,20,0,10" HorizontalAlignment="Right">
+                        <Button Content="Remise AVANT TVA"
+                                Command="{Binding ApplyDiscountBeforeTaxCommand}"
+                                Background="{Binding BeforeTaxButtonBackground}"
+                                Foreground="White" Padding="15,8" FontSize="12" FontWeight="SemiBold"
+                                CornerRadius="6" BorderThickness="0" Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#059669"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        <Button Content="Remise APRÈS TVA"
+                                Command="{Binding ApplyDiscountAfterTaxCommand}"
+                                Background="{Binding AfterTaxButtonBackground}"
+                                Foreground="White" Padding="15,8" FontSize="12" FontWeight="SemiBold"
+                                CornerRadius="6" BorderThickness="0" Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#059669"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="*,250" Margin="0,0,0,0">
+                        <StackPanel Grid.Column="1">
+                            <Border BorderBrush="#E5E7EB" BorderThickness="2" Padding="20" CornerRadius="8" Background="#F9FAFB" BoxShadow="0 1 3 0 #0A000000">
+                                <StackPanel Spacing="12">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="{x:Static local:Strings.TotalHT}" FontWeight="SemiBold" FontSize="13" Foreground="#374151"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding TotalHT, StringFormat={}{0:F2} DH}" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Right" Foreground="#374151"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="{x:Static local:Strings.Taxe}" FontWeight="SemiBold" FontSize="13" Foreground="#374151"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding TotalTaxe, StringFormat={}{0:F2} DH}" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Right" Foreground="#374151"/>
+                                    </Grid>
+                                    <Rectangle Height="2" Fill="#D1D5DB" Margin="0,8"/>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="{x:Static local:Strings.TotalTTC}" FontWeight="Bold" FontSize="17" Foreground="#1F2937"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding TotalTTC, StringFormat={}{0:F2} DH}" FontWeight="Bold" FontSize="17" HorizontalAlignment="Right" Foreground="#2563EB"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Margin="0,25,0,0">
+                        <TextBlock Text="{x:Static local:Strings.AmountInWords}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8" Foreground="#374151"/>
+                        <Border BorderBrush="#E5E7EB" BorderThickness="2" Padding="16" Background="#FEF3C7" CornerRadius="8" BoxShadow="0 1 3 0 #0A000000">
+                            <TextBlock Text="{Binding TotalInWords}" FontSize="15" FontWeight="Bold" TextWrapping="Wrap" Foreground="#92400E"/>
+                        </Border>
+                    </StackPanel>
+
+                    <TextBox Text="{Binding CompanyAddress, Mode=TwoWay}"
+                             Margin="0,20,0,0" FontSize="9" TextAlignment="Center"
+                             BorderThickness="0" Background="Transparent"
+                             TextWrapping="Wrap" AcceptsReturn="True"
+                             Watermark="{x:Static local:Strings.CompanyAddress}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

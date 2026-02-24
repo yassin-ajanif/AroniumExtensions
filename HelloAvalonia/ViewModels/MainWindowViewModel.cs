@@ -12,6 +12,12 @@ using Velopack;
 
 namespace AroniumFactures.ViewModels;
 
+public enum SidebarPage
+{
+    Facture,
+    // Add more pages later, e.g. Devis, BonDeLivraison
+}
+
 public class MainWindowViewModel : ViewModelBase
 {
     private string _invoiceNumber = string.Empty;
@@ -40,6 +46,10 @@ public class MainWindowViewModel : ViewModelBase
     private bool _isUpdateAvailable;
     private UpdateInfo? _updateInfo;
     private bool _isDownloadingUpdate;
+    private SidebarPage _currentPage = SidebarPage.Facture;
+    private string _googleConnectionStatus = string.Empty;
+    private int _auditExportIntervalMinutes = 0;
+    private int _auditExportIntervalSeconds = 30;
 
     public MainWindowViewModel()
     {
@@ -56,6 +66,8 @@ public class MainWindowViewModel : ViewModelBase
         PrintCommand = new RelayCommand(async () => await PrintAsync());
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
         DownloadUpdateCommand = new RelayCommand(async () => await DownloadAndApplyUpdateAsync(), () => !_isDownloadingUpdate);
+        NavigateToCommand = new RelayCommand<SidebarPage>(p => CurrentPage = p);
+        ConnectToGoogleCommand = new RelayCommand(async () => await ConnectToGoogleAsync());
 
         ProductCountDisplay = _productCountStatus;
         
@@ -126,6 +138,62 @@ public class MainWindowViewModel : ViewModelBase
     public RelayCommand PrintCommand { get; }
     public RelayCommand PreviewInvoiceCommand { get; }
     public RelayCommand DownloadUpdateCommand { get; }
+    public RelayCommand<SidebarPage> NavigateToCommand { get; }
+    public RelayCommand ConnectToGoogleCommand { get; }
+
+    public string GoogleConnectionStatus
+    {
+        get => _googleConnectionStatus;
+        private set
+        {
+            if (_googleConnectionStatus != value)
+            {
+                _googleConnectionStatus = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    /// <summary>Audit log export interval (minutes). Bind from UI; used when scheduler starts.</summary>
+    public int AuditExportIntervalMinutes
+    {
+        get => _auditExportIntervalMinutes;
+        set
+        {
+            if (_auditExportIntervalMinutes != value)
+            {
+                _auditExportIntervalMinutes = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    /// <summary>Audit log export interval (seconds). Bind from UI; used when scheduler starts.</summary>
+    public int AuditExportIntervalSeconds
+    {
+        get => _auditExportIntervalSeconds;
+        set
+        {
+            if (_auditExportIntervalSeconds != value)
+            {
+                _auditExportIntervalSeconds = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+
+    public SidebarPage CurrentPage
+    {
+        get => _currentPage;
+        set
+        {
+            if (_currentPage != value)
+            {
+                _currentPage = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
 
     public bool IsInitializing
     {
@@ -717,9 +785,14 @@ private void RecalculateAfterTax()
             ServiceProvider.Initialize(mainDbPath);
             ProductCountDisplay = _productCountStatus;
             InitializationMessage = "Base de donnees prete.";
-            
+
             // Load saved settings after ServiceProvider is initialized
             await LoadSavedSettingsAsync();
+
+            _ = ConnectToGoogleAsync();
+
+            // Start audit log export scheduler (interval from bindable AuditExportIntervalMinutes/Seconds → Desktop\AuditLogExports)
+            ServiceProvider.AuditLogExportScheduler.Start(AuditExportIntervalMinutes, AuditExportIntervalSeconds);
             
             // Check for updates in background
             _ = CheckForUpdatesAsync();
@@ -1122,6 +1195,25 @@ private void RecalculateAfterTax()
         catch (Exception ex)
         {
             LoadDocumentStatus = $"❌ Erreur: {ex.Message}";
+        }
+    }
+
+    private async Task ConnectToGoogleAsync()
+    {
+        try
+        {
+            GoogleConnectionStatus = "Connexion à Google...";
+            var svc = ServiceProvider.GoogleDriveConnectionService;
+
+            await svc.ConnectAsync();
+
+            var email = await svc.GetConnectedEmailAsync();
+            GoogleConnectionStatus = $"✅ Connecté : {email ?? "inconnu"}";
+        }
+        catch (Exception ex)
+        {
+            GoogleConnectionStatus = $"❌ Erreur Google : {ex.Message}";
+            Console.WriteLine($"Google connection error: {ex}");
         }
     }
 

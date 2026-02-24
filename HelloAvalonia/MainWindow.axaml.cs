@@ -44,29 +44,7 @@ public partial class MainWindow : Window
 
     private void MainGrid_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        // Remove focus from ICE TextBox when clicking outside
-        if (IceNumberTextBox != null && IceNumberTextBox.IsFocused)
-        {
-            // Check if the click was on the ICE TextBox itself
-            var source = e.Source;
-            if (source != IceNumberTextBox && !IsDescendantOf(IceNumberTextBox, source as Control))
-            {
-                IceNumberTextBox.IsEnabled = false;
-                IceNumberTextBox.IsEnabled = true; // Re-enable to remove focus
-            }
-        }
-    }
-
-    private bool IsDescendantOf(Control ancestor, Control? descendant)
-    {
-        if (descendant == null) return false;
-        var parent = descendant.Parent;
-        while (parent != null)
-        {
-            if (parent == ancestor) return true;
-            parent = parent.Parent;
-        }
-        return false;
+        // ICE TextBox focus logic is now in FactureView (UserControl)
     }
 }
 

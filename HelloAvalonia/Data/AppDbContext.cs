@@ -108,6 +108,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Zreport> Zreports { get; set; }
 
+    public virtual DbSet<TableAuditLog> TableAuditLogs { get; set; }
+
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Respect externally provided options (from ServiceProvider); fall back to default only when not configured.
@@ -805,6 +807,11 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.DateCreated)
                 .HasDefaultValueSql("datetime('now', 'localtime')")
                 .HasColumnType("DATETIME");
+        });
+
+        modelBuilder.Entity<TableAuditLog>(entity =>
+        {
+            entity.ToTable("TableAuditLog");
         });
 
         OnModelCreatingPartial(modelBuilder);
