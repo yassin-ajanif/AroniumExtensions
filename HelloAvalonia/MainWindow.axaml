@@ -15,9 +15,21 @@
     <Window.Resources>
         <helpers:SidebarPageToBoolConverter x:Key="SidebarPageToBoolConverter"/>
     </Window.Resources>
-    <Grid PointerPressed="MainGrid_PointerPressed" RowDefinitions="Auto,Auto,*">
-        <!-- Update Banner -->
+    <Grid PointerPressed="MainGrid_PointerPressed" RowDefinitions="Auto,Auto,Auto,*">
+        <!-- Initialization Failed Banner (red, top) -->
         <Border Grid.Row="0"
+                Background="#FEE2E2"
+                Padding="15,12"
+                IsVisible="{Binding InitializationFailed}">
+            <TextBlock Text="{Binding InitializationMessage}"
+                       Foreground="#DC2626"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap"/>
+        </Border>
+        <!-- Update Banner -->
+        <Border Grid.Row="1"
                 Background="#10B981"
                 Padding="15,12"
                 IsVisible="{Binding IsUpdateAvailable}"
@@ -51,7 +63,7 @@
         </Border>
         
         <!-- Top Bar with Settings Button (Always Enabled) -->
-        <Border Grid.Row="1"
+        <Border Grid.Row="2"
                 Background="White"
                 Padding="15,10"
                 BorderBrush="#E5E7EB"
@@ -83,7 +95,7 @@
         </Border>
         
         <!-- Sidebar + Content area -->
-        <Grid Grid.Row="2" ColumnDefinitions="220,*">
+        <Grid Grid.Row="3" ColumnDefinitions="220,*">
             <!-- Sidebar -->
             <Border Grid.Column="0" 
                     Background="White" 

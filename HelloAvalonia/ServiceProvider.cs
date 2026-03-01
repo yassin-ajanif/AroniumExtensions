@@ -23,6 +23,19 @@ public static class ServiceProvider
     private static IGoogleDriveConnectionService? _googleDriveConnectionService;
     private static IAuditLogExportService? _auditLogExportService;
     private static AuditLogExportScheduler? _auditLogExportScheduler;
+    private static ICompanionAppWatcherService? _companionAppWatcherService;
+
+    /// <summary>
+    /// Initializes only LocalSettingsService and CompanionAppWatcherService (no DB).
+    /// Call this before LoadAroniumMainAppAndStartWatchingAsync when running companion app logic at startup.
+    /// </summary>
+    public static void EnsureCompanionServicesInitialized()
+    {
+        if (_localSettingsService == null)
+            _localSettingsService = new LocalSettingsService();
+        if (_companionAppWatcherService == null)
+            _companionAppWatcherService = new CompanionAppWatcherService();
+    }
 
     public static void Initialize(string databasePath)
     {
@@ -42,12 +55,15 @@ public static class ServiceProvider
         _customerService = new CustomerService(_customerRepository);
         _applicationService = new ApplicationService(_applicationPropertyRepository);
         _productService = new ProductService(_productRepository);
-        _localSettingsService = new LocalSettingsService();
+        if (_localSettingsService == null)
+            _localSettingsService = new LocalSettingsService();
         _pdfService = new PdfService();
         _updateService = new UpdateService();
         _googleDriveConnectionService = new GoogleDriveConnectionService();
         _auditLogExportService = new AuditLogExportService(_dbContext);
         _auditLogExportScheduler = new AuditLogExportScheduler(_auditLogExportService, _googleDriveConnectionService);
+        if (_companionAppWatcherService == null)
+            _companionAppWatcherService = new CompanionAppWatcherService();
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -61,4 +77,5 @@ public static class ServiceProvider
     public static IGoogleDriveConnectionService GoogleDriveConnectionService => _googleDriveConnectionService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IAuditLogExportService AuditLogExportService => _auditLogExportService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static AuditLogExportScheduler AuditLogExportScheduler => _auditLogExportScheduler ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static ICompanionAppWatcherService CompanionAppWatcherService => _companionAppWatcherService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

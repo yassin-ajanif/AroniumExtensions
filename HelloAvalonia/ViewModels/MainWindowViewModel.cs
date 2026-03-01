@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
+using AroniumFactures;
 using AroniumFactures.Models;
 using AroniumFactures.Helpers;
 using AroniumFactures.Services;
@@ -770,10 +771,26 @@ private void RecalculateAfterTax()
     {
         InitializationFailed = false;
         IsInitializing = true;
-        InitializationMessage = "Initialisation de la base de donnees...";
 
         try
         {
+            // ---------- Phase 1: Companion app (no DB) ----------
+            // Start Aronium main app and watcher first; if this fails, we shutdown. Independent of DB.
+            InitializationMessage = "Démarrage de l'application compagnon...";
+            ServiceProvider.EnsureCompanionServicesInitialized();
+            var (continueInit, initErrorMessage) = await LoadAroniumMainAppAndStartWatchingAsync();
+            if (!continueInit)
+            {
+                var win = (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                if (win != null && !string.IsNullOrEmpty(initErrorMessage))
+                    await ShowErrorMessageDialogAsync(win, initErrorMessage);
+                (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.Shutdown();
+                return;
+            }
+
+            // ---------- Phase 2: Database and app data ----------
+            // If DB fails we show the red banner and return; we do not shutdown (companion app is already running).
+            InitializationMessage = "Initialisation de la base de donnees...";
             var dbInitialized = await DatabaseInitializer.InitializeDatabaseAsync(mainDbPath);
             if (!dbInitialized)
             {
@@ -786,15 +803,10 @@ private void RecalculateAfterTax()
             ProductCountDisplay = _productCountStatus;
             InitializationMessage = "Base de donnees prete.";
 
-            // Load saved settings after ServiceProvider is initialized
             await LoadSavedSettingsAsync();
 
             _ = ConnectToGoogleAsync();
-
-            // Start audit log export scheduler (interval from bindable AuditExportIntervalMinutes/Seconds → Desktop\AuditLogExports)
             ServiceProvider.AuditLogExportScheduler.Start(AuditExportIntervalMinutes, AuditExportIntervalSeconds);
-            
-            // Check for updates in background
             _ = CheckForUpdatesAsync();
         }
         catch (Exception ex)
@@ -806,6 +818,117 @@ private void RecalculateAfterTax()
         {
             IsInitializing = false;
         }
+    }
+
+    /// <summary>
+    /// Loads or validates companion app path, starts Aronium main app (or attaches to existing), and starts the watcher.
+    /// Returns (false, errorMessage) if the user cancelled or start failed; (true, null) to continue initialization.
+    /// </summary>
+    private async Task<(bool Success, string? ErrorMessage)> LoadAroniumMainAppAndStartWatchingAsync()
+    {
+        try
+        {
+            var settings = await ServiceProvider.LocalSettingsService.LoadSettingsAsync();
+            var companionPath = settings.CompanionAppExePath;
+            if (string.IsNullOrWhiteSpace(companionPath) || !File.Exists(companionPath))
+            {
+                var window = (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                if (window != null)
+                {
+                    await WaitForWindowVisibleAsync(window);
+                    var pathDialog = new CompanionAppPathDialog();
+                    var submitted = await pathDialog.ShowDialog<bool>(window);
+                    if (!submitted)
+                        return (false, "Aucun chemin vers Aronium Lite n'a été sélectionné. L'application va se fermer.");
+                    settings = await ServiceProvider.LocalSettingsService.LoadSettingsAsync();
+                    companionPath = settings.CompanionAppExePath;
+                }
+            }
+            if (string.IsNullOrWhiteSpace(companionPath) || !File.Exists(companionPath))
+                return (true, null);
+
+            var processName = Path.GetFileNameWithoutExtension(companionPath);
+            var existing = Process.GetProcessesByName(processName);
+            int pid;
+            if (existing.Length > 0)
+            {
+                pid = existing[0].Id;
+                foreach (var p in existing) p.Dispose();
+            }
+            else
+            {
+                try
+                {
+                    var psi = new ProcessStartInfo(companionPath)
+                    {
+                        UseShellExecute = true,
+                        WorkingDirectory = Path.GetDirectoryName(companionPath) ?? ""
+                    };
+                    var proc = Process.Start(psi);
+                    if (proc == null) throw new InvalidOperationException("Process.Start returned null.");
+                    pid = proc.Id;
+                    proc.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[CompanionApp] Failed to start: {ex.Message}");
+                    var win = (Avalonia.Application.Current?.ApplicationLifetime as Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                    if (win != null)
+                    {
+                        await WaitForWindowVisibleAsync(win);
+                        var pathDialog = new CompanionAppPathDialog();
+                        var submitted = await pathDialog.ShowDialog<bool>(win);
+                        if (!submitted)
+                            return (false, $"Impossible de démarrer l'application principale: {ex.Message}");
+                    }
+                    return (false, $"Impossible de démarrer l'application principale: {ex.Message}");
+                }
+            }
+            ServiceProvider.CompanionAppWatcherService.Start(pid);
+            return (true, null);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[CompanionApp] Error: {ex.Message}");
+            return (false, ex.Message);
+        }
+    }
+
+    /// <summary>Waits for the window to become visible (Avalonia requires visible owner for ShowDialog).</summary>
+    private static async Task WaitForWindowVisibleAsync(Avalonia.Controls.Window window, int timeoutMs = 5000)
+    {
+        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        while (!window.IsVisible && DateTime.UtcNow < deadline)
+            await Task.Delay(50);
+    }
+
+    private static async Task ShowErrorMessageDialogAsync(Avalonia.Controls.Window owner, string message)
+    {
+        var dialog = new Avalonia.Controls.Window
+        {
+            Title = "Erreur",
+            Width = 450,
+            Height = 180,
+            WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.CenterOwner,
+            CanResize = false
+        };
+        var panel = new Avalonia.Controls.StackPanel { Margin = new Avalonia.Thickness(20), Spacing = 15 };
+        panel.Children.Add(new Avalonia.Controls.TextBlock
+        {
+            Text = message,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            MaxWidth = 400
+        });
+        var okButton = new Avalonia.Controls.Button
+        {
+            Content = "OK",
+            Width = 80,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right
+        };
+        okButton.Click += (_, _) => dialog.Close();
+        panel.Children.Add(okButton);
+        dialog.Content = panel;
+        await dialog.ShowDialog(owner);
     }
 
     private async Task CheckForUpdatesAsync()

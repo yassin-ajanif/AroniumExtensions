@@ -35,11 +35,13 @@ public partial class MainWindow : Window
             {
                 this.Icon = new WindowIcon("avares://AroniumFactures/Assets/aronium Facture.png");
             }
-            catch
-            {
-                // Icon loading failed, continue without icon
+        catch
+        {
+            // Icon loading failed, continue without icon
             }
         }
+
+        Closing += (_, e) => e.Cancel = true;
     }
 
     private void MainGrid_PointerPressed(object? sender, PointerPressedEventArgs e)
