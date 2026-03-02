@@ -44,8 +44,10 @@ public class AuditLogExportService : IAuditLogExportService
         var currentDbMaxId = await _context.TableAuditLogs
             .MaxAsync(x => (int?)x.Id) ?? 0;
 
-        var maxIdInExport = await GetMaxIdFromExportFileAsync(filePath);
-        if (currentDbMaxId <= maxIdInExport)
+        var maxIdInCsvExported = await GetMaxIdFromExportFileAsync(filePath);
+        var maxIdInGoogleDriveCsvFile = await GetLastUploadedIdAsync();
+
+        if (AllFilesAreInSync(currentDbMaxId, maxIdInCsvExported, maxIdInGoogleDriveCsvFile))
             return (null, 0);
 
         var rows = await _context.TableAuditLogs
@@ -72,6 +74,24 @@ public class AuditLogExportService : IAuditLogExportService
         }
 
         return (filePath, currentDbMaxId);
+    }
+
+    private bool AllFilesAreInSync(int currentDbMaxId, int maxIdInCsvExported, int maxIdInGoogleDriveCsvFile)
+    {
+        // Condition 1: DB and exported CSV are in sync when currentDbMaxId == maxIdInCsvExported (no new rows to export).
+        // The normal "no action" case is when both have the same max Id. maxIdInCsvExported > currentDbMaxId is
+        // almost impossible in practice; the equality check is kept for safety.
+        //
+        // Condition 2: Local exported CSV and Google Drive CSV are in sync when maxIdInCsvExported == maxIdInGoogleDriveCsvFile
+        // (all exported rows have been uploaded). Out of sync can happen if the upload operation fails.
+        //
+        // Returns true only when both conditions hold (all in sync → skip export).
+        bool databaseAndExportedCsvFileAreInSync = currentDbMaxId == maxIdInCsvExported;
+        bool LocalExportedCsvFileAndGoogleDriveCsvFileAreInSync = maxIdInCsvExported == maxIdInGoogleDriveCsvFile;
+
+        return databaseAndExportedCsvFileAreInSync 
+        &&
+        LocalExportedCsvFileAndGoogleDriveCsvFileAreInSync;
     }
 
     public async Task<int> GetMaxIdFromCsvFileAsync()
