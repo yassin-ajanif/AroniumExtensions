@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AroniumFactures.Data;
 using Microsoft.EntityFrameworkCore;
@@ -27,23 +28,25 @@ public class AuditLogExportService : IAuditLogExportService
     /// </summary>
     public const string ExportFileName = "aronium-auditlog.csv.gz";
 
+    private const string UploadStateFileName = "upload-state.json";
+
     public AuditLogExportService(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<string?> ExportToCsvAsync()
+    public async Task<(string? Path, int MaxIdInFile)> ExportToCsvAsync()
     {
         Directory.CreateDirectory(DefaultExportDirectory);
 
         var filePath = Path.Combine(DefaultExportDirectory, ExportFileName);
 
-        var currentMaxId = await _context.TableAuditLogs
+        var currentDbMaxId = await _context.TableAuditLogs
             .MaxAsync(x => (int?)x.Id) ?? 0;
 
         var maxIdInExport = await GetMaxIdFromExportFileAsync(filePath);
-        if (currentMaxId <= maxIdInExport)
-            return null;
+        if (currentDbMaxId <= maxIdInExport)
+            return (null, 0);
 
         var rows = await _context.TableAuditLogs
             .OrderBy(x => x.Id)
@@ -68,7 +71,39 @@ public class AuditLogExportService : IAuditLogExportService
             }
         }
 
-        return filePath;
+        return (filePath, currentDbMaxId);
+    }
+
+    public async Task<int> GetMaxIdFromCsvFileAsync()
+    {
+        var filePath = Path.Combine(DefaultExportDirectory, ExportFileName);
+        return await GetMaxIdFromExportFileAsync(filePath);
+    }
+
+    public async Task<int> GetLastUploadedIdAsync()
+    {
+        var statePath = Path.Combine(DefaultExportDirectory, UploadStateFileName);
+        if (!File.Exists(statePath)) return 0;
+        try
+        {
+            var json = await File.ReadAllTextAsync(statePath);
+            var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("LastUploadedId", out var prop) && prop.TryGetInt32(out var id))
+                return id;
+        }
+        catch
+        {
+            // corrupted or missing -> treat as 0
+        }
+        return 0;
+    }
+
+    public async Task SaveLastUploadedIdIntoJsonFile(int id)
+    {
+        Directory.CreateDirectory(DefaultExportDirectory);
+        var statePath = Path.Combine(DefaultExportDirectory, UploadStateFileName);
+        var json = JsonSerializer.Serialize(new { LastUploadedId = id });
+        await File.WriteAllTextAsync(statePath, json);
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -92,23 +93,51 @@ public class AuditLogExportScheduler
             return;
         }
 
-        var path = await ExportAsync();
-        if (path == null)
+        var (path, maxIdInFile) = await ExportAsync();
+
+        if (path != null)
+        {
+            // New export written; upload it and save state on success
+            LogExported(path);
+            if (!TryBeginUpload())
+            {
+                LogSkippedUploadAlreadyInProgress();
+                return;
+            }
+            try
+            {
+                await UploadAndSaveStateAsync(path, maxIdInFile);
+            }
+            finally
+            {
+                EndUpload();
+            }
+            return;
+        }
+
+        // No new export; check if we need to retry a failed upload (csv ahead of Drive)
+        var lastUploadedId = await _exportService.GetLastUploadedIdAsync();
+        var csvMaxId = await _exportService.GetMaxIdFromCsvFileAsync();
+        if (csvMaxId <= lastUploadedId)
         {
             LogSkippedNoNewRows();
             return;
         }
 
-        LogExported(path);
+        var csvPath = Path.Combine(AuditLogExportService.DefaultExportDirectory, AuditLogExportService.ExportFileName);
+        if (!File.Exists(csvPath))
+        {
+            LogSkippedNoNewRows();
+            return;
+        }
         if (!TryBeginUpload())
         {
             LogSkippedUploadAlreadyInProgress();
             return;
         }
-
         try
         {
-            await UploadAndLogAsync(path);
+            await UploadAndSaveStateAsync(csvPath, csvMaxId);
         }
         finally
         {
@@ -128,20 +157,25 @@ public class AuditLogExportScheduler
 
     private void EndUpload() => _uploadInProgress = false;
 
-    private async Task<string?> ExportAsync()
+    private async Task<(string? Path, int MaxIdInFile)> ExportAsync()
     {
         return await _exportService.ExportToCsvAsync();
     }
 
-    private async Task UploadAndLogAsync(string path)
+    private async Task UploadAndSaveStateAsync(string path, int maxIdInFile)
     {
         try
         {
             var driveFileId = await _googleDriveService.UploadCsvToDriveAsync(path);
             if (driveFileId != null)
+            {
+                await _exportService.SaveLastUploadedIdIntoJsonFile(maxIdInFile);
                 Console.WriteLine($"[AuditLogExport] Uploaded to Google Drive (file Id: {driveFileId})");
+            }
             else
-                Console.WriteLine("[AuditLogExport] Google Drive upload skipped or failed (not connected or error)");
+            {
+                Console.WriteLine("[AuditLogExport] Google Drive upload skipped or failed (will retry next cycle)");
+            }
         }
         catch (Exception ex)
         {
