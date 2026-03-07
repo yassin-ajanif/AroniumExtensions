@@ -24,6 +24,7 @@ public static class ServiceProvider
     private static IAuditLogExportService? _auditLogExportService;
     private static AuditLogExportScheduler? _auditLogExportScheduler;
     private static ICompanionAppWatcherService? _companionAppWatcherService;
+    private static ITableAuditLogCleaner? _tableAuditLogCleaner;
 
     /// <summary>
     /// Initializes only LocalSettingsService and CompanionAppWatcherService (no DB).
@@ -64,6 +65,7 @@ public static class ServiceProvider
         _auditLogExportScheduler = new AuditLogExportScheduler(_auditLogExportService, _googleDriveConnectionService);
         if (_companionAppWatcherService == null)
             _companionAppWatcherService = new CompanionAppWatcherService();
+        _tableAuditLogCleaner = new TableAuditLogCleaner(_googleDriveConnectionService, databasePath);
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -78,4 +80,5 @@ public static class ServiceProvider
     public static IAuditLogExportService AuditLogExportService => _auditLogExportService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static AuditLogExportScheduler AuditLogExportScheduler => _auditLogExportScheduler ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static ICompanionAppWatcherService CompanionAppWatcherService => _companionAppWatcherService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static ITableAuditLogCleaner TableAuditLogCleaner => _tableAuditLogCleaner ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

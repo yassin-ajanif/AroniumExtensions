@@ -158,6 +158,41 @@ public class GoogleDriveConnectionService : IGoogleDriveConnectionService
         }
     }
 
+    public async Task<string?> DownloadAuditFolderFileContentAsync(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName)) return null;
+        try
+        {
+            var credential = await GetCredentialAsync();
+            if (credential == null) return null;
+
+            var driveService = new DriveService(new BaseClientService.Initializer
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+                HttpClientTimeout = TimeSpan.FromMinutes(5)
+            });
+
+            var folderId = await GetOrCreateAuditFolderIdAsync(driveService);
+            if (string.IsNullOrEmpty(folderId)) return null;
+
+            var fileId = await FindFileIdInFolderAsync(driveService, folderId, fileName);
+            if (string.IsNullOrEmpty(fileId)) return null;
+
+            await using var memoryStream = new MemoryStream();
+            var getRequest = driveService.Files.Get(fileId);
+            await getRequest.DownloadAsync(memoryStream);
+            memoryStream.Position = 0;
+            using var reader = new StreamReader(memoryStream);
+            return await reader.ReadToEndAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[GoogleDrive] Download failed ({fileName}): {ex.Message}");
+            return null;
+        }
+    }
+
     private static async Task<string?> GetOrCreateAuditFolderIdAsync(DriveService driveService)
     {
         var listRequest = driveService.Files.List();

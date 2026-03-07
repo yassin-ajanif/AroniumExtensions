@@ -807,6 +807,7 @@ private void RecalculateAfterTax()
 
             _ = ConnectToGoogleAsync();
             ServiceProvider.AuditLogExportScheduler.Start(AuditExportIntervalMinutes, AuditExportIntervalSeconds);
+            _ = ServiceProvider.TableAuditLogCleaner.CleanAsync();
             _ = CheckForUpdatesAsync();
         }
         catch (Exception ex)

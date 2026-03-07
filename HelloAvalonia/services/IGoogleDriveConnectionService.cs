@@ -30,4 +30,9 @@ public interface IGoogleDriveConnectionService
     /// Overwrites the existing file if present. Returns the Drive file Id, or null on failure.
     /// </summary>
     Task<string?> UploadCsvToDriveAsync(string localFilePath);
+
+    /// <summary>
+    /// Downloads a file from the "Aronium Audit" folder by name and returns its content as string, or null if not found or on failure.
+    /// </summary>
+    Task<string?> DownloadAuditFolderFileContentAsync(string fileName);
 }
