@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Aronium Invoice</value>
+  </data>
+  <data name="IntroText" xml:space="preserve">
+    <value>Welcome to your invoicing application.</value>
+  </data>
+  <data name="SliderLabel" xml:space="preserve">
+    <value>Adjust estimated amount</value>
+  </data>
+  <data name="CreateInvoiceButton" xml:space="preserve">
+    <value>Create invoice</value>
+  </data>
+  <data name="FormTitle" xml:space="preserve">
+    <value>New invoice</value>
+  </data>
+  <data name="CustomerLabel" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SliderValuePrefix" xml:space="preserve">
+    <value>Estimated amount:</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>No.:</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="PaymentType" xml:space="preserve">
+    <value>Paid by:</value>
+  </data>
+  <data name="ClientLabel" xml:space="preserve">
+    <value>Customer:</value>
+  </data>
+  <data name="ICELabel" xml:space="preserve">
+    <value>ICE:</value>
+  </data>
+  <data name="RefColumn" xml:space="preserve">
+    <value>Ref.</value>
+  </data>
+  <data name="DesignationColumn" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="QtyColumn" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="PriceColumn" xml:space="preserve">
+    <value>Unit price (incl. tax)</value>
+  </data>
+  <data name="TVAColumn" xml:space="preserve">
+    <value>VAT</value>
+  </data>
+  <data name="TotalColumn" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="TotalHT" xml:space="preserve">
+    <value>Subtotal (excl. tax)</value>
+  </data>
+  <data name="Taxe" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="TotalTTC" xml:space="preserve">
+    <value>Total (incl. tax)</value>
+  </data>
+  <data name="AddItemButton" xml:space="preserve">
+    <value>Add item</value>
+  </data>
+  <data name="RemoveItemButton" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Company address</value>
+  </data>
+  <data name="InvoiceTitle" xml:space="preserve">
+    <value>Delivery note / Invoice</value>
+  </data>
+  <data name="GenerateButton" xml:space="preserve">
+    <value>Generate Invoice</value>
+  </data>
+  <data name="ChooseLogo" xml:space="preserve">
+    <value>Choose logo</value>
+  </data>
+  <data name="AmountInWords" xml:space="preserve">
+    <value>This invoice is for the total amount of:</value>
+  </data>
+  <data name="SettingsButton" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="UpdateBannerMessage" xml:space="preserve">
+    <value>A new update is available. Click to download and install.</value>
+  </data>
+  <data name="SidebarFacture" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="DocumentNumberLabel" xml:space="preserve">
+    <value>Document No.:</value>
+  </data>
+  <data name="LoadButton" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="PrintButton" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="DueDateLabel" xml:space="preserve">
+    <value>Due date</value>
+  </data>
+  <data name="DiscountColumn" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="DiscountBeforeTax" xml:space="preserve">
+    <value>Discount BEFORE tax</value>
+  </data>
+  <data name="DiscountAfterTax" xml:space="preserve">
+    <value>Discount AFTER tax</value>
+  </data>
+  <data name="AddButton" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BrowseButton" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CompanionPathDialogTitle" xml:space="preserve">
+    <value>Aronium Lite - Path required</value>
+  </data>
+  <data name="CompanionPathDialogMessage" xml:space="preserve">
+    <value>No valid path to Aronium Lite. Please select the main application executable.</value>
+  </data>
+  <data name="ExecutableLabel" xml:space="preserve">
+    <value>Executable (e.g. Aronium.Pos.exe):</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DatabaseConfigSection" xml:space="preserve">
+    <value>Database configuration</value>
+  </data>
+  <data name="DatabasePathLabel" xml:space="preserve">
+    <value>Main database path:</value>
+  </data>
+  <data name="TestConnectionButton" xml:space="preserve">
+    <value>Test connection</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="InitializingDatabase" xml:space="preserve">
+    <value>Initializing database...</value>
+  </data>
+  <data name="ClickToLoadProductCount" xml:space="preserve">
+    <value>Click to load product count</value>
+  </data>
+  <data name="StartingCompanionApp" xml:space="preserve">
+    <value>Starting companion app...</value>
+  </data>
+  <data name="DatabaseReady" xml:space="preserve">
+    <value>Database ready.</value>
+  </data>
+  <data name="DatabaseInitFailed" xml:space="preserve">
+    <value>Database initialization failed.</value>
+  </data>
+  <data name="InitErrorPrefix" xml:space="preserve">
+    <value>Initialization error:</value>
+  </data>
+  <data name="NoCompanionPathSelected" xml:space="preserve">
+    <value>No path to Aronium Lite was selected. The application will close.</value>
+  </data>
+  <data name="CannotStartMainApp" xml:space="preserve">
+    <value>Unable to start main application:</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ChooseLogoTitle" xml:space="preserve">
+    <value>Choose a logo</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Error loading</value>
+  </data>
+  <data name="MainWindowNotFound" xml:space="preserve">
+    <value>Error: Main window not found</value>
+  </data>
+  <data name="PreparingPrint" xml:space="preserve">
+    <value>Preparing to print...</value>
+  </data>
+  <data name="DocumentSentToPrinter" xml:space="preserve">
+    <value>Document sent to printer</value>
+  </data>
+  <data name="PrintErrorPrefix" xml:space="preserve">
+    <value>Print error:</value>
+  </data>
+  <data name="PdfOpenPrintManually" xml:space="preserve">
+    <value>PDF opened - you can print manually</value>
+  </data>
+  <data name="PdfGenerationErrorPrefix" xml:space="preserve">
+    <value>Error generating PDF:</value>
+  </data>
+  <data name="ErrorPrefix" xml:space="preserve">
+    <value>Error:</value>
+  </data>
+  <data name="OpeningPreview" xml:space="preserve">
+    <value>Opening preview...</value>
+  </data>
+  <data name="PreviewOpened" xml:space="preserve">
+    <value>Preview opened in QuestPDF Companion</value>
+  </data>
+  <data name="EnsureQuestPdfCompanion" xml:space="preserve">
+    <value>Make sure QuestPDF Companion is installed and open.</value>
+  </data>
+  <data name="ConnectingToGoogle" xml:space="preserve">
+    <value>Connecting to Google...</value>
+  </data>
+  <data name="ConnectedLabel" xml:space="preserve">
+    <value>Connected:</value>
+  </data>
+  <data name="DocumentNotFoundFormat" xml:space="preserve">
+    <value>Document '{0}' not found or empty</value>
+  </data>
+  <data name="ProductsLoadedFormat" xml:space="preserve">
+    <value>{0} product(s) loaded</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>unknown</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="SelectDatabaseTitle" xml:space="preserve">
+    <value>Select database</value>
+  </data>
+  <data name="SqliteDatabaseFileType" xml:space="preserve">
+    <value>SQLite database</value>
+  </data>
+  <data name="AllFilesFileType" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="PleaseSelectDatabase" xml:space="preserve">
+    <value>Please select a database</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File not found</value>
+  </data>
+  <data name="FileValid" xml:space="preserve">
+    <value>File valid</value>
+  </data>
+  <data name="TestConnectionStatus" xml:space="preserve">
+    <value>Testing connection...</value>
+  </data>
+  <data name="ConnectionSuccessFormat" xml:space="preserve">
+    <value>Connection successful! ({0} invoice(s) found)</value>
+  </data>
+  <data name="SettingsSavedRestart" xml:space="preserve">
+    <value>Settings saved! Restart the application.</value>
+  </data>
+  <data name="DocTypePurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="DocTypeStockReturn" xml:space="preserve">
+    <value>Stock Return</value>
+  </data>
+  <data name="DocTypeSales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="DocTypeRefund" xml:space="preserve">
+    <value>Refund</value>
+  </data>
+  <data name="DocTypeProforma" xml:space="preserve">
+    <value>Proforma</value>
+  </data>
+  <data name="DocTypeInventoryCount" xml:space="preserve">
+    <value>Inventory Count</value>
+  </data>
+  <data name="DocTypeLossAndDamage" xml:space="preserve">
+    <value>Loss and Damage</value>
+  </data>
+</root>

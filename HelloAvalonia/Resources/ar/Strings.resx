@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>أرونيوم فاتورة</value>
+  </data>
+  <data name="IntroText" xml:space="preserve">
+    <value>مرحباً بك في تطبيق الفواتير.</value>
+  </data>
+  <data name="SliderLabel" xml:space="preserve">
+    <value>ضبط المبلغ التقديري</value>
+  </data>
+  <data name="CreateInvoiceButton" xml:space="preserve">
+    <value>إنشاء فاتورة</value>
+  </data>
+  <data name="FormTitle" xml:space="preserve">
+    <value>فاتورة جديدة</value>
+  </data>
+  <data name="CustomerLabel" xml:space="preserve">
+    <value>العميل</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="SliderValuePrefix" xml:space="preserve">
+    <value>المبلغ التقديري:</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>رقم:</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value>التاريخ:</value>
+  </data>
+  <data name="PaymentType" xml:space="preserve">
+    <value>مدفوع بواسطة:</value>
+  </data>
+  <data name="ClientLabel" xml:space="preserve">
+    <value>العميل:</value>
+  </data>
+  <data name="ICELabel" xml:space="preserve">
+    <value>الرقم الجبائي:</value>
+  </data>
+  <data name="RefColumn" xml:space="preserve">
+    <value>المرجع</value>
+  </data>
+  <data name="DesignationColumn" xml:space="preserve">
+    <value>التسمية</value>
+  </data>
+  <data name="QtyColumn" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="PriceColumn" xml:space="preserve">
+    <value>السعر شامل الضريبة</value>
+  </data>
+  <data name="TVAColumn" xml:space="preserve">
+    <value>الضريبة</value>
+  </data>
+  <data name="TotalColumn" xml:space="preserve">
+    <value>المبلغ الإجمالي</value>
+  </data>
+  <data name="TotalHT" xml:space="preserve">
+    <value>المجموع دون ضريبة</value>
+  </data>
+  <data name="Taxe" xml:space="preserve">
+    <value>الضريبة</value>
+  </data>
+  <data name="TotalTTC" xml:space="preserve">
+    <value>المجموع شامل الضريبة</value>
+  </data>
+  <data name="AddItemButton" xml:space="preserve">
+    <value>إضافة صنف</value>
+  </data>
+  <data name="RemoveItemButton" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>اسم المؤسسة</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>عنوان المؤسسة</value>
+  </data>
+  <data name="InvoiceTitle" xml:space="preserve">
+    <value>إيصال / فاتورة</value>
+  </data>
+  <data name="GenerateButton" xml:space="preserve">
+    <value>إنشاء الفاتورة</value>
+  </data>
+  <data name="ChooseLogo" xml:space="preserve">
+    <value>اختيار الشعار</value>
+  </data>
+  <data name="AmountInWords" xml:space="preserve">
+    <value>تم وقف هذه الفاتورة لمبلغ:</value>
+  </data>
+  <data name="SettingsButton" xml:space="preserve">
+    <value>الإعدادات</value>
+  </data>
+  <data name="UpdateBannerMessage" xml:space="preserve">
+    <value>تحديث جديد متاح. انقر للتنزيل والتثبيت.</value>
+  </data>
+  <data name="SidebarFacture" xml:space="preserve">
+    <value>فاتورة</value>
+  </data>
+  <data name="DocumentNumberLabel" xml:space="preserve">
+    <value>رقم المستند:</value>
+  </data>
+  <data name="LoadButton" xml:space="preserve">
+    <value>تحميل</value>
+  </data>
+  <data name="PrintButton" xml:space="preserve">
+    <value>طباعة</value>
+  </data>
+  <data name="DueDateLabel" xml:space="preserve">
+    <value>تاريخ الاستحقاق</value>
+  </data>
+  <data name="DiscountColumn" xml:space="preserve">
+    <value>الخصم</value>
+  </data>
+  <data name="DiscountBeforeTax" xml:space="preserve">
+    <value>خصم قبل الضريبة</value>
+  </data>
+  <data name="DiscountAfterTax" xml:space="preserve">
+    <value>خصم بعد الضريبة</value>
+  </data>
+  <data name="AddButton" xml:space="preserve">
+    <value>إضافة</value>
+  </data>
+  <data name="BrowseButton" xml:space="preserve">
+    <value>استعراض...</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="CompanionPathDialogTitle" xml:space="preserve">
+    <value>أرونيوم لايت - المسار مطلوب</value>
+  </data>
+  <data name="CompanionPathDialogMessage" xml:space="preserve">
+    <value>لا يوجد مسار صالح لأرونيوم لايت. يرجى اختيار ملف تنفيذ التطبيق الرئيسي.</value>
+  </data>
+  <data name="ExecutableLabel" xml:space="preserve">
+    <value>الملف التنفيذي (مثال: Aronium.Pos.exe):</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>الإعدادات</value>
+  </data>
+  <data name="DatabaseConfigSection" xml:space="preserve">
+    <value>إعدادات قاعدة البيانات</value>
+  </data>
+  <data name="DatabasePathLabel" xml:space="preserve">
+    <value>مسار قاعدة البيانات الرئيسية:</value>
+  </data>
+  <data name="TestConnectionButton" xml:space="preserve">
+    <value>اختبار الاتصال</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="InitializingDatabase" xml:space="preserve">
+    <value>جاري تهيئة قاعدة البيانات...</value>
+  </data>
+  <data name="ClickToLoadProductCount" xml:space="preserve">
+    <value>انقر لتحميل عدد المنتجات</value>
+  </data>
+  <data name="StartingCompanionApp" xml:space="preserve">
+    <value>جاري تشغيل التطبيق المرافق...</value>
+  </data>
+  <data name="DatabaseReady" xml:space="preserve">
+    <value>قاعدة البيانات جاهزة.</value>
+  </data>
+  <data name="DatabaseInitFailed" xml:space="preserve">
+    <value>فشل تهيئة قاعدة البيانات.</value>
+  </data>
+  <data name="InitErrorPrefix" xml:space="preserve">
+    <value>خطأ في التهيئة:</value>
+  </data>
+  <data name="NoCompanionPathSelected" xml:space="preserve">
+    <value>لم يتم اختيار مسار لأرونيوم لايت. سيتم إغلاق التطبيق.</value>
+  </data>
+  <data name="CannotStartMainApp" xml:space="preserve">
+    <value>تعذر تشغيل التطبيق الرئيسي:</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="ChooseLogoTitle" xml:space="preserve">
+    <value>اختيار شعار</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>جاري التحميل...</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>خطأ أثناء التحميل</value>
+  </data>
+  <data name="MainWindowNotFound" xml:space="preserve">
+    <value>خطأ: النافذة الرئيسية غير موجودة</value>
+  </data>
+  <data name="PreparingPrint" xml:space="preserve">
+    <value>جاري التحضير للطباعة...</value>
+  </data>
+  <data name="DocumentSentToPrinter" xml:space="preserve">
+    <value>تم إرسال المستند إلى الطابعة</value>
+  </data>
+  <data name="PrintErrorPrefix" xml:space="preserve">
+    <value>خطأ في الطباعة:</value>
+  </data>
+  <data name="PdfOpenPrintManually" xml:space="preserve">
+    <value>تم فتح PDF - يمكنك الطباعة يدوياً</value>
+  </data>
+  <data name="PdfGenerationErrorPrefix" xml:space="preserve">
+    <value>خطأ عند إنشاء PDF:</value>
+  </data>
+  <data name="ErrorPrefix" xml:space="preserve">
+    <value>خطأ:</value>
+  </data>
+  <data name="OpeningPreview" xml:space="preserve">
+    <value>جاري فتح المعاينة...</value>
+  </data>
+  <data name="PreviewOpened" xml:space="preserve">
+    <value>تم فتح المعاينة في QuestPDF Companion</value>
+  </data>
+  <data name="EnsureQuestPdfCompanion" xml:space="preserve">
+    <value>تأكد من تثبيت QuestPDF Companion وفتحه.</value>
+  </data>
+  <data name="ConnectingToGoogle" xml:space="preserve">
+    <value>جاري الاتصال بـ Google...</value>
+  </data>
+  <data name="ConnectedLabel" xml:space="preserve">
+    <value>متصل:</value>
+  </data>
+  <data name="DocumentNotFoundFormat" xml:space="preserve">
+    <value>المستند '{0}' غير موجود أو فارغ</value>
+  </data>
+  <data name="ProductsLoadedFormat" xml:space="preserve">
+    <value>{0} صنف/منتجات محملة</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>غير معروف</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>غير متاح</value>
+  </data>
+  <data name="SelectDatabaseTitle" xml:space="preserve">
+    <value>اختيار قاعدة البيانات</value>
+  </data>
+  <data name="SqliteDatabaseFileType" xml:space="preserve">
+    <value>قاعدة بيانات SQLite</value>
+  </data>
+  <data name="AllFilesFileType" xml:space="preserve">
+    <value>جميع الملفات</value>
+  </data>
+  <data name="PleaseSelectDatabase" xml:space="preserve">
+    <value>يرجى اختيار قاعدة بيانات</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>الملف غير موجود</value>
+  </data>
+  <data name="FileValid" xml:space="preserve">
+    <value>الملف صالح</value>
+  </data>
+  <data name="TestConnectionStatus" xml:space="preserve">
+    <value>جاري اختبار الاتصال...</value>
+  </data>
+  <data name="ConnectionSuccessFormat" xml:space="preserve">
+    <value>تم الاتصال بنجاح! ({0} فاتورة/فواتير)</value>
+  </data>
+  <data name="SettingsSavedRestart" xml:space="preserve">
+    <value>تم حفظ الإعدادات! أعد تشغيل التطبيق.</value>
+  </data>
+  <data name="DocTypePurchase" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="DocTypeStockReturn" xml:space="preserve">
+    <value>إرجاع مخزون</value>
+  </data>
+  <data name="DocTypeSales" xml:space="preserve">
+    <value>مبيعات / فاتورة</value>
+  </data>
+  <data name="DocTypeRefund" xml:space="preserve">
+    <value>استرداد</value>
+  </data>
+  <data name="DocTypeProforma" xml:space="preserve">
+    <value>فاتورة أولية / عرض سعر</value>
+  </data>
+  <data name="DocTypeInventoryCount" xml:space="preserve">
+    <value>جرد المخزون</value>
+  </data>
+  <data name="DocTypeLossAndDamage" xml:space="preserve">
+    <value>فقد وتلف</value>
+  </data>
+</root>

@@ -16,7 +16,7 @@ namespace AroniumFactures.ViewModels;
 public enum SidebarPage
 {
     Facture,
-    // Add more pages later, e.g. Devis, BonDeLivraison
+    MobileConnection,
 }
 
 public class MainWindowViewModel : ViewModelBase
@@ -51,6 +51,7 @@ public class MainWindowViewModel : ViewModelBase
     private string _googleConnectionStatus = string.Empty;
     private int _auditExportIntervalMinutes = 0;
     private int _auditExportIntervalSeconds = 30;
+    private readonly MobileConnectionViewModel _mobileConnectionViewModel = new();
 
     public MainWindowViewModel()
     {
@@ -195,6 +196,8 @@ public class MainWindowViewModel : ViewModelBase
             }
         }
     }
+
+    public MobileConnectionViewModel MobileConnectionViewModel => _mobileConnectionViewModel;
 
     public bool IsInitializing
     {
@@ -807,6 +810,7 @@ private void RecalculateAfterTax()
 
             _ = ConnectToGoogleAsync();
             ServiceProvider.AuditLogExportScheduler.Start(AuditExportIntervalMinutes, AuditExportIntervalSeconds);
+            _ = ServiceProvider.TableAuditLogCleaner.CleanAsync();
             _ = CheckForUpdatesAsync();
         }
         catch (Exception ex)

@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AroniumFactures.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="AroniumFactures.UserControls.MobileConnectionView"
+             x:DataType="vm:MobileConnectionViewModel"
+             x:Name="MobileConnectionViewRoot">
+    <ScrollViewer>
+        <StackPanel Margin="30" Spacing="20">
+            <TextBlock Text="Manual syncing with a phone"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="#1F2937"/>
+            <!-- Connected phones: list with Sync inside each row -->
+            <Border Background="White"
+                    Padding="20"
+                    CornerRadius="8"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    BoxShadow="0 1 3 0 #10000000">
+                <StackPanel Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Téléphones connectés"
+                                  FontWeight="SemiBold"
+                                  Foreground="#374151"
+                                  VerticalAlignment="Center"/>
+                        <Button Grid.Column="1"
+                                Content="Actualiser"
+                                Command="{Binding RefreshPhonesCommand}"
+                                Background="#E5E7EB"
+                                Foreground="#374151"
+                                Padding="12,6"
+                                FontSize="12"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#D1D5DB"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </Grid>
+                    <ItemsControl ItemsSource="{Binding ConnectedPhones}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="vm:ConnectedPhoneItem">
+                                <Border Background="#F9FAFB"
+                                        Padding="12,10"
+                                        CornerRadius="6"
+                                        Margin="0,0,0,6"
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="1">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding Name}"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#1F2937"
+                                                   VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1"
+                                                Content="Sync"
+                                                Command="{Binding DataContext.SyncToPhoneCommand, ElementName=MobileConnectionViewRoot}"
+                                                CommandParameter="{Binding}"
+                                                Background="#2563EB"
+                                                Foreground="White"
+                                                Padding="20,8"
+                                                FontWeight="SemiBold"
+                                                CornerRadius="6"
+                                                BorderThickness="0"
+                                                Cursor="Hand">
+                                            <Button.Styles>
+                                                <Style Selector="Button:pointerover">
+                                                    <Setter Property="Background" Value="#1D4ED8"/>
+                                                </Style>
+                                                <Style Selector="Button:disabled">
+                                                    <Setter Property="Background" Value="#D1D5DB"/>
+                                                    <Setter Property="Cursor" Value="Arrow"/>
+                                                </Style>
+                                            </Button.Styles>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+            <Border Background="White"
+                    Padding="20"
+                    CornerRadius="8"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    BoxShadow="0 1 3 0 #10000000">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="Dossier (ex. téléchargements du téléphone)"
+                              FontWeight="SemiBold"
+                              Foreground="#374151"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox Grid.Column="0"
+                                 Text="{Binding SelectedFolderPath, Mode=TwoWay}"
+                                 Watermark="Collez le chemin du dossier (ex. depuis l’Explorateur)"
+                                 Padding="10,8"
+                                 Margin="0,0,10,0"/>
+                        <Button Grid.Column="1"
+                                Content="Browse"
+                                Command="{Binding PickFolderCommand}"
+                                Background="#6B7280"
+                                Foreground="White"
+                                Padding="20,8"
+                                FontWeight="SemiBold"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Background" Value="#4B5563"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </Grid>
+                    <Button Content="Sync vers dossier"
+                            Command="{Binding SyncCommand}"
+                            HorizontalAlignment="Left"
+                            Background="#10B981"
+                            Foreground="White"
+                            Padding="24,10"
+                            FontWeight="SemiBold"
+                            CornerRadius="6"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover">
+                                <Setter Property="Background" Value="#059669"/>
+                            </Style>
+                            <Style Selector="Button:disabled">
+                                <Setter Property="Background" Value="#D1D5DB"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                    <TextBlock Text="{Binding StatusMessage}"
+                               FontSize="13"
+                               Foreground="#6B7280"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

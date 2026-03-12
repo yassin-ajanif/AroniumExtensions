@@ -122,11 +122,33 @@
                             </Style>
                         </Button.Styles>
                     </Button>
+                    <Button Content="📱 Sync téléphone"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static vm:SidebarPage.MobileConnection}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Padding="16,12"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Background="#6B7280"
+                            Foreground="White"
+                            CornerRadius="8"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover">
+                                <Setter Property="Background" Value="#4B5563"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
                 </StackPanel>
             </Border>
             <!-- Content area: switch between UserControls by visibility -->
             <Grid Grid.Column="1" IsEnabled="{Binding IsInteractive}">
                 <views:FactureView IsVisible="{Binding CurrentPage, Converter={StaticResource SidebarPageToBoolConverter}, ConverterParameter={x:Static vm:SidebarPage.Facture}}"/>
+                <Border IsVisible="{Binding CurrentPage, Converter={StaticResource SidebarPageToBoolConverter}, ConverterParameter={x:Static vm:SidebarPage.MobileConnection}}">
+                    <views:MobileConnectionView DataContext="{Binding MobileConnectionViewModel}"/>
+                </Border>
             </Grid>
         </Grid>
     </Grid>
