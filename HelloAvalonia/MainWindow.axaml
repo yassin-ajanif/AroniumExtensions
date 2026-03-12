@@ -11,6 +11,7 @@
         x:DataType="vm:MainWindowViewModel"
         Title="{x:Static local:Strings.AppTitle}"
         Width="1000" Height="800"
+        MinWidth="950" MinHeight="650"
         Background="#F0F2F5">
     <Window.Resources>
         <helpers:SidebarPageToBoolConverter x:Key="SidebarPageToBoolConverter"/>

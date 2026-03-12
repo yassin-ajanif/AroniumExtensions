@@ -36,8 +36,12 @@ public class GoogleDriveConnectionService : IGoogleDriveConnectionService
 
     private UserCredential? _credential;
 
+    /// <summary>Cached email from the last successful GetConnectedEmailAsync; set to null on Disconnect.</summary>
+    public string? ConnectedEmail { get; private set; }
+
     public async Task ConnectAsync()
     {
+        ConnectedEmail = null;
         _credential = await GetCredentialAsync(forceRefresh: true);
     }
 
@@ -70,7 +74,10 @@ public class GoogleDriveConnectionService : IGoogleDriveConnectionService
                 new Google.Apis.Auth.GoogleJsonWebSignature.ValidationSettings { ForceGoogleCertRefresh = false }
             );
 
-            return payload?.Email;
+            var email = payload?.Email;
+            if (!string.IsNullOrEmpty(email))
+                ConnectedEmail = email;
+            return email;
         }
         catch (Exception ex)
         {
@@ -86,6 +93,7 @@ public class GoogleDriveConnectionService : IGoogleDriveConnectionService
             var store = new Google.Apis.Util.Store.FileDataStore(TokenStorePath, fullPath: true);
             await store.DeleteAsync<Google.Apis.Auth.OAuth2.Responses.TokenResponse>(UserId);
             _credential = null;
+            ConnectedEmail = null;
         }
         catch (Exception ex)
         {

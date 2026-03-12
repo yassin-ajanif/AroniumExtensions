@@ -21,6 +21,12 @@ public interface IGoogleDriveConnectionService
     Task<string?> GetConnectedEmailAsync();
 
     /// <summary>
+    /// Cached email from the last successful GetConnectedEmailAsync (or null after Disconnect).
+    /// Use when offline so the UI can still show the last known email.
+    /// </summary>
+    string? ConnectedEmail { get; }
+
+    /// <summary>
     /// Disconnects the current user by deleting the saved token.
     /// </summary>
     Task DisconnectAsync();

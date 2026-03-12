@@ -68,7 +68,14 @@ public class MainWindowViewModel : ViewModelBase
         PrintCommand = new RelayCommand(async () => await PrintAsync());
         PreviewInvoiceCommand = new RelayCommand(async () => await PreviewInvoiceAsync());
         DownloadUpdateCommand = new RelayCommand(async () => await DownloadAndApplyUpdateAsync(), () => !_isDownloadingUpdate);
-        NavigateToCommand = new RelayCommand<SidebarPage>(p => CurrentPage = p);
+        NavigateToCommand = new RelayCommand<SidebarPage>(async p =>
+        {
+            CurrentPage = p;
+            if (p == SidebarPage.MobileConnection)
+            {
+                await _mobileConnectionViewModel.LoadGoogleStateAsync();
+            }
+        });
         ConnectToGoogleCommand = new RelayCommand(async () => await ConnectToGoogleAsync());
 
         ProductCountDisplay = _productCountStatus;
@@ -808,7 +815,9 @@ private void RecalculateAfterTax()
 
             await LoadSavedSettingsAsync();
 
-            _ = ConnectToGoogleAsync();
+            // Initialize Google connection (loads token + email). MobileConnectionViewModel
+            // will read the cached ConnectedEmail when the user opens the Mobile page.
+            await ConnectToGoogleAsync();
             ServiceProvider.AuditLogExportScheduler.Start(AuditExportIntervalMinutes, AuditExportIntervalSeconds);
             _ = ServiceProvider.TableAuditLogCleaner.CleanAsync();
             _ = CheckForUpdatesAsync();
