@@ -32,7 +32,7 @@ public class ManualMobileDesktopSyncingService : IManualMobileDesktopSyncingServ
     /// Deletes the folder on the MTP device if it exists.
     /// Call this before creating the folder and uploading content (MTP does not overwrite files).
     /// </summary>
-    [SupportedOSPlatform("windows")]
+   /* [SupportedOSPlatform("windows")]
     private static void DeleteFolderIfExists(MediaDevice device, string remotePath)
     {
         if (device == null || string.IsNullOrWhiteSpace(remotePath)) return;
@@ -53,7 +53,32 @@ public class ManualMobileDesktopSyncingService : IManualMobileDesktopSyncingServ
 
         DeleteRecursive(remotePath);
     }
+*/
 
+
+[SupportedOSPlatform("windows")]
+private static void DeleteFolderIfExists(MediaDevice device, string remotePath)
+{
+    if (device == null || string.IsNullOrWhiteSpace(remotePath)) return;
+    
+    try
+    {
+        if (device.DirectoryExists(remotePath))
+        {
+            // The second parameter 'true' tells the library to delete 
+            // all files and subfolders automatically.
+            device.DeleteDirectory(remotePath, true);
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log or handle the error if the folder is locked by the phone's OS
+        System.Diagnostics.Debug.WriteLine($"MTP Delete Error: {ex.Message}");
+    }
+}
+   
+   
+   
     [SupportedOSPlatform("windows")]
     public IReadOnlyList<(int Index, string FriendlyName)> GetConnectedDevices()
     {
@@ -71,99 +96,105 @@ public class ManualMobileDesktopSyncingService : IManualMobileDesktopSyncingServ
         }
     }
 
-    [SupportedOSPlatform("windows")]
-    public async Task<(bool Success, string Message)> SyncToMobileAsync(int deviceIndex)
+   [SupportedOSPlatform("windows")]
+public async Task<(bool Success, string Message)> SyncToMobileAsync(int deviceIndex)
+{
+    MediaDevice? phone = null;
+
+    try
+    {
+        var devices = MediaDevice.GetDevices().ToList();
+        if (deviceIndex < 0 || deviceIndex >= devices.Count)
+            return (false, "Appareil non trouvé. Actualisez la liste.");
+
+        phone = devices[deviceIndex];
+
+        await Task.Delay(1500).ConfigureAwait(false); // give MTP time after plug-in
+
+        if (!phone.IsConnected)
+            phone.Connect();
+
+        var drives = phone.GetDrives().ToList();
+        var drive = drives.FirstOrDefault();
+        if (drive == null)
+            return (false, "Impossible d'accéder au stockage du téléphone.");
+
+        string remoteReportPath = Path.Combine(drive.RootDirectory.FullName, ReportFolderName);
+        DeleteFolderIfExists(phone, remoteReportPath);
+        phone.CreateDirectory(remoteReportPath);
+
+        var dbPath = DatabaseLocationConfigurationService.GetMainDatabasePath();
+        if (!File.Exists(dbPath))
+            return (false, "Base de données introuvable.");
+
+        string tempDbPath = Path.Combine(Path.GetTempPath(), "aronium_sync_" + Path.GetFileName(dbPath));
+        try
+        {
+            await Task.Run(() => File.Copy(dbPath, tempDbPath, overwrite: true)).ConfigureAwait(false);
+            string destDbPath = Path.Combine(remoteReportPath, Path.GetFileName(dbPath));
+            await Task.Run(() => phone.UploadFile(tempDbPath, destDbPath)).ConfigureAwait(false);
+        }
+        finally
+        {
+            try { if (File.Exists(tempDbPath)) File.Delete(tempDbPath); } catch { }
+        }
+
+        int lastRowId = 0;
+        try
+        {
+            var db = ServiceProvider.DbContext;
+            if (db.TableAuditLogs.Any())
+                lastRowId = await db.TableAuditLogs.MaxAsync(x => x.Id).ConfigureAwait(false);
+        }
+        catch
+        {
+        }
+
+        var state = new LastSyncState { LastInjectedCsvRowId = lastRowId };
+        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var json = JsonSerializer.Serialize(state, options);
+
+        string tempJsonPath = Path.Combine(Path.GetTempPath(), LastAuditImportFileName);
+        await File.WriteAllTextAsync(tempJsonPath, json).ConfigureAwait(false);
+
+        try
+        {
+            string destJsonPath = Path.Combine(remoteReportPath, LastAuditImportFileName);
+            await Task.Run(() => phone.UploadFile(tempJsonPath, destJsonPath)).ConfigureAwait(false);
+        }
+        finally
+        {
+            try { File.Delete(tempJsonPath); } catch { }
+        }
+
+        try
+        {
+            if (lastRowId > 0)
+                await TableAuditLogCleaner.DeleteOlderRowsAsync(dbPath, lastRowId).ConfigureAwait(false);
+        }
+        catch
+        {
+        }
+
+        return (true, "Synchronisé vers le téléphone : " + (phone.FriendlyName ?? "appareil") + ".");
+    }
+    catch (Exception ex)
+    {
+        return (false, "MTP : " + ex.Message);
+    }
+    finally
     {
         try
         {
-            var devices = MediaDevice.GetDevices().ToList();
-            if (deviceIndex < 0 || deviceIndex >= devices.Count)
-                return (false, "Appareil non trouvé. Actualisez la liste.");
-
-            var phone = devices[deviceIndex];
-
-            phone.Connect();
-
-            var drives = phone.GetDrives().ToList();
-            var drive = drives.FirstOrDefault();
-            if (drive == null)
-            {
+            if (phone != null && phone.IsConnected)
                 phone.Disconnect();
-                return (false, "Impossible d'accéder au stockage du téléphone.");
-            }
-
-            string remoteReportPath = Path.Combine(drive.RootDirectory.FullName, ReportFolderName);
-            DeleteFolderIfExists(phone, remoteReportPath);
-            phone.CreateDirectory(remoteReportPath);
-
-            var dbPath = DatabaseLocationConfigurationService.GetMainDatabasePath();
-            if (!File.Exists(dbPath))
-            {
-                phone.Disconnect();
-                return (false, "Base de données introuvable.");
-            }
-
-            // Copy DB to temp then upload so we don't open the live DB (may be locked by the app).
-            string tempDbPath = Path.Combine(Path.GetTempPath(), "aronium_sync_" + Path.GetFileName(dbPath));
-            try
-            {
-                await Task.Run(() => File.Copy(dbPath, tempDbPath, overwrite: true)).ConfigureAwait(false);
-                string destDbPath = Path.Combine(remoteReportPath, Path.GetFileName(dbPath));
-                await Task.Run(() => phone.UploadFile(tempDbPath, destDbPath)).ConfigureAwait(false);
-            }
-            finally
-            {
-                try { if (File.Exists(tempDbPath)) File.Delete(tempDbPath); } catch { /* ignore */ }
-            }
-
-            int lastRowId = 0;
-            try
-            {
-                var db = ServiceProvider.DbContext;
-                if (db.TableAuditLogs.Any())
-                    lastRowId = await db.TableAuditLogs.MaxAsync(x => x.Id).ConfigureAwait(false);
-            }
-            catch
-            {
-                // Keep 0
-            }
-
-            var state = new LastSyncState { LastInjectedCsvRowId = lastRowId };
-            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            var json = JsonSerializer.Serialize(state, options);
-            string tempJsonPath = Path.Combine(Path.GetTempPath(), LastAuditImportFileName);
-            await File.WriteAllTextAsync(tempJsonPath, json).ConfigureAwait(false);
-            try
-            {
-                string destJsonPath = Path.Combine(remoteReportPath, LastAuditImportFileName);
-                await Task.Run(() => phone.UploadFile(tempJsonPath, destJsonPath)).ConfigureAwait(false);
-            }
-            finally
-            {
-                try { File.Delete(tempJsonPath); } catch { /* ignore */ }
-            }
-
-            // After successful export, prune older audit logs locally.
-            try
-            {
-                if (lastRowId > 0)
-                    await TableAuditLogCleaner.DeleteOlderRowsAsync(dbPath, lastRowId).ConfigureAwait(false);
-            }
-            catch
-            {
-                // ignore cleanup failures to avoid blocking sync
-            }
-
-            phone.Disconnect();
-            return (true, "Synchronisé vers le téléphone : " + (phone.FriendlyName ?? "appareil") + ".");
         }
-        catch (Exception ex)
+        catch
         {
-            return (false, "MTP : " + ex.Message);
         }
     }
-
-    public async Task<(bool Success, string Message)> SyncToFolderAsync(string rootFolderPath)
+}
+       public async Task<(bool Success, string Message)> SyncToFolderAsync(string rootFolderPath)
     {
         if (string.IsNullOrWhiteSpace(rootFolderPath))
             return (false, "Dossier non sélectionné.");

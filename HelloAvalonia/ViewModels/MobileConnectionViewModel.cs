@@ -289,7 +289,16 @@ public class MobileConnectionViewModel : ViewModelBase
         });
 
         if (folders.Count > 0)
-            SelectedFolderPath = folders[0].Path.LocalPath;
+        {
+            var uri = folders[0].Path;
+            if (uri.IsAbsoluteUri && uri.IsFile)
+                SelectedFolderPath = uri.LocalPath;
+            else
+            {
+                StatusMessage = "Veuillez choisir un dossier sur ce PC (lecteur local).";
+                SelectedFolderPath = string.Empty;
+            }
+        }
     }
 
     private async Task SyncAsync()
