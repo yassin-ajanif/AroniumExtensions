@@ -24,7 +24,7 @@ public class InternetCheckerService : IInternetChecker
 
             return response.IsSuccessStatusCode;
         }
-        catch
+        catch(Exception ex)
         {
             return false;
         }

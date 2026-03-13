@@ -122,34 +122,42 @@
                                         Margin="0,0,0,6"
                                         BorderBrush="#E5E7EB"
                                         BorderThickness="1">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <TextBlock Grid.Column="0"
-                                                   Text="{Binding Name}"
+                                    <StackPanel Spacing="6">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{Binding Name}"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="#1F2937"
+                                                       VerticalAlignment="Center"/>
+                                            <Button Grid.Column="1"
+                                                    Content="Sync"
+                                                    Command="{Binding DataContext.SyncToPhoneCommand, ElementName=MobileConnectionViewRoot}"
+                                                    CommandParameter="{Binding}"
+                                                    Background="#2563EB"
+                                                    Foreground="White"
+                                                    Padding="20,8"
+                                                    FontWeight="SemiBold"
+                                                    CornerRadius="6"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand">
+                                                <Button.Styles>
+                                                    <Style Selector="Button:pointerover">
+                                                        <Setter Property="Background" Value="#1D4ED8"/>
+                                                    </Style>
+                                                    <Style Selector="Button:disabled">
+                                                        <Setter Property="Background" Value="#D1D5DB"/>
+                                                        <Setter Property="Cursor" Value="Arrow"/>
+                                                    </Style>
+                                                </Button.Styles>
+                                            </Button>
+                                        </Grid>
+                                        <TextBlock Text="{Binding LastStatus}"
+                                                   FontSize="13"
                                                    FontWeight="SemiBold"
-                                                   Foreground="#1F2937"
-                                                   VerticalAlignment="Center"/>
-                                        <Button Grid.Column="1"
-                                                Content="Sync"
-                                                Command="{Binding DataContext.SyncToPhoneCommand, ElementName=MobileConnectionViewRoot}"
-                                                CommandParameter="{Binding}"
-                                                Background="#2563EB"
-                                                Foreground="White"
-                                                Padding="20,8"
-                                                FontWeight="SemiBold"
-                                                CornerRadius="6"
-                                                BorderThickness="0"
-                                                Cursor="Hand">
-                                            <Button.Styles>
-                                                <Style Selector="Button:pointerover">
-                                                    <Setter Property="Background" Value="#1D4ED8"/>
-                                                </Style>
-                                                <Style Selector="Button:disabled">
-                                                    <Setter Property="Background" Value="#D1D5DB"/>
-                                                    <Setter Property="Cursor" Value="Arrow"/>
-                                                </Style>
-                                            </Button.Styles>
-                                        </Button>
-                                    </Grid>
+                                                   Foreground="{Binding SyncStatusColor}"
+                                                   TextWrapping="Wrap"
+                                                   IsVisible="{Binding LastStatus, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                    </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -211,7 +219,8 @@
                     </Button>
                     <TextBlock Text="{Binding StatusMessage}"
                                FontSize="13"
-                               Foreground="#6B7280"
+                               FontWeight="SemiBold"
+                               Foreground="{Binding StatusBrush}"
                                TextWrapping="Wrap"/>
                 </StackPanel>
             </Border>

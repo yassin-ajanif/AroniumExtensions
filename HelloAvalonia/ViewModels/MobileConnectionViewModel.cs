@@ -8,14 +8,40 @@ namespace AroniumFactures.ViewModels;
 
 public class ConnectedPhoneItem : ViewModelBase
 {
+    private string _lastStatus = string.Empty;
+    private string _syncStatusColor = "#6B7280";
+
     public int Index { get; init; }
     public string Name { get; init; } = string.Empty;
+
+    public string LastStatus
+    {
+        get => _lastStatus;
+        set
+        {
+            if (_lastStatus == value) return;
+            _lastStatus = value ?? string.Empty;
+            RaisePropertyChanged();
+        }
+    }
+
+    public string SyncStatusColor
+    {
+        get => _syncStatusColor;
+        set
+        {
+            if (_syncStatusColor == value) return;
+            _syncStatusColor = value ?? "#6B7280";
+            RaisePropertyChanged();
+        }
+    }
 }
 
 public class MobileConnectionViewModel : ViewModelBase
 {
     private string _selectedFolderPath = string.Empty;
     private string _statusMessage = "Sélectionnez un dossier ou un téléphone pour synchroniser.";
+    private string _statusBrush = "#6B7280"; // gray; green/red for folder sync result
     private bool _isSyncing;
     private bool _isGoogleConnected;
     private string _googleEmail = string.Empty;
@@ -130,6 +156,18 @@ public class MobileConnectionViewModel : ViewModelBase
         {
             if (_statusMessage == value) return;
             _statusMessage = value ?? string.Empty;
+            RaisePropertyChanged();
+        }
+    }
+
+    /// <summary>Hex color for folder sync status: green success, red error, gray neutral.</summary>
+    public string StatusBrush
+    {
+        get => _statusBrush;
+        set
+        {
+            if (_statusBrush == value) return;
+            _statusBrush = value ?? "#6B7280";
             RaisePropertyChanged();
         }
     }
@@ -267,10 +305,12 @@ public class MobileConnectionViewModel : ViewModelBase
             var service = ServiceProvider.ManualMobileDesktopSyncingService;
             var (success, message) = await service.SyncToFolderAsync(SelectedFolderPath).ConfigureAwait(true);
             StatusMessage = message;
+            StatusBrush = success ? "#16a34a" : "#DC2626"; // green / red, medium bold
         }
         catch (Exception ex)
         {
             StatusMessage = "Erreur : " + ex.Message;
+            StatusBrush = "#DC2626";
         }
         finally
         {
@@ -303,17 +343,20 @@ public class MobileConnectionViewModel : ViewModelBase
         _isSyncing = true;
         SyncCommand.RaiseCanExecuteChanged();
         SyncToPhoneCommand.RaiseCanExecuteChanged();
-        StatusMessage = "Synchronisation vers " + item.Name + "...";
+        item.LastStatus = "Synchronisation en cours...";
+        item.SyncStatusColor = "#6B7280";
 
         try
         {
             var service = ServiceProvider.ManualMobileDesktopSyncingService;
             var (success, message) = await service.SyncToMobileAsync(item.Index).ConfigureAwait(true);
-            StatusMessage = message;
+            item.LastStatus = message;
+            item.SyncStatusColor = success ? "#16a34a" : "#DC2626"; // green / red, medium bold
         }
         catch (Exception ex)
         {
-            StatusMessage = "Erreur : " + ex.Message;
+            item.LastStatus = "Erreur : " + ex.Message;
+            item.SyncStatusColor = "#DC2626";
         }
         finally
         {

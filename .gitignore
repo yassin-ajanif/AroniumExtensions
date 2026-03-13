@@ -13,3 +13,7 @@ deployment/
 # Build folders
 bin/
 obj/
+
+# Google Drive credentials (do not commit)
+HelloAvalonia/secret_desktop_googledrive_key.json
+secret_desktop_googledrive_key.json
