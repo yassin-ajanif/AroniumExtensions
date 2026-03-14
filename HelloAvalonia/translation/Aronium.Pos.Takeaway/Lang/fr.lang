@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <Order>
+    <ServiceType Text="Type de service">
+      <Select Text="Sélectionner type de service pour cette commande" />
+      <None Text="Aucun" />
+      <DineIn Text="Sur place" />
+      <Takeaway Text="À emporter" />
+      <Settings>
+        <Enabled Text="Activer sélection type service" />
+        <RequestServiceType Text="Demander type service automatiquement" />
+        <DefaultServiceType Text="Type service par défaut" />
+        <PrintLargeOrderNumber Text="Imprimer grand n° commande sur ticket" />
+      </Settings>
+    </ServiceType>
+  </Order>
+</Language>

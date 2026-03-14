@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <Users Text="Utilisateurs &amp; sécurité">
+    <View Text="Utilisateurs">
+      <Disabled Text="Afficher utilisateurs inactifs" />
+    </View>
+    <New Text="Ajouter utilisateur" />
+    <ResetPassword Text="Réinitialiser mot de passe">
+      <Success Text="Mot de passe modifié avec succès" />
+    </ResetPassword>
+    <LearnMore Text="En savoir plus sur gestion utilisateurs" />
+    <User>
+      <FirstName Text="Prénom" />
+      <LastName Text="Nom" />
+      <Email Text="Email" />
+      <Password Text="Mot de passe" />
+      <PasswordConfirmation Text="Confirmer mot de passe" />
+      <AccessLevel Text="Niveau d'accès" />
+      <IsEnabled Text="Actif" />
+      <Error>
+        <PasswordConfirmationMatch Text="Le mot de passe et la confirmation doivent correspondre." />
+        <InvalidPassword Text="Un utilisateur avec ce mot de passe existe déjà.
+Veuillez saisir un mot de passe unique et réessayez." />
+        <Disable>
+          <OpenOrders Text="Désactiver l'utilisateur l'empêchera de clôturer les ventes ouvertes.
+Veuillez fermer toutes les commandes ouvertes de cet utilisateur avant de le désactiver.">
+            <Title Text="Impossible de désactiver utilisateur avec ventes ouvertes" />
+          </OpenOrders>
+        </Disable>
+        <DuplicateEmail Text="Cet email est déjà utilisé.
+Veuillez utiliser un autre adresse email." />
+      </Error>
+      <Saved Text="Détails utilisateur modifiés avec succès." />
+    </User>
+    <Delete Text="Supprimer utilisateur">
+      <Confirmation Text="Êtes-vous sûr de vouloir supprimer « {0} » ?" />
+      <Error>
+        <CurrentUser Text="Vous ne pouvez pas vous supprimer vous-même !" />
+        <DataViolation Text="Impossible de supprimer utilisateur.
+L'utilisateur contient des documents ou éléments liés." />
+      </Error>
+    </Delete>
+    <Security Text="Sécurité">
+      <Title Text="Définir niveau d'accès pour opérations prédéfinies" />
+      <Description Text="Sélectionnez niveau d'accès pour chaque action afin de définir permissions utilisateur requises." />
+      <LearnMore Text="En savoir plus sur niveaux d'accès et sécurité" />
+      <InvalidAccessLevel Text="Niveau d'accès invalide" />
+      <Save>
+        <Success Text="Niveaux de sécurité enregistrés avec succès" />
+        <Error>
+          <AccessLevels Text="Niveaux d'accès invalides">
+            <Message Text="Vous tentez d'assigner des niveaux d'accès supérieurs à vos permissions. Niveau d'accès maximum utilisable : {0}.
+
+Veuillez corriger erreurs de validation et réessayez." />
+          </AccessLevels>
+        </Error>
+      </Save>
+      <Group>
+        <General Text="Général" />
+        <Sales Text="Ventes" />
+      </Group>
+    </Security>
+  </Users>
+</Language>

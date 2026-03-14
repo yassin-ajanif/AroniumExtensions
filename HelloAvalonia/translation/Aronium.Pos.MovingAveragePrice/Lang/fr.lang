@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <MovingAveragePrice>
+    <Recalculate Text="Prix moyen pondéré">
+      <Title Text="Prix moyen pondéré" />
+      <Info Text="Sélectionnez les produits ou groupes de produits pour lesquels vous souhaitez recalculer le prix moyen pondéré. Le prix moyen pondéré sera calculé et mettra à jour tous les documents de la période sélectionnée.
+Cette opération peut prendre du temps, selon le nombre de produits et la période sélectionnée." />
+      <Selection>
+        <ProductGroups Text="Groupes de produits"/>
+        <Products Text="Produits"/>
+        <NoItems Text="Aucun produit sélectionné" />
+      </Selection>
+      <SelectedPeriod Text="Période sélectionnée" />
+      <PeriodStart Text="Début de période" />
+      <PeriodEnd Text="Fin de période" />
+      <Start Text="Démarrer" />
+      <Stop Text="Arrêter" />
+      <Product Text="Produit : {0}" />
+      <OverallProgress Text="Progression globale" />
+      <Complete Text="Prix moyen pondéré recalculé avec succès." />
+      <Disabled Text="Le prix moyen pondéré est désactivé. Activez le prix moyen pondéré pour commencer à suivre automatiquement les prix de revient.">
+        <Enable Text="Cliquez ici pour activer le prix moyen pondéré" />
+      </Disabled>
+      <PriceChangeOption Text="Que doit être mis à jour lorsque le prix de revient change ?">
+        <Markup Text="Marge" />
+        <SalePrice Text="Prix de vente" />
+      </PriceChangeOption>
+    </Recalculate>
+    <Settings>
+      <Title Text="Prix moyen pondéré" />
+      <Enabled Text="Activer le prix moyen pondéré" />
+    </Settings>
+    <SalePriceChanged Text="Prix de vente modifiés">
+      <Message Text="Les prix de vente des produits achetés ont été modifiés ! Veuillez vérifier si les nouveaux prix sont corrects." />
+    </SalePriceChanged>
+  </MovingAveragePrice>
+</Language>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language name="French" code="fr">
+  <ReceiptPrinter Text="Imprimante ticket">
+    <PrintReceipt Text="Imprimer ticket" />
+    <Receipt>
+      <PrinterNotFound Text="L'imprimante ticket n'est pas sélectionnée ou désactivée. Vérifiez les paramètres d'imprimante et réessayez." />
+      <PaymentTypes>
+        <PrintDisabled Text="L'impression de ticket est désactivée pour les types de paiement sélectionnés.
+Veuillez activer l'impression de ticket pour les types de paiement sélectionnés avant d'imprimer un ticket." />
+      </PaymentTypes>
+      <Company>
+        <TaxNumber Text="N° TVA" />
+      </Company>
+      <Customer Text="Client">
+        <Address Text="Adresse" />
+        <TaxNumber Text="N° TVA" />
+        <Code Text="Code" />
+        <PhoneNumber Text="Tél." />
+        <Email Text="Email" />
+      </Customer>
+      <Number Text="N° ticket" />
+      <RefundNumber Text="N° avoir" />
+      <OrderNumber Text="N° commande" />
+      <ItemsCount Text="Nb articles" />
+      <Subtotal Text="Sous-total" />
+      <Tax Text="TVA" />
+      <Discount Text="Remise panier" />
+      <Total Text="TOTAL" />
+      <PaidAmount Text="Montant payé" />
+      <AmountDue Text="Reste à payer" />
+      <DueDate Text="Échéance" />
+      <User Text="Utilisateur" />
+      <Change Text="Rendu" />
+      <TotalSavings Text="Économisé" />
+      <OutstandingBalance Text="Solde restant" />
+      <Customize Text="Personnaliser ticket">
+        <UseSystemCurrency Text="Utiliser format devise système">
+          <Info Text="Votre symbole de devise est défini sur « {0} ». Utilisez le Panneau de configuration Windows pour changer le symbole de devise.">
+            <OpenRegionalSettings Text="Ouvrir paramètres régionaux"/>
+          </Info>
+        </UseSystemCurrency>
+        <NumberOfDecimalPlaces Text="Décimales" />
+        <PrintTaxes Text="Imprimer totaux TVA" />
+        <PrintItemsCount Text="Imprimer nb articles">
+          <PrintItemsQuantity Text="Imprimer quantité totale" />
+        </PrintItemsCount>
+        <PrintMeasurementUnit Text="Imprimer unité mesure" />
+        <PrintOrderNumber Text="Imprimer n° commande" />
+        <PrintOutstandingBalance Text="Imprimer solde restant" />
+        <ShortReceiptNumber Text="N° ticket court" />
+        <PrintTaxName Text="Imprimer nom TVA" />
+        <Counter Text="Compteur ticket">
+          <Edit Text="Cliquer pour modifier compteur n° ticket" />
+        </Counter>
+        <Localize Text="Localiser texte ticket">
+          <Info Text="Utilisez ce formulaire pour traduire ou modifier les libellés imprimés sur les tickets." />
+          <UseInReportsAndInvoices Text="Utiliser libellés personnalisés dans rapports et factures">
+            <RestartRequired Text="Redémarrage requis avant application des changements" />
+          </UseInReportsAndInvoices>
+          <Company>
+            <TaxNumber Text="N° TVA entreprise" />
+          </Company>
+          <CustomerDetails Text="Détails client">
+            <Info Text="Choisissez comment les détails client sont imprimés sur ticket. Si vous ne souhaitez pas imprimer certains libellés, décochez l'option ci-dessous.
+Cette section concerne uniquement les libellés, pas les détails client réels imprimés." />
+          </CustomerDetails>
+          <Customer Text="Client">
+            <Address Text="Adresse" />
+            <TaxNumber Text="N° TVA" />
+            <Code Text="Code" />
+            <PhoneNumber Text="N° téléphone" />
+            <Email Text="Email" />
+          </Customer>
+          <ReceiptNumber Text="N° ticket" />
+          <RefundNumber Text="N° avoir" />
+          <OrderNumber Text="N° commande" />
+          <ItemsCount Text="Nb articles" />
+          <Discount Text="Remise" />
+          <Subtotal Text="Sous-total" />
+          <Tax Text="Taux TVA" />
+          <Total Text="Total" />
+          <PaidAmount Text="Montant payé" />
+          <AmountDue Text="Reste à payer" />
+          <DueDate Text="Échéance" />
+          <User Text="Utilisateur" />
+          <Change Text="Rendu" />
+          <TotalSavings Text="Économies totales" />
+          <OutstandingBalance Text="Solde restant" />
+        </Localize>
+        <CustomerDetails Text="Détails client">
+          <Info Text="Choisissez quels détails client imprimer sur ticket" />
+          <Name Text="Nom" />
+          <Code Text="Code" />
+          <TaxNumber Text="N° TVA" />
+          <Address Text="Adresse" />
+          <PhoneNumber Text="N° téléphone" />
+          <Email Text="Email" />
+        </CustomerDetails>
+        <Address Text="Format adresse">
+          <Info Text="Spécifiez comment les lignes d'adresse sont imprimées sur tickets et factures" />
+          <Preview Text="Aperçu" />
+        </Address>
+      </Customize>
+    </Receipt>
+    <DailyReport>
+      <ZReport Text="RAPPORT Z" />
+      <XReport Text="RAPPORT X" />
+      <CashRegister Text="Caisse :" />
+      <Date Text="Date :" />
+      <Time Text="Heure :" />
+      <ReportNumber Text="Rapport :" />
+      <FromDocument Text="Du document :" />
+      <ToDocument Text="Au document :" />
+      <CashIn Text="Entrée caisse :" />
+      <CashOut Text="Sortie caisse :" />
+      <UserSales Text="Ventes utilisateur :" />
+      <PaymentTypes Text="Modes paiement :">
+        <Reconciled Text="Rapproché" />
+        <Total Text="Total encaissé :" />
+      </PaymentTypes>
+      <Refunds Text="Retours :">
+        <Total Text="Total retours :" />
+      </Refunds>
+      <TaxCollected Text="TVA collectée :" />
+      <TaxableTotal Text="Base TVA :" />
+      <Tax Text="TVA :" />
+      <Total Text="Total :" />
+      <TotalBalance Text="Solde total :" />
+      <Items Text="RAPPORT ARTICLES">
+        <ReportNumber Text="Rapport :" />
+        <Products Text="PRODUITS" />
+        <Groups Text="GROUPES PRODUITS" />
+        <Count Text="Nb articles" />
+      </Items>
+      <DiscountsGranted Text="Remises accordées :" />
+      <CreditPayments Text="Paiements crédit encaissés :" />
+    </DailyReport>
+    <CashDrawer Text="Tiroir caisse">
+      <OpenCashDrawer Text="Ouvrir tiroir caisse">
+        <AuthorizationRequired Text="Ouvrir tiroir caisse nécessite autorisation.
+Veuillez saisir le mot de passe requis pour ouvrir le tiroir caisse." />
+      </OpenCashDrawer>
+      <Command Text="Commande tiroir caisse">
+        <LearnMore Text="Qu'est-ce que c'est ?" />
+      </Command>
+      <Error>
+        <CommandNotSet Text="Commande tiroir caisse non définie.
+Veuillez définir la commande tiroir caisse pour continuer." />
+        <PrinterNotSet Text="Imprimante ticket non définie.
+Veuillez configurer l'imprimante ticket pour continuer." />
+      </Error>
+      <Test Text="Tester tiroir">
+        <InvalidCommand Text="Veuillez saisir une commande tiroir caisse valide pour tester." />
+      </Test>
+    </CashDrawer>
+  </ReceiptPrinter>
+  <FiscalPrinter>
+    <Check Text="Chargement imprimante ticket...">
+      <Status Text="Vérification statut imprimante..." />
+    </Check>
+    <CloseFiscalDay Text="Imprimer rapports clôture">
+      <Info Text="Veuillez sélectionner les rapports à imprimer. Assurez-vous que votre imprimante est disponible et opérationnelle." />
+      <DailyReport Text="Imprimer rapport Z">
+        <InProgress Text="Impression rapport Z... Veuillez patienter..." />
+      </DailyReport>
+      <SubReport Text="Imprimer rapport X">
+        <InProgress Text="Impression rapport X... Veuillez patienter..." />
+      </SubReport>
+      <ItemsReport Text="Imprimer rapport articles">
+        <InProgress Text="Impression rapport articles... Veuillez patienter..." />
+      </ItemsReport>
+      <PrinterDisabled Text="Imprimante désactivée ou non sélectionnée. Les rapports ne peuvent pas être imprimés." />
+    </CloseFiscalDay>
+  </FiscalPrinter>
+</Language>

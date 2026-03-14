@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <CustomerDisplay>
+    <Total Text="Total :" />
+    <Change Text="Rendu :" />
+    <Paid Text="Payé :" />
+    <WelcomeMessage Text="BIENVENUE !" />
+    <Settings Text="Affichage client">
+      <Enabled Text="Activé" />
+      <Port Text="Port COM">
+        <Settings>
+          <BaudRate Text="Bits par seconde" />
+          <DataBits Text="Bits de données" />
+          <StopBits Text="Bits d'arrêt" />
+          <Parity Text="Parité" />
+          <FlowControl Text="Contrôle de flux" />
+          <Show Text="Afficher les paramètres du port"/>
+          <Hide Text="Masquer les paramètres du port" />
+          <ResetToDefaults Text="Restaurer les paramètres par défaut" />
+        </Settings>
+      </Port>
+      <CharactersPerLine Text="Nombre de caractères" />
+      <WelcomeMessage Text="Message de bienvenue">
+        <TopLine Text="Ligne supérieure" />
+        <BottomLine Text="Ligne inférieure" />
+      </WelcomeMessage>
+      <Test Text="Tester l'affichage" />
+    </Settings>
+    <Error>
+      <InvalidPortSettings Text="Erreur lors de l'initialisation de l'affichage client.\nVeuillez vérifier les paramètres du port." />
+    </Error>
+  </CustomerDisplay>
+</Language>

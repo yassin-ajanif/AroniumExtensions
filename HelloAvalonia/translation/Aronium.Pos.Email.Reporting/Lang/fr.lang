@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <Settings>
+    <Email>
+      <Disabled Text="La configuration de l'e-mail est requise pour envoyer des e-mails. Assurez-vous que vos paramètres de messagerie sont correctement configurés." />
+      <Reporting Text="Rapports">
+        <Recipient Text="Destinataire(s)">
+          <Info Text="Séparez plusieurs adresses e-mail par des virgules" />
+        </Recipient>
+        <Subject Text="Sujet" />
+        <Message Text="Message" />
+        <XReport Text="Rapport X" />
+        <ZReport Text="Rapport Z (fin de journée)" />
+        <Reports Text="Rapports">
+          <Selection Text="Sélection du rapport">
+            <Add Text="Ajouter un rapport" />
+            <Remove Text="Supprimer le rapport" />
+          </Selection>
+          <Format Text="Format">
+            <Pdf Text="PDF" />
+            <Excel Text="Excel" />
+          </Format>
+        </Reports>
+        <Scheduled Text="Rapports planifiés">
+          <SendPeriodically Text="Envoyer un e-mail périodiquement" />
+          <Interval Text="Intervalle d'envoi">
+            <Minutes Text="minutes" />
+          </Interval>
+          <BusinessHours Text="Heures de bureau" />
+          <SendEmpty Text="Envoyer si vide">
+            <Info Text="Envoyer un e-mail même si aucune vente n'a été réalisée" />
+          </SendEmpty>
+        </Scheduled>
+        <Test Text="Envoyer un e-mail de test">
+          <Info Text="La configuration sera enregistrée avant d'envoyer l'e-mail de test" />
+          <Incomplete Text="L'e-mail n'est pas configuré. Veuillez vérifier votre configuration et réessayer." />
+          <Error Text="Erreur lors de l'envoi de l'e-mail de test. Veuillez vérifier votre configuration et réessayer.\nMessage système : {0}" />
+        </Test>
+      </Reporting>
+    </Email>
+  </Settings>
+  <Email>
+    <Reporting>
+      <Message>
+        <Body>
+          <Total Text="Votre total de ventes pour {0} : {1}" />
+          <NumberOfSales Text="Nombre de ventes : {0}" />
+          <PaymentTypes Text="Types de paiement :" />
+          <Users Text="Utilisateurs :" />
+          <NumberOfRefunds Text="Nombre de remboursements : {0}" />
+          <RefundsTotal Text="Total des remboursements : {0}" />
+        </Body>
+        <ReportType>
+          <XReport Text="Rapports de ventes" />
+          <ZReport Text="Fin de journée" />
+        </ReportType>
+      </Message>
+      <License>
+        <Expiring Text="La licence du module &quot;Rapports par e-mail&quot; expirera dans {0} jour(s).\n\nVeuillez acheter une licence pour garantir un accès continu après le {1}">
+          <Title Text="La licence expirera bientôt"/>
+        </Expiring>
+        <GracePeriod Text="La licence du module &quot;Rapports par e-mail&quot; a expiré et il cessera de fonctionner après le {0}\nVeuillez acheter une licence pour garantir un accès continu.">
+          <LicenseAlreadyPurchased Text="Si vous avez déjà acheté une licence, vous pouvez ignorer ce message jusqu'à ce que nous recevions le paiement et que votre licence soit mise à jour." />
+          <Hide Text="Masquer ce message pendant 30 jours" />
+        </GracePeriod>
+        <Expired Text="La licence du module &quot;Rapports par e-mail&quot; a expiré et le module sera désactivé jusqu'à ce qu'une licence soit achetée.">
+          <Title Text="Licence expirée !"/>
+          <Renew Text="Veuillez renouveler votre licence sur"/>
+          <Hide Text="Ne plus afficher ce message"/>
+        </Expired>
+        <Error>
+          <Notification Text="Veuillez acheter une licence pour activer la fonctionnalité de rapports par e-mail.">
+            <Expired Text="Licence expirée." />
+            <Missing Text="Licence manquante." />
+          </Notification>
+        </Error>
+      </License>
+      <SendingInProgress Text="Envoi des rapports... Veuillez patienter..." />
+    </Reporting>
+  </Email>
+</Language>

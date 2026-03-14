@@ -27,6 +27,7 @@ public static class ServiceProvider
     private static ITableAuditLogCleaner? _tableAuditLogCleaner;
     private static IManualMobileDesktopSyncingService? _manualMobileDesktopSyncingService;
     private static IInternetChecker? _internetCheckerService;
+    private static ILanguageInjecter? _languageInjecter;
 
     /// <summary>
     /// Initializes only LocalSettingsService and CompanionAppWatcherService (no DB).
@@ -70,6 +71,7 @@ public static class ServiceProvider
         _tableAuditLogCleaner = new TableAuditLogCleaner(_googleDriveConnectionService, databasePath);
         _manualMobileDesktopSyncingService = new ManualMobileDesktopSyncingService();
         _internetCheckerService = new InternetCheckerService();
+        _languageInjecter = new LanguageInjecter();
     }
 
     public static AppDbContext DbContext => _dbContext ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
@@ -87,4 +89,5 @@ public static class ServiceProvider
     public static ITableAuditLogCleaner TableAuditLogCleaner => _tableAuditLogCleaner ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IManualMobileDesktopSyncingService ManualMobileDesktopSyncingService => _manualMobileDesktopSyncingService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
     public static IInternetChecker InternetCheckerService => _internetCheckerService ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
+    public static ILanguageInjecter LanguageInjecter => _languageInjecter ?? throw new System.InvalidOperationException("ServiceProvider not initialized");
 }

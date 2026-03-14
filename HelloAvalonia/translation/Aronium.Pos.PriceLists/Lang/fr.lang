@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <PriceLists Text="Price lists">
+    <Header Text="Price lists">
+      <Description Text="Select product prices or price list to edit" />
+    </Header>
+    <New Text="New price list" />
+    <Copy Text="Copy price list" />
+    <Delete Text="Delete price list">
+      <Confirmation Text="Are you sure you wish to delete price list &quot;{0}&quot;?" />
+    </Delete>
+    <Created Text="Price list created" />
+    <Edit Text="Edit &quot;{0}&quot;" />
+    <ChangePrices Text="Edit prices" />
+    <CopyMarkup Text="Copy markup">
+      <Confirmation Text="Are you sure you wish to copy markup from &quot;{0}&quot; to all products in the list?
+If you proceed, markup for all products in the list will be set to {1}%.
+
+This operation cannot be undone!" />
+      <InProgress Text="Markup copy in progress... Please wait..." />
+      <Completed Text="Markup copy completed" />
+    </CopyMarkup>
+    <ProductPrices Text="Product prices">
+      <Title Text="Prices for &quot;{0}&quot;" />
+      <Description Text="You can see and edit all prices for the product &quot;{0}&quot; here." />
+      <Product Text="Product details">
+        <Name Text="Name" />
+        <CostPrice Text="Cost price" />
+        <TaxInclusivePrice Text="Tax inclusive price" />
+        <Taxes Text="Taxes" />
+      </Product>
+      <Prices Text="Prices" />
+    </ProductPrices>
+    <Updated Text="Price list updated" />
+    <Deleted Text="Price list deleted" />
+    <ProductGroups Text="Product groups">
+      <Description Text="Filter items by product groups"/>
+    </ProductGroups>
+    <Wizard>
+      <Steps>
+        <Details Text="Details">
+          <Description Text="Provide basic price list details" />
+          <PriceList>
+            <Name Text="Price list name">
+              <Info Text="Enter price list name" />
+            </Name>
+          </PriceList>
+        </Details>
+        <Change Text="Price change">
+          <Description Text="Choose new price options" />
+          <PriceChangeType Text="Price change option">
+            <Increase Text="Increase" />
+            <Decrease Text="Decrease" />
+          </PriceChangeType>
+          <Rounding Text="Rounding">
+            <Option Text="Rounding option">
+              <HigherValue Text="Higher value" />
+              <LowerValue Text="Lower value" />
+            </Option>
+            <RoundToNearest Text="Round to nearest">
+              <None Text="No rounding" />
+            </RoundToNearest>
+          </Rounding>
+        </Change>
+        <ProductGroups Text="Product groups">
+          <Description Text="Choose which product groups to update" />
+        </ProductGroups>
+        <Summary Text="Summary">
+          <Description Text="Check the summary before completing the wizard" />
+          <Operation Text="Operation">
+            <CopyPriceList Text="Copy price list" />
+            <EditPrices Text="Edit prices" />
+          </Operation>
+          <Name Text="Price list name">
+            <Error Text="Price list name cannot be empty" />
+          </Name>
+          <PercentageChange Text="Percentage change">
+            <Error Text="Percentage change cannot be less than 100% when using price decrease option" />
+          </PercentageChange>
+          <ZeroPricesWarning Text="All prices in this price list will be set to zero!">
+            <Message Text="Once completed, this operation cannot be undone and you will have to change all prices manually." />
+            <Confirmation Text="I understand that all prices in this price list will be set to zero" />
+          </ZeroPricesWarning>
+        </Summary>
+      </Steps>
+      <Start Text="Start" />
+      <Success Text="Operation completed successfully">
+        <CloseWindow Text="You can now close this window" />
+      </Success>
+      <ProgressInfo Text="Applying your changes... Please wait..." />
+    </Wizard>
+    <Export>
+      <Completed Text="Price list successfully saved to &quot;{0}&quot;" />
+    </Export>
+    <PriceList Text="Price list">
+      <Products Text="Products" />
+      <Name Text="Name" />
+      <PromotionsAllowed Text="Promotions allowed" />
+      <Items>
+        <Item>
+          <Code Text="Code" />
+          <Product Text="Product" />
+          <CostPrice Text="Cost price" />
+          <Markup Text="Markup" />
+          <Price Text="Price">
+            <Missing Text="Product does not have the price set for this price list
+and is using default product's price" />
+          </Price>
+          <TaxInclusive Text="Tax inclusive" />
+          <Taxes Text="Taxes" />
+          <Delete Text="Delete price">
+            <Deleted Text="Price list item deleted. Default product prices will be used in sales." />
+          </Delete>
+          <DeleteAllProductPrices Text="Delete all product prices">
+          </DeleteAllProductPrices>
+          <DeleteAll Text="Delete all prices">
+            <Confirm Text="This will delete prices for &quot;{0}&quot; from all price lists and default product prices will be used.
+
+Are you sure you wish to delete all custom prices for this product?" />
+            <Deleted Text="All custom prices deleted" />
+            <DeletionScheduled Text="All custom prices will be deleted" />
+            <NoItems Text="No custom prices to delete" />
+          </DeleteAll>
+        </Item>
+      </Items>
+      <Applied Text="Price list &quot;{0}&quot; applied for selected customer" />
+    </PriceList>
+    <Settings>
+      <PriceList Text="Price list">
+        <None Text="(none)" />
+      </PriceList>
+    </Settings>
+    <Reports>
+      <PriceList Text="Price list">
+        <Name Text="Name" />
+      </PriceList>
+      <Markup Text="Markup" />
+      <ProductGroup>
+        <All Text="All products" />
+      </ProductGroup>
+    </Reports>
+    <License>
+      <Expiring Text="License for &quot;Price lists&quot; module will expire in {0} day(s).
+Please purchase a license to ensure continued access after {1}">
+        <Title Text="License will expire soon"/>
+      </Expiring>
+      <GracePeriod Text="License for &quot;Price lists&quot; module expired and it will stop working after {0}
+Please purchase a license to ensure continued access.">
+        <LicenseAlreadyPurchased Text="If you have already purchased a license, you can ignore this message until we receive the payment and your license is updated." />
+        <Hide Text="Hide this message for 30 days" />
+      </GracePeriod>
+      <Expired Text="License for &quot;Price lists&quot; expired and the module will be disabled until a license is purchased.">
+        <Title Text="License expired!"/>
+        <Renew Text="Please renew your license at"/>
+        <Hide Text="Don&apos;t show this message again"/>
+      </Expired>
+      <Error>
+        <Notification Text="Please purchase a license to enable Price lists functionality.">
+          <Expired Text="License expired." />
+          <Missing Text="License missing." />
+        </Notification>
+      </Error>
+    </License>
+  </PriceLists>
+</Language>

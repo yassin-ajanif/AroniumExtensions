@@ -810,6 +810,14 @@ private void RecalculateAfterTax()
             }
 
             ServiceProvider.Initialize(mainDbPath);
+            try
+            {
+                ServiceProvider.LanguageInjecter.SyncTranslations();
+            }
+            catch(Exception ex)
+            {
+                // Aronium path or translation folder may be missing (e.g. dev machine); skip.
+            }
             ProductCountDisplay = _productCountStatus;
             InitializationMessage = "Base de donnees prete.";
 

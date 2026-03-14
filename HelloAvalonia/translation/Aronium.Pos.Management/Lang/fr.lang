@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language code="fr" name="French">
+  <Management Text="Gestion">
+    <NoItems Text="Aucun module de gestion disponible pour l'utilisateur {0}.
+Veuillez vous connecter avec un utilisateur ayant accès à au moins un module de gestion pour continuer." />
+    <Dashboard Text="Tableau de bord">
+      <NoData Text="Aucune donnée à afficher" />
+      <MonthlySales Text="Ventes mensuelles">
+        <Description Text="Données de ventes regroupées par mois" />
+        <Month Text="Mois" />
+        <Legend Text="Légende" />
+        <CurrentYear Text="Année en cours" />
+        <TotalSales Text="Total des ventes">
+          <TopMonth Text="Meilleur mois :" />
+        </TotalSales>
+        <Year Text="Année">
+          <Previous Text="Année précédente" />
+          <Next Text="Année suivante" />
+        </Year>
+      </MonthlySales>
+      <HourlySales Text="Ventes horaires">
+        <Description Text="Données de ventes regroupées par heure" />
+        <Hour Text="Heure" />
+        <Options>
+          <Amount Text="Montant" />
+          <Count Text="Nombre" />
+        </Options>
+      </HourlySales>
+      <TopProducts Text="Meilleurs produits">
+        <Product Text="Produit" />
+        <Total Text="Total" />
+      </TopProducts>
+      <TopProductGroups Text="Meilleurs groupes de produits">
+        <Description Text="Meilleurs groupes de produits vendus sur la période sélectionnée" />
+        <Group Text="Groupe de produits" />
+      </TopProductGroups>
+      <TopCustomers Text="Meilleurs clients">
+        <Description Text="Principaux clients sur la période sélectionnée (top 5)" />
+      </TopCustomers>
+      <PeriodicReports Text="Rapports périodiques">
+        <SelectPeriod Text="Sélectionner la période de rapport" />
+      </PeriodicReports>
+    </Dashboard>
+    <Products Text="Produits">
+      <Loading Text="Chargement des produits..." />
+      <LearnMore Text="En savoir plus sur les produits" />
+      <Taxes Text="Taux de TVA">
+        <LearnMore Text="En savoir plus sur les taux de TVA"/>
+        <New Text="Nouveau taux de TVA" />
+        <Switch Text="Changer les taxes">
+          <OldTax Text="Ancienne taxe" />
+          <NewTax Text="Nouvelle taxe" />
+          <Tooltip Text="Remplacer la taxe pour tous les produits" />
+          <Info Text="Utilisez ce formulaire pour remplacer les taxes de tous les produits.
+
+Sélectionnez l'ancienne taxe à remplacer par la nouvelle taxe et cliquez sur le bouton « Remplacer » ci-dessous." />
+          <Replace Text="Remplacer" />
+          <Error Text="Erreur lors du remplacement des taxes.
+Message système : {0}" />
+          <Success Text="Taxes remplacées avec succès !" />
+        </Switch>
+        <Edit>
+          <Title Text="Modifier la taxe « {0} »" />
+        </Edit>
+        <Delete>
+          <Title Text="Supprimer le taux de TVA" />
+          <Confirmation Text="Êtes-vous sûr de vouloir supprimer le taux de TVA « {0} » ?" />
+          <Error Text="Erreur lors de la suppression du taux de TVA. Assurez-vous que le taux n'est pas utilisé et réessayez." />
+        </Delete>
+        <Tax>
+          <ReadOnly Text="La taxe sélectionnée existe dans des documents et ne peut pas être modifiée" />
+          <Code Text="Code" />
+          <Name Text="Nom" />
+          <Rate Text="Taux" />
+          <Fixed Text="Fixe" />
+          <TaxOnTotal Text="TVA sur total" />
+          <Enabled Text="Activée" />
+        </Tax>
+        <Onboarding>
+          <Title Text="Taux de TVA" />
+          <Info Text="Saisissez les taux de TVA utilisés pour les définitions de produits, s'il y en a.
+Il doit y avoir au moins un taux de TVA dans le système." />
+          <AddMore Text="Enregistrer &amp; ajouter d'autres">
+            <Error Text="Erreur lors de l'ajout du nouveau taux de TVA. Vérifiez vos données et réessayez" />
+            <Name Text="Nom de la taxe (ex. « Pas de taxe »)" />
+          </AddMore>
+          <Existing Text="Taux de TVA existants">
+            <NoItems Text="Aucun taux de TVA défini. Ajoutez au moins un taux de TVA pour pouvoir ajouter de nouveaux produits.">
+              <AddDefault Text="Ajouter un taux de TVA par défaut" />
+            </NoItems>
+          </Existing>
+        </Onboarding>
+        <NoTaxes Text="Aucune taxe">
+          <Add Text="Ajouter une nouvelle taxe" />
+        </NoTaxes>
+      </Taxes>
+      <New Text="Nouveau produit">
+        <Product Text="Ajouter un nouveau produit" />
+        <Or Text="ou" />
+        <Group Text="nouveau groupe de produits" />
+      </New>
+      <Delete Text="Supprimer le produit" />
+      <Edit Text="Modifier le produit" />
+      <Search Text="Rechercher des produits">
+        <Result Text="Résultat" />
+        <Empty Text="Aucun résultat" />
+      </Search>
+      <Groups Text="Groupes de produits">
+        <Root Text="Produits" />
+        <Empty Text="Le groupe sélectionné ne contient aucun produit">
+          <Info Text="Ajouter un produit au groupe sélectionné" />
+        </Empty>
+      </Groups>
+      <Group>
+        <Details Text="Détails" />
+        <New Text="Nouveau groupe" />
+        <Edit Text="Modifier le groupe">
+          <Title Text="Modifier le groupe « {0} »" />
+          <Error>
+            <InvalidParentGroup Text="Groupe parent invalide" />
+          </Error>
+        </Edit>
+        <Name Text="Nom" />
+        <Color Text="Couleur" />
+        <Image Text="Image">
+          <Browse Text="Parcourir">
+            <Info Text="Sélectionnez l'image du groupe de produits depuis votre ordinateur" />
+          </Browse>
+          <Clear Text="Effacer">
+            <Info Text="Supprimer l'image du groupe de produits" />
+          </Clear>
+          <Error Text="Impossible de charger l'image.
+L'image peut être invalide ou trop volumineuse. Essayez de redimensionner l'image avant de l'ajouter au groupe." />
+        </Image>
+        <Delete Text="Supprimer le groupe">
+          <Title Text="Supprimer le groupe de produits" />
+          <Confirmation Text="Êtes-vous sûr de vouloir supprimer le groupe « {0} » ?" />
+          <Error Text="Erreur lors de la suppression du groupe.
+Message système : {0}">
+            <DataViolation Text="Le groupe sélectionné ne peut pas être supprimé.
+
+Assurez-vous qu'il n'y a pas de produits enfants dans des documents, promotions ou ventes et réessayez." />
+          </Error>
+        </Delete>
+        <Saved Text="Le groupe a été enregistré avec succès" />
+      </Group>
+      <Product>
+        <Edit Text="Modifier le produit « {0} »" />
+        <Details Text="Détails" />
+        <Name Text="Nom" />
+        <Code Text="Code" />
+        <Barcode Text="Code-barres">
+          <Generate Text="Générer le code-barres" />
+        </Barcode>
+        <MeasurementUnit Text="Unité de mesure" />
+        <Taxes Text="Taxes">
+          <Add Text="Ajouter une taxe au produit">
+            <Tooltip Text="Ajouter un taux de TVA au produit" />
+          </Add>
+          <Remove>
+            <Tooltip Text="Supprimer ce taux de TVA" />
+          </Remove>
+          <NoTaxes>
+            <Info Text="Aucune taxe trouvée.
+Ajoutez des taxes pour pouvoir en assigner une au produit" />
+          </NoTaxes>
+        </Taxes>
+        <SalePriceBeforeTax Text="Prix de vente avant taxe" />
+        <SalePrice Text="Prix de vente" />
+        <IsTaxIncluded Text="Le prix inclut la taxe" />
+        <Group Text="Groupe" />
+        <IsEnabled Text="Actif" />
+        <IsService Text="Service (sans stock)" />
+        <IsDiscountAllowed Text="Remise autorisée" />
+        <IsPriceChangeAllowed Text="Modification de prix autorisée" />
+        <IsUsingDefaultQuantity Text="Quantité par défaut" />
+        <AgeRestriction Text="Restriction d'âge">
+          <Tooltip Text="Âge minimum requis pour acheter ce produit" />
+          <Years Text="année(s)" />
+          <Validation>
+            <Message Text="Ce produit est soumis à une restriction d'âge.
+Veuillez confirmer que le client est autorisé à acheter l'article.">
+              <Title Text="Produit avec restriction d'âge" />
+              <BornBefore Text="Né avant le :" />
+            </Message>
+            <Confirm Text="Confirmer" />
+          </Validation>
+        </AgeRestriction>
+        <Description Text="Description" />
+        <Prices Text="Prix &amp; taxe" />
+        <Cost Text="Coût">
+          <BeforeTax Text="(avant taxe)" />
+          <Disabled Text="Pourquoi ne puis-je pas saisir le prix de revient ?" />
+        </Cost>
+        <Markup Text="Marge" />
+        <ImageAndColor Text="Image &amp; couleur">
+          <Image Text="Image">
+            <Browse Text="Parcourir">
+              <Info Text="Sélectionnez l'image du produit depuis votre ordinateur" />
+            </Browse>
+            <Clear Text="Effacer">
+              <Info Text="Supprimer l'image du produit" />
+            </Clear>
+            <Error Text="Impossible de charger l'image.
+L'image peut être invalide ou trop volumineuse. Essayez de redimensionner l'image avant de l'ajouter au produit." />
+          </Image>
+          <Color Text="Couleur" />
+        </ImageAndColor>
+        <Comments Text="Commentaires">
+          <Info Text="Les commentaires seront imprimés sur les tickets de cuisine." />
+          <Note Text="Saisir un commentaire..." />
+          <Add Text="Ajouter" />
+          <Error>
+            <ExistingComment Text="Le commentaire existe déjà" />
+          </Error>
+        </Comments>
+        <DateCreated Text="Créé le" />
+        <DateUpdated Text="Mis à jour le" />
+        <Saved>
+          <Created Text="Produit créé avec succès" />
+          <Updated Text="Produit mis à jour avec succès" />
+        </Saved>
+        <Delete Text="Suppression du produit">
+          <Confirmation Text="Êtes-vous sûr de vouloir supprimer le produit « {0} » ?" />
+          <Error Text="Erreur lors de la suppression du produit.
+Message système : {0}" />
+          <DataViolation Text="Impossible de supprimer le produit.
+Assurez-vous que le produit n'existe pas dans des documents et réessayez." />
+        </Delete>
+        <Error>
+          <Invalid Text="Impossible d'enregistrer le produit car les données saisies ne sont pas valides. Vérifiez les messages d'erreur et réessayez." />
+          <Code Text="Un produit avec le code spécifié existe déjà (« {0} »).
+Saisissez un code produit unique et réessayez." />
+          <Barcode Text="Un produit avec le code-barres spécifié existe déjà (« {0} »).
+Saisissez des codes-barres uniques et réessayez." />
+          <Taxes Text="Taxes en double détectées. Nom de la taxe (« {0} »).
+Veuillez sélectionner des taxes valides et réessayez." />
+        </Error>
+      </Product>
+      <Export Text="Export">
+        <NoServices Text="Aucun service d'export disponible." />
+        <Success Text="Export terminé avec succès." />
+        <Error Text="Erreur survenue. Veuillez réessayer." />
+        <Select Text="Sélectionner le type d'export" />
+      </Export>
+      <Onboarding>
+        <Import Text="Importer des produits depuis un fichier CSV">
+          <SelectFile Text="Sélectionner le fichier">
+            <Description Text="Sélectionnez le fichier CSV contenant vos produits." />
+          </SelectFile>
+          <Validate Text="Valider">
+            <Description Text="Valider le contenu CSV et les produits pour l'import." />
+            <Error Text="Erreur lors de la validation du fichier CSV. Vérifiez vos données et réessayez." />
+            <Success Text="Les produits sont prêts pour l'import. Nombre de produits : {0}" />
+          </Validate>
+          <ImportProducts Text="Importer">
+            <Description Text="Cliquez pour importer les produits depuis le fichier CSV sélectionné." />
+          </ImportProducts>
+          <NoItems Text="Rien à importer" />
+          <Completed Text="Import terminé avec succès !">
+            <Result>
+              <Created Text="Éléments créés :" />
+              <Updated Text="Éléments mis à jour :" />
+              <DocumentNumber Text="Document créé :" />
+            </Result>
+            <Restart Text="Redémarrer l'import" />
+          </Completed>
+          <Importing Text="Importation des produits... Veuillez patienter..." />
+        </Import>
+      </Onboarding>
+      <Count Text="Nombre de produits :" />
+      <ChangeGroup Text="Produit « {0} » déplacé vers « {1} »" />
+      <Guide>
+        <Title Text="Ouvrir les produits" />
+        <Content Text="Cliquez ici pour ouvrir la section produits et ajouter des produits à votre magasin" />
+        <Add>
+          <Title Text="Ajouter un produit" />
+          <Content Text="Cliquez sur le bouton « Nouveau produit » pour commencer à ajouter de nouveaux produits" />
+          <Name>
+            <Title Text="Nom du produit" />
+            <Content Text="Ajoutez le nom du produit et les détails du produit utilisés pour la vente" />
+          </Name>
+          <Prices>
+            <Title Text="Prix du produit" />
+            <Content Text="Cliquez ici pour définir le prix du produit" />
+            <SalePrice>
+              <Title Text="Prix de vente" />
+              <Content Text="Définissez le prix de vente du produit pour qu'il apparaisse à l'écran des ventes" />
+            </SalePrice>
+          </Prices>
+          <Save>
+            <Title Text="Enregistrer les modifications" />
+            <Content Text="Cliquez sur le bouton « Enregistrer » pour sauvegarder vos modifications et ajouter le nouveau produit" />
+          </Save>
+        </Add>
+      </Guide>
+      <Settings Text="Produits">
+        <Title Text="Valeurs par défaut des produits"/>
+        <PriceIncludesTax Text="Le prix inclut la taxe">
+          <Tooltip Text="Si sélectionné, les nouveaux produits auront par défaut la case « prix avec taxe » cochée" />
+        </PriceIncludesTax>
+        <DefaultTax Text="Taux de TVA par défaut">
+          <NoTaxes Text="TVA non trouvée. Veuillez ajouter des taux de TVA dans la section gestion." />
+        </DefaultTax>
+        <MarkupOption Text="Marge basée sur le prix de revient">
+          <Tooltip Text="Si sélectionné, la modification du prix de revient mettra à jour la marge au lieu du prix de vente" />
+        </MarkupOption>
+      </Settings>
+      <Import Text="Importer">
+        <LearnMore Text="En savoir plus sur l'import CSV" />
+        <Basic Text="Basique">
+          <Description Text="Vous pouvez utiliser l'import basique en suivant notre guide pour créer un fichier CSV sur">
+            <Link Text="notre centre de support" />
+            <Formatting Text="Si vous utilisez un fichier CSV préparé, assurez-vous de lire le">
+              <Link Text="tutoriel de formatage du fichier CSV" />
+            </Formatting>
+            <Exported Text="Vous pouvez également utiliser cet import basique pour importer des produits précédemment exportés avec la fonctionnalité d'export Aronium." />
+          </Description>
+        </Basic>
+        <Csv Text="CSV">
+          <Description Text="Utilisez l'import CSV pour charger des produits depuis un fichier CSV personnalisé ou un CSV exporté depuis une autre application.
+Vous pouvez en savoir plus sur l'import de produits via des fichiers CSV sur">
+            <Link Text="notre centre de support" />
+          </Description>
+          <SelectFile Text="Sélectionner le fichier" />
+          <Fields>
+            <Name Text="Nom" />
+            <ProductGroup Text="Groupe de produits" />
+            <SKU Text="SKU" />
+            <Barcode Text="Code-barres" />
+            <MeasurementUnit Text="Unité de mesure" />
+            <Cost Text="Coût" />
+            <Markup Text="Marge" />
+            <Price Text="Prix" />
+            <Tax Text="Taxe" />
+            <IsTaxInclusivePrice Text="Prix incluant la taxe" />
+            <IsPriceChangeAllowed Text="Modification de prix autorisée" />
+            <IsUsingDefaultQuantity Text="Utilise la quantité par défaut" />
+            <IsService Text="Service (sans stock)" />
+            <IsEnabled Text="Activé" />
+            <Description Text="Description" />
+            <Quantity Text="Quantité" />
+            <Clear Text="Effacer la valeur" />
+          </Fields>
+          <Duplicates Text="Que se passe-t-il en cas de doublons ?">
+            <Skip Text="Ignorer les doublons" />
+            <Merge Text="Fusionner les doublons" />
+          </Duplicates>
+          <Document Text="Créer un document à partir de la quantité spécifiée">
+            <Purchase Text="Achat" />
+            <InventoryCount Text="Inventaire" />
+          </Document>
+          <RequiredField Text="Indique un champ obligatoire" />
+          <Import Text="Importer" />
+          <Preview Text="Aperçu">
+            <ProductsCount Text="Nombre de produits à importer :" />
+          </Preview>
+          <Error>
+            <RequiredFields Text="Des champs obligatoires sont manquants. Veuillez sélectionner tous les champs obligatoires avant l'import." />
+            <InvalidContent Text="Erreur lors de l'analyse du fichier CSV. Vérifiez votre contenu et réessayez.
+Message d'erreur : {0}" />
+            <InvalidField Text="Entrée invalide pour le champ « {0} ». Vérifiez le contenu du fichier et réessayez." />
+            <FileNotSelected Text="Aucun fichier CSV sélectionné. Veuillez sélectionner un fichier pour continuer." />
+            <DuplicateSKU Text="Codes produits en double détectés. Nom du produit : « {0} ». Code dupliqué : « {1} »" />
+            <DuplicateName Text="Nom de produit en double détecté. Nom du produit : « {0} »." />
+            <Validation>
+              <Product Text="Erreur lors de l'import du produit « {0} »." />
+              <ProductGroup Text="Erreur lors de l'import du groupe de produits « {0} »." />
+              <Tax Text="Erreur lors de l'import de la taxe « {0} »." />
+            </Validation>
+          </Error>
+        </Csv>
+        <Xml Text="XML">
+          <Description Text="Utilisez l'import XML pour charger des produits exportés depuis une autre instance Aronium.
+L'import XML préservera toutes les propriétés, y compris les images et la hiérarchie des produits." />
+          <SelectFile Text="Sélectionner le fichier" />
+          <Import Text="Importer" />
+        </Xml>
+      </Import>
+      <PriceTags Text="Étiquettes de prix">
+        <Loading Text="Chargement du modèle d'étiquettes de prix... Veuillez patienter..." />
+        <Layout Text="Mise en page">
+          <PaperSize Text="Taille du papier">
+            <Custom Text="Personnalisée" />
+          </PaperSize>
+          <PageWidth Text="Largeur de page" />
+          <PageHeight Text="Hauteur de page" />
+          <LabelWidth Text="Largeur de l'étiquette" />
+          <LabelHeight Text="Hauteur de l'étiquette" />
+          <Columns Text="Colonnes" />
+          <RowSpacing Text="Espacement des lignes" />
+          <ColumnSpacing Text="Espacement des colonnes" />
+          <RollPaper Text="Imprimer sur papier en rouleau (hauteur illimitée)" />
+        </Layout>
+        <Display Text="Affichage">
+          <Barcode Text="Code-barres">
+            <Type Text="Type de code-barres" />
+            <Height Text="Hauteur du code-barres" />
+          </Barcode>
+          <Code Text="Code (SKU)" />
+          <PriceIncludesTax Text="Prix incluant la taxe" />
+          <Borders Text="Bordures" />
+          <Product Text="Nom du produit">
+            <FontSize Text="Taille de police du nom du produit" />
+          </Product>
+          <Price Text="Prix">
+            <FontSize Text="Taille de police du prix" />
+          </Price>
+        </Display>
+        <Products Text="Produits">
+          <NoSelection Text="Aucun produit sélectionné
+Tous les produits seront imprimés" />
+          <NumberOfCopies Text="Nombre d'exemplaires" />
+        </Products>
+      </PriceTags>
+      <Sort Text="Tri">
+        <Top Text="Haut" />
+        <Bottom Text="Bas" />
+        <Reset Text="Réinitialiser">
+          <Confirmation Text="Cela effacera le tri personnalisé et remettra tous les produits et groupes à leur rang par défaut.
+
+Voulez-vous continuer ?">
+            <Title Text="Réinitialiser l'ordre de tri des produits et groupes" />
+          </Confirmation>
+        </Reset>
+        <Menu>
+          <Top Text="Déplacer en haut" />
+          <Bottom Text="Déplacer en bas" />
+          <Reset Text="Réinitialiser les produits et groupes" />
+          <SortProducts Text="Trier les produits" />
+          <SortGroups Text="Trier les groupes" />
+        </Menu>
+        <NoItems Text="Le groupe sélectionné n'a aucun élément à trier" />
+        <Success Text="Produits triés avec succès" />
+        <Progress Text="Tri des produits... Veuillez patienter..." />
+        <UnsavedChanges Text="Il y a des modifications non enregistrées qui seront perdues si vous continuez.
+
+Êtes-vous sûr de vouloir continuer et perdre les modifications non enregistrées ?">
+          <Title Text="Modifications non enregistrées" />
+        </UnsavedChanges>
+      </Sort>
+    </Products>
+    <Customers Text="Clients &amp; fournisseurs">
+      <Search Text="Rechercher clients &amp; fournisseurs" />
+      <LearnMore Text="En savoir plus sur les clients et fournisseurs" />
+      <New Text="Nouveau client / fournisseur" />
+      <Delete Text="Supprimer">
+        <Confirmation Text="Êtes-vous sûr de vouloir supprimer « {0} » ?" />
+        <Error Text="Erreur lors de la suppression du client. Le client n'a pas pu être supprimé.
+Message système : {0}" />
+      </Delete>
+      <Customer>
+        <Edit Text="Modifier « {0} »" />
+        <General Text="Général">
+          <Title Text="Informations générales" />
+          <Code Text="Code" />
+          <Name Text="Nom" />
+          <TaxNumber Text="Numéro de TVA" />
+          <RabatePercent Text="Remise" />
+          <Email Text="Email" />
+          <PhoneNumber Text="Numéro de téléphone" />
+          <IsEnabled Text="Actif" />
+          <IsCustomer Text="Client" />
+          <IsSupplier Text="Fournisseur" />
+        </General>
+        <Loyalty>
+          <Discounts Text="Remises">
+            <Title Text="Définir les remises client pour les produits ou groupes de produits" />
+            <Info Text="Définir la remise pour l'élément sélectionné" />
+            <NoItems Text="Aucune remise" />
+            <Existing Text="Remise pour « {0} » existe déjà." />
+            <Clear Text="Effacer toutes les remises" />
+          </Discounts>
+          <Cards Text="Cartes de fidélité">
+            <Title Text="Saisir les cartes de fidélité du client" />
+            <CardNumber Text="Numéro de carte" />
+            <Add Text="Ajouter la carte" />
+            <Duplicate Text="Carte de fidélité déjà existante">
+              <Warning Text="La carte de fidélité « {0} » est déjà assignée à {1}. Les cartes de fidélité doivent être uniques.
+
+Veuillez utiliser une autre carte pour ce client et réessayez." />
+            </Duplicate>
+          </Cards>
+        </Loyalty>
+        <Saved>
+          <Created Text="Nouveau client créé avec succès." />
+          <Updated Text="Client modifié avec succès." />
+        </Saved>
+        <Existing Text="Client existant">
+          <Warning Text="Un client similaire existe déjà : {0}.
+Champs en double : {1}.
+
+Voulez-vous enregistrer le client quand même ?" />
+        </Existing>
+        <PaymentTerms Text="Conditions de paiement">
+          <DueDatePeriod Text="Délai d'échéance">
+            <Info Text="Utilisez le délai d'échéance pour définir le nombre de jours avant que la transaction doive être payée pour chaque vente non payée assignée à ce client" />
+            <Days Text="jours" />
+          </DueDatePeriod>
+          <TaxExempt Text="Exempt de TVA">
+            <Info Text="Si l'option exempt de TVA est activée, les taxes seront supprimées de la vente lorsque ce client est sélectionné." />
+          </TaxExempt>
+        </PaymentTerms>
+        <Default>
+          <Warning Text="C'est le client par défaut utilisé pour toutes les ventes où le client n'est pas explicitement assigné.
+
+Nous déconseillons fortement de modifier ce client." />
+        </Default>
+      </Customer>
+      <Guide>
+        <Title Text="Clients et fournisseurs" />
+        <Content Text="Cliquez ici pour ouvrir la section clients et fournisseurs" />
+        <Add>
+          <Title Text="Ajouter un client ou fournisseur" />
+          <Content Text="Cliquez ici pour créer un nouveau client ou fournisseur" />
+          <Name>
+            <Title Text="Saisir le nom" />
+            <Content Text="Saisissez le nom du client ou fournisseur" />
+          </Name>
+          <Save>
+            <Title Text="Enregistrer les modifications" />
+            <Content Text="Une fois que vous avez saisi tous les détails, cliquez sur le bouton « Enregistrer » pour sauvegarder les modifications" />
+          </Save>
+        </Add>
+      </Guide>
+      <Import Text="Importer">
+        <Title Text="Importer des clients" />
+        <Description Text="Utilisez l'import de clients pour télécharger une liste de clients depuis votre fichier CSV personnalisé ou un CSV exporté depuis une autre application.
+Vous pouvez en savoir plus sur l'import de clients sur">
+          <Link Text="notre centre de support" />
+        </Description>
+        <Fields>
+          <Name Text="Nom" />
+          <Code Text="Code" />
+          <TaxNumber Text="Numéro de TVA" />
+          <StreetName Text="Nom de la rue" />
+          <AdditionalStreetName Text="Complément d'adresse" />
+          <BuildingNumber Text="Numéro du bâtiment" />
+          <PlotIdentification Text="Identifiant de parcelle" />
+          <CitySubdivisionName Text="Quartier" />
+          <PostalCode Text="Code postal" />
+          <City Text="Ville" />
+          <CountrySubentity Text="Région / Province" />
+          <Country Text="Pays" />
+          <Email Text="Email" />
+          <Phone Text="Téléphone" />
+          <IsEnabled Text="Activé" />
+          <IsCustomer Text="Client" />
+          <IsTaxExempt Text="Exempt de TVA" />
+          <Clear Text="Effacer la valeur" />
+        </Fields>
+        <Import Text="Importer" />
+        <Preview Text="Aperçu">
+          <CustomersCount Text="Nombre de clients à importer : " />
+        </Preview>
+        <RequiredField Text="Indique un champ obligatoire" />
+        <Importing Text="Importation des clients... Veuillez patienter..." />
+        <Error>
+          <RequiredFields Text="Des champs obligatoires sont manquants. Veuillez sélectionner tous les champs obligatoires avant l'import." />
+          <InvalidContent Text="Erreur lors de l'analyse du fichier CSV. Vérifiez votre contenu et réessayez.
+Message d'erreur : {0}" />
+          <InvalidField Text="Entrée invalide pour le champ « {0} ». Vérifiez le contenu du fichier et réessayez." />
+          <FileNotSelected Text="Aucun fichier CSV sélectionné. Veuillez sélectionner un fichier pour continuer." />
+          <DuplicateName Text="Nom de client en double détecté. Nom du client : « {0} »." />
+        </Error>
+        <Completed Text="Clients importés avec succès !" />
+      </Import>
+      <Export Text="Exporter">
+        <Completed Text="Clients exportés avec succès !
+Nom du fichier : « {0} »" />
+      </Export>
+    </Customers>
+    <PaymentTypes Text="Types de paiement">
+      <LearnMore Text="En savoir plus sur les types de paiement" />
+      <New Text="Nouveau type de paiement" />
+      <Edit Text="Modifier le type de paiement « {0} »" />
+      <Delete Text="Supprimer le type de paiement">
+        <Confirmation Text="Êtes-vous sûr de vouloir supprimer « {0} » ?" />
+        <Error Text="Erreur lors de la suppression du type de paiement. Le type de paiement sélectionné ne peut pas être supprimé.
+Message système : {0}" />
+        <DataViolation Text="Impossible de supprimer le type de paiement sélectionné. Assurez-vous qu'il n'est pas utilisé dans des documents et réessayez." />
+      </Delete>
+      <PaymentType>
+        <Name Text="Nom" />
+        <Code Text="Code" />
+        <IsCustomerRequired Text="Client requis" />
+        <IsFiscal Text="Imprimer reçu" />
+        <IsChangeAllowed Text="Rendu autorisé" />
+        <Ordinal Text="Position" />
+        <IsEnabled Text="Activé" />
+        <IsQuickPayment Text="Paiement rapide" />
+        <OpenCashDrawer Text="Ouvrir tiroir caisse" />
+        <ShortcutKey Text="Touche de raccourci" />
+        <MarkAsPaid Text="Marquer la transaction comme payée" />
+        <Saved>
+          <Created Text="Type de paiement créé avec succès." />
+          <Updated Text="Type de paiement modifié avec succès." />
+        </Saved>
+        <Error Text="Erreur">
+          <ExistingShortcutKey Text="La touche de raccourci spécifiée est déjà assignée au type de paiement « {0} ».
+Les touches de raccourci doivent être uniques.
+
+Veuillez spécifier une autre touche de raccourci et réessayez.">
+            <Title Text="Touche de raccourci en double détectée" />
+          </ExistingShortcutKey>
+        </Error>
+      </PaymentType>
+      <Onboarding>
+        <Title Text="Types de paiement" />
+        <Info Text="Saisissez les types de paiement utilisés pour les ventes dans votre magasin." />
+        <AddMore Text="Enregistrer &amp; ajouter d'autres">
+          <Error Text="Erreur lors de l'ajout du nouveau type de paiement.
+Vérifiez votre saisie et réessayez" />
+        </AddMore>
+        <Existing Text="Types de paiement existants" />
+      </Onboarding>
+    </PaymentTypes>
+    <Documents Text="Documents">
+      <View Text="Voir les documents" />
+      <Search Text="Rechercher des documents">
+        <Customer Text="Client">
+          <All Text="Tous les clients" />
+          <Search Text="Rechercher des clients...">
+            <NoResults Text="Aucun résultat" />
+          </Search>
+        </Customer>
+        <Product Text="Produit">
+          <All Text="Tous les produits" />
+          <Search Text="Rechercher des produits...">
+            <NoResults Text="Aucun résultat" />
+          </Search>
+        </Product>
+        <Period Text="Période">
+          <Tip Text="Cliquez pour sélectionner la période de recherche" />
+        </Period>
+        <DocumentType Text="Type de document">
+          <All Text="Tous les types de documents" />
+        </DocumentType>
+        <User Text="Utilisateur">
+          <All Text="Tous les utilisateurs" />
+        </User>
+        <PaidStatus Text="Statut de paiement">
+          <None Text="Toutes les transactions" />
+          <Paid Text="Payé" />
+          <Unpaid Text="Non payé" />
+        </PaidStatus>
+        <DocumentNumber Text="Numéro de document" />
+        <ReferenceDocumentNumber Text="Document externe" />
+        <CashRegister Text="Caisse">
+          <All Text="Toutes les caisses" />
+        </CashRegister>
+        <Clear Text="Effacer tous les filtres" />
+      </Search>
+      <Document>
+        <Save>
+          <Saved Text="Document enregistré avec succès" />
+          <Error Text="Erreur lors de l'enregistrement du document. Les modifications n'ont pas été enregistrées.
+Message système : {0}">
+            <InvalidPayments Text="Montant de paiement invalide">
+              <Info Text="Le montant des paiements doit être égal au total du document. Veuillez corriger les paiements du document et réessayez.
+
+Total du document : {0}. Montant des paiements : {1}." />
+            </InvalidPayments>
+          </Error>
+        </Save>
+        <UnsavedChanges Text="Modifications non enregistrées">
+          <Confirmation Text="Le document « {0} » contient des modifications non enregistrées.
+
+Voulez-vous enregistrer le document avant de le fermer ?" />
+        </UnsavedChanges>
+        <StockDate Text="Sélectionner la date de modification de stock">
+          <Description Text="Saisissez la date à laquelle la modification de stock a été enregistrée par ce document" />
+          <Invalid Text="Date de stock invalide">
+            <Description Text="L'action sélectionnée n'est pas autorisée.
+
+Inventaire existant trouvé. Document « {0} » créé le {1}.
+
+Vérifiez la date de stock du document et réessayez." />
+            <Message Text="La date de stock sélectionnée n'est pas autorisée.
+Inventaire {0} créé le {1}" />
+            <InvalidTime Text="L'heure d'inventaire ne peut pas être dans le futur" />
+          </Invalid>
+        </StockDate>
+        <Note Text="Note" />
+        <InternalNote Text="Note interne" />
+        <PaidStatus>
+          <Changed Text="Statut de paiement modifié avec succès" />
+        </PaidStatus>
+        <Items>
+          <CostPrice>
+            <Settings>
+              <AutoUpdate Text="Mettre à jour automatiquement le prix de revient à l'achat">
+                <SalePrice Text="Mettre à jour le prix de vente basé sur la marge" />
+              </AutoUpdate>
+            </Settings>
+            <Update Text="Mettre à jour le prix de revient">
+              <Info Text="Le coût des articles a changé. Sélectionnez les articles dont vous souhaitez changer le prix de revient." />
+              <Confirmation Text="Voulez-vous mettre à jour le prix de revient pour les articles sélectionnés ?" />
+              <Success Text="Prix de revient mis à jour avec succès" />
+              <SalePrice>
+                <Warning Text="ATTENTION !">
+                  <Message Text="La mise à jour des prix de revient pour les articles sélectionnés mettra automatiquement à jour leurs prix de vente en fonction de la marge du produit." />
+                </Warning>
+              </SalePrice>
+            </Update>
+          </CostPrice>
+          <Missing Text="Le produit sélectionné n'existe pas." />
+        </Items>
+        <Payments>
+          <AutomaticallyModified Text="Les paiements et montants existants ont été mis à jour pour correspondre au total des paiements" />
+          <MarkPaid Text="Tous les paiements à crédit sont maintenant payés. Voulez-vous marquer le document comme payé ?">
+            <Title Text="Mettre à jour le statut du document" />
+          </MarkPaid>
+          <Status Text="Statut">
+            <Paid Text="Payé" />
+            <Unpaid Text="Non payé" />
+          </Status>
+        </Payments>
+        <Convert>
+          <Invoice Text="Convertir en facture" />
+        </Convert>
+      </Document>
+      <New>
+        <SelectDocumentType Text="Sélectionner le type de document" />
+      </New>
+      <NoDocument Text="Le document demandé n'existe pas." />
+      <Inventory>
+        <Date Text="Sélectionner la date d'inventaire">
+          <Description Text="Saisissez la date à laquelle la liste d'inventaire a été créée." />
+        </Date>
+        <Document>
+          <Item>
+            <Expected Text="Attendu" />
+            <Counted Text="Compté" />
+            <ChangeQuantity Text="Changer la quantité" />
+          </Item>
+          <ExistingItem Text="L'élément sélectionné est déjà ajouté à ce document." />
+          <Service Text="Tentative d'ajout d'un service à l'inventaire">
+            <Info Text="L'élément sélectionné « {0} » est marqué comme service. Êtes-vous sûr de vouloir ajouter un service à l'inventaire ?" />
+          </Service>
+          <AddGroup Text="Ajouter les éléments du groupe au document">
+            <Confirmation Text="Êtes-vous sûr de vouloir ajouter tous les produits du groupe « {0} » à l'inventaire ?" />
+          </AddGroup>
+        </Document>
+      </Inventory>
+      <Guide>
+        <Title Text="Ouvrir les documents" />
+        <Content Text="Cliquez ici pour ouvrir la section documents et ajouter votre premier achat" />
+        <Add>
+          <Title Text="Créer un document" />
+          <Content Text="Cliquez ici pour créer un nouvel achat et mettre des articles en stock" />
+          <Customer>
+            <Title Text="Sélectionner un client" />
+            <Content Text="Sélectionnez un client pour ce document" />
+          </Customer>
+          <Supplier>
+            <Title Text="Sélectionner un fournisseur" />
+            <Content Text="Sélectionnez un fournisseur pour ce document" />
+          </Supplier>
+          <Product>
+            <Title Text="Sélectionner un produit" />
+            <Content Text="Double-cliquez sur un produit que vous souhaitez ajouter au document" />
+          </Product>
+          <Item>
+            <Quantity>
+              <Title Text="Saisir la quantité" />
+              <Content Text="Saisissez la quantité achetée. Cette quantité sera mise en stock" />
+            </Quantity>
+            <Price>
+              <Title Text="Prix" />
+              <Content Text="Saisissez le prix de l'article" />
+            </Price>
+            <Save>
+              <Title Text="Enregistrer les modifications" />
+              <Content Text="Cliquez sur le bouton « Enregistrer » pour sauvegarder les modifications et ajouter cet article au document" />
+            </Save>
+          </Item>
+          <Save>
+            <Title Text="Enregistrer le document" />
+            <Content Text="Cliquez sur le bouton « Enregistrer » pour enregistrer le document" />
+          </Save>
+        </Add>
+      </Guide>
+    </Documents>
+    <Countries Text="Pays">
+      <New Text="Nouveau pays" />
+      <Delete>
+        <Title Text="Supprimer le pays" />
+        <Confirmation Text="Êtes-vous sûr de vouloir supprimer le pays « {0} » ?" />
+      </Delete>
+      <Country>
+        <Edit Text="Modifier le pays « {0} »" />
+        <Name Text="Nom" />
+        <Code Text="Code" />
+        <Saved>
+          <Created Text="Pays créé avec succès" />
+          <Updated Text="Pays modifié avec succès" />
+        </Saved>
+      </Country>
+    </Countries>
+    <Company Text="Mon entreprise">
+      <LearnMore Text="En savoir plus sur les détails de l'entreprise" />
+      <Details Text="Données de mon entreprise">
+        <Title Text="Données de l'entreprise" />
+        <Logo Text="Logo">
+          <Add Text="Parcourir" />
+          <Remove Text="Effacer" />
+        </Logo>
+        <BankAccount Text="Compte bancaire">
+          <Number Text="N° compte bancaire" />
+          <BankDetails Text="Détails bancaires" />
+        </BankAccount>
+      </Details>
+      <Saved Text="Données de l'entreprise enregistrées avec succès" />
+      <Onboarding>
+        <Title Text="Détails de l'entreprise" />
+        <Info Text="Saisissez les détails de votre entreprise. Les détails de l'entreprise sont utilisés pour les reçus et factures" />
+      </Onboarding>
+      <Reset Text="Réinitialiser la base de données">
+        <Info Text="Ceci est une opération destructive. Veuillez vous assurer de lire les instructions avant de continuer." />
+        <Selection Text="Sélectionner les entités à réinitialiser">
+          <Description Text="Les entités sélectionnées seront supprimées de la base de données" />
+          <Items>
+            <Documents Text="Documents" />
+            <Products Text="Produits" />
+            <Customers Text="Clients" />
+            <Promotions Text="Promotions" />
+            <Counters Text="Compteurs" />
+            <CashInOut Text="Entrées / sorties caisse" />
+            <Taxes Text="Taxes" />
+            <OpenOrders Text="Commandes ouvertes" />
+          </Items>
+        </Selection>
+        <AdminPassword Text="Saisir le mot de passe administrateur" />
+        <Backup>
+          <Description Text="Emplacement où la sauvegarde de la base de données sera enregistrée" />
+          <Info Text="Une sauvegarde de la base de données sera effectuée avant la réinitialisation. Vous pouvez modifier la destination de sauvegarde par défaut ci-dessous." />
+          <Path Text="Chemin de sauvegarde de la base de données">
+            <Select Text="Sélectionner la destination où la sauvegarde de la base de données sera enregistrée avant la réinitialisation." />
+          </Path>
+          <Completed Text="Sauvegarde de la base de données terminée" />
+        </Backup>
+        <Confirmation Text="Confirmation">
+          <Description Text="Autoriser et effectuer la réinitialisation sur les entités sélectionnées" />
+        </Confirmation>
+        <PerformReset Text="Réinitialiser la base de données">
+          <Confirmation Text="Êtes-vous sûr de vouloir réinitialiser la base de données et effacer les données sélectionnées ?">
+            <Title Text="Réinitialisation de la base de données en cours" />
+          </Confirmation>
+          <Error>
+            <NoSelection Text="Veuillez sélectionner au moins une entité à réinitialiser." />
+          </Error>
+        </PerformReset>
+        <Completed Text="Réinitialisation de la base de données terminée avec succès. Aronium va maintenant redémarrer." />
+      </Reset>
+    </Company>
+    <Guide>
+      <Title Text="Gestion" />
+      <Content Text="Cliquez ici pour ouvrir la section gestion et ajouter des produits et clients" />
+    </Guide>
+    <Authorization>
+      <Title Text="Veuillez saisir le mot de passe pour accéder à la section gestion" />
+    </Authorization>
+    <Void>
+      <Reasons Text="Motifs d'annulation">
+        <Add Text="Ajouter un motif d'annulation">
+          <Info Text="Insérez un nouveau motif d'annulation ici..." />
+        </Add>
+        <Error>
+          <Existing Text="Motif d'annulation déjà existant" />
+        </Error>
+        <Saved Text="Motifs d'annulation enregistrés avec succès" />
+        <NoItems Text="Aucun motif d'annulation" />
+      </Reasons>
+    </Void>
+  </Management>
+</Language>
