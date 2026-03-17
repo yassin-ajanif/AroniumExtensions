@@ -19,7 +19,8 @@ public class AuditLogExportService : IAuditLogExportService
     /// </summary>
     public static string DefaultExportDirectory =>
         Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "AroniumFactures",
             "AuditLogExports"
         );
 
